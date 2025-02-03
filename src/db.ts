@@ -5,7 +5,7 @@ interface Project {
 	name: string;
 }
 
-const db = new Dexie('FriendsDatabase') as Dexie & {
+const db = new Dexie('Prioritizationator') as Dexie & {
 	projects: EntityTable<Project, 'id'>;
 };
 

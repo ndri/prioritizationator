@@ -11,7 +11,7 @@
 	}
 </script>
 
-{#if projects}
+{#if projects?.length}
 	<section>
 		<h2 class="mb-4 text-xl font-medium">Your projects:</h2>
 		<ul class="ml-8 list-disc">
