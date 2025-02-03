@@ -1,19 +1,13 @@
 <script lang="ts">
-	import { db } from '../db';
+	import { createProject, db } from '../db';
 
 	let projectName = $state('');
 
 	const submitForm = (event: Event) => {
 		event.preventDefault();
-		addProject(projectName);
+		createProject({ name: projectName });
 		projectName = '';
 	};
-
-	async function addProject(projectName: string) {
-		const id = await db.projects.add({
-			name: projectName
-		});
-	}
 </script>
 
 <section>

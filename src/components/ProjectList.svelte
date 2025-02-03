@@ -1,14 +1,10 @@
 <script lang="ts">
-	import { db } from '../db';
+	import { db, deleteProject, getProject, getProjects } from '../db';
 	import { stateQuery } from '$lib/stateQuery.svelte';
 	import TrashIcon from '../components/heroicons/micro/TrashIcon.svelte';
 
-	const projectsQuery = stateQuery(() => db.projects.toArray());
+	const projectsQuery = stateQuery(getProjects);
 	let projects = $derived(projectsQuery.current);
-
-	async function deleteProject(id: number) {
-		await db.projects.delete(id);
-	}
 </script>
 
 {#if projects?.length}
