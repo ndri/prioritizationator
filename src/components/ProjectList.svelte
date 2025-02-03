@@ -18,7 +18,7 @@
 			{#each projects as project}
 				<li>
 					<div class="flex items-center gap-1.5">
-						<span>{project.name}</span>
+						<a href="/projects/{project.id}">{project.name}</a>
 						<button
 							class="rounded-md p-1 hover:bg-slate-700"
 							onclick={() => deleteProject(project.id)}
