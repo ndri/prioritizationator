@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { db, deleteProject, getProject, getProjects } from '../db';
+	import { deleteProject, getProjects } from '../db';
 	import { stateQuery } from '$lib/stateQuery.svelte';
 	import TrashIcon from '../components/heroicons/micro/TrashIcon.svelte';
 
