@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { stateQuery } from '$lib/stateQuery.svelte';
-	import { getProject, recordValueLoss, recordValueTie, recordValueWin } from '$lib/db';
+	import { getProject, recordEaseLoss, recordEaseTie, recordEaseWin } from '$lib/db';
 	import type { PageProps } from './$types';
 	import TaskPairing from '$lib/components/TaskPairing.svelte';
 
@@ -13,14 +13,14 @@
 
 <a href="/projects/{projectId}">Back to project</a>
 
-<h1 class="text-3xl font-bold">{project?.name} value rating</h1>
+<h1 class="text-3xl font-bold">{project?.name} ease rating</h1>
 
-<h2 class="text-lg font-medium">Which of these provides more value in your project?</h2>
+<h2 class="text-lg font-medium">Which of these requires less effort to complete?</h2>
 
 <TaskPairing
 	{projectId}
-	dimension="value"
-	recordWin={recordValueWin}
-	recordLoss={recordValueLoss}
-	recordTie={recordValueTie}
+	dimension="ease"
+	recordWin={recordEaseWin}
+	recordLoss={recordEaseLoss}
+	recordTie={recordEaseTie}
 />

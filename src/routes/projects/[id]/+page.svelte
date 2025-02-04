@@ -19,7 +19,7 @@
 
 <div class="grid grid-cols-2 gap-2">
 	<Button href={`/projects/${projectId}/value`} variant="secondary" size="xl">Rate value</Button>
-	<Button href={`/projects/${projectId}/effort`} variant="secondary" size="xl">Rate effort</Button>
+	<Button href={`/projects/${projectId}/ease`} variant="secondary" size="xl">Rate ease</Button>
 </div>
 
 <Button onclick={() => resetRatings(projectId)} variant="secondary" size="xl">Reset ratings</Button>

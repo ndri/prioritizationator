@@ -5,23 +5,30 @@
 
 	interface Props {
 		projectId: number;
+		dimension: 'value' | 'ease';
 		recordWin: (winnerId: number) => void;
 		recordLoss: (loserId: number) => void;
 		recordTie: (taskId: number) => void;
 	}
 
-	const { projectId, recordWin, recordLoss, recordTie }: Props = $props();
+	const { projectId, dimension, recordWin, recordLoss, recordTie }: Props = $props();
 
-	let taskPairPromise = $state(getTaskPair(projectId));
+	const newTasks = () => getTaskPair(projectId, dimension);
+
+	let taskPairPromise = $state(newTasks());
+
+	const resetTasks = () => {
+		taskPairPromise = newTasks();
+	};
 
 	const recordResult = ({ winnerId, loserId }: { winnerId: number; loserId: number }) => {
-		taskPairPromise = getTaskPair(projectId);
+		resetTasks();
 		recordWin(winnerId);
 		recordLoss(loserId);
 	};
 
 	const recordTieResult = ({ task1Id, task2Id }: { task1Id: number; task2Id: number }) => {
-		taskPairPromise = getTaskPair(projectId);
+		resetTasks();
 		recordTie(task1Id);
 		recordTie(task2Id);
 	};
