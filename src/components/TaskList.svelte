@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { deleteTask, type Task } from '../db';
+	import { deleteTask, type ScoredTask } from '../db';
 	import TrashIcon from '../components/heroicons/micro/TrashIcon.svelte';
 
 	interface Props {
-		tasks?: Task[];
+		tasks?: ScoredTask[];
 	}
 
 	const { tasks }: Props = $props();
@@ -16,10 +16,15 @@
 			{#each tasks as task}
 				<li class="flex items-center gap-2 px-5 py-3">
 					<div class="grow">{task.name}</div>
+					<div>Wins: {task.wins}</div>
+					<div>Losses: {task.losses}</div>
+					<div>Score: {task.score}</div>
 					<button
 						class="flex justify-center rounded-md p-2.5 hover:bg-red-900"
-						onclick={() => deleteTask(task.id)}><TrashIcon className="text-slate-200" /></button
+						onclick={() => deleteTask(task.id)}
 					>
+						<TrashIcon className="text-slate-200" />
+					</button>
 				</li>
 			{/each}
 		</ol>

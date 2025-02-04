@@ -1,11 +1,12 @@
+import { score0to100 } from '$lib/utils';
 import Dexie, { type EntityTable } from 'dexie';
 
-interface Project {
+export interface Project {
 	id: number;
 	name: string;
 }
 
-interface Task {
+export interface Task {
 	id: number;
 	projectId: number;
 	name: string;
@@ -14,7 +15,9 @@ interface Task {
 	ties: number;
 }
 
-export type { Project, Task };
+export interface ScoredTask extends Task {
+	score: number;
+}
 
 const db = new Dexie('Prioritizationator') as Dexie & {
 	projects: EntityTable<Project, 'id'>;
@@ -37,14 +40,14 @@ export async function getProjectsWithTasks() {
 	const tasks = await db.tasks.toArray();
 	return projects.map((project) => ({
 		...project,
-		tasks: tasks.filter((task) => task.projectId === project.id)
+		tasks: getProjectTasks(project.id)
 	}));
 }
 
 export async function getProject(id: number) {
 	const project = await db.projects.where({ id }).first();
 	if (project) {
-		const tasks = await db.tasks.where({ projectId: project.id }).toArray();
+		const tasks = await getProjectTasks(project.id);
 		return { ...project, tasks };
 	}
 	return project;
@@ -60,6 +63,13 @@ export async function deleteProject(id: number) {
 		await db.tasks.delete(task.id);
 	}
 	return db.projects.delete(id);
+}
+
+export async function getProjectTasks(projectId: number): Promise<ScoredTask[]> {
+	return (await db.tasks.where({ projectId }).toArray()).map((task) => ({
+		...task,
+		score: score0to100(task.wins, task.losses)
+	}));
 }
 
 export async function getTask(id: number) {
