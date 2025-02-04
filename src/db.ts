@@ -62,3 +62,13 @@ export async function createTask({ name, projectId }: { name: string; projectId:
 export async function deleteTask(id: number) {
 	return db.tasks.delete(id);
 }
+
+export async function getRandomTaskPair(projectId: number): Promise<[Task, Task]> {
+	const tasks = await db.tasks.where({ projectId }).toArray();
+
+	const task1 = tasks[Math.floor(Math.random() * tasks.length)];
+	const remainingTasks = tasks.filter((task) => task.id !== task1.id);
+	const task2 = remainingTasks[Math.floor(Math.random() * remainingTasks.length)];
+
+	return [task1, task2];
+}
