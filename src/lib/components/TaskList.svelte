@@ -16,9 +16,9 @@
 			{#each tasks as task}
 				<li class="flex items-center gap-2 px-5 py-3">
 					<div class="grow">{task.name}</div>
-					<div>Wins: {task.valueWins}</div>
-					<div>Losses: {task.valueLosses}</div>
-					<div>Score: {task.valueScore}</div>
+					<div>W: {task.valueWins}</div>
+					<div>L: {task.valueLosses}</div>
+					<div>S: {task.valueScore}</div>
 					<button
 						class="flex justify-center rounded-md p-2.5 hover:bg-red-900"
 						onclick={() => deleteTask(task.id)}

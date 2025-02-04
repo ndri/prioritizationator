@@ -66,7 +66,7 @@ export async function getProjects() {
 
 export async function getProjectsWithTasks() {
 	const projects = await db.projects.toArray();
-	const allTasks = await getAllTasks();
+	const allTasks = await db.tasks.toArray();
 	return projects.map((project) => ({
 		...project,
 		tasks: allTasks.filter((task) => task.projectId === project.id)
@@ -75,11 +75,11 @@ export async function getProjectsWithTasks() {
 
 export async function getProject(id: number) {
 	const project = await db.projects.where({ id }).first();
-	if (project) {
-		const tasks = await getProjectTasks(project.id);
-		return { ...project, tasks };
-	}
-	return project;
+
+	if (!project) return;
+
+	const tasks = await getProjectTasks(project.id);
+	return { ...project, tasks };
 }
 
 export async function createProject({ name }: { name: string }) {
@@ -94,18 +94,8 @@ export async function deleteProject(id: number) {
 	return db.projects.delete(id);
 }
 
-export async function getAllTasks() {
-	return (await db.tasks.toArray()).map((task) => ({
-		...task,
-		valueScore: score0to100(task.valueWins, task.valueLosses)
-	}));
-}
-
 export async function getProjectTasks(projectId: number) {
-	return (await db.tasks.where({ projectId }).toArray()).map((task) => ({
-		...task,
-		valueScore: score0to100(task.valueWins, task.valueLosses)
-	}));
+	return db.tasks.where({ projectId }).toArray();
 }
 
 export async function getTask(id: number) {
