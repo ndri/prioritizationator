@@ -13,6 +13,7 @@
 
 	const submitForm = (event: Event) => {
 		event.preventDefault();
+		if (!taskName) return;
 		createTask({ projectId, name: taskName });
 		taskName = '';
 	};

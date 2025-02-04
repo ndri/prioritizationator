@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { stateQuery } from '$lib/stateQuery.svelte';
 	import Button from '../../../../components/ui/Button.svelte';
-	import { getProject, getRandomTaskPair } from '../../../../db';
+	import { getProject, getRandomTaskPair, recordLoss, recordWin } from '../../../../db';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -12,8 +12,10 @@
 
 	let taskPairPromise = $state(getRandomTaskPair(projectId));
 
-	const handleClick = (taskId: number) => {
+	const handleClick = ({ winner, loser }: { winner: number; loser: number }) => {
 		taskPairPromise = getRandomTaskPair(projectId);
+		recordWin(winner);
+		recordLoss(loser);
 	};
 </script>
 
@@ -24,9 +26,19 @@
 <h2 class="text-lg font-medium">Which of these is more valuable?</h2>
 {#await taskPairPromise then [task1, task2]}
 	<div class="grid grid-cols-2 gap-4">
-		<Button variant="secondary" size="xl" onclick={() => handleClick(task1.id)}>{task1.name}</Button
+		<Button
+			variant="secondary"
+			size="xl"
+			onclick={() => handleClick({ winner: task1.id, loser: task2.id })}
 		>
-		<Button variant="secondary" size="xl" onclick={() => handleClick(task2.id)}>{task2.name}</Button
+			{task1.name}
+		</Button>
+		<Button
+			variant="secondary"
+			size="xl"
+			onclick={() => handleClick({ winner: task2.id, loser: task1.id })}
 		>
+			{task2.name}
+		</Button>
 	</div>
 {/await}

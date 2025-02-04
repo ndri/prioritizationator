@@ -9,6 +9,9 @@ interface Task {
 	id: number;
 	projectId: number;
 	name: string;
+	wins: number;
+	losses: number;
+	ties: number;
 }
 
 export type { Project, Task };
@@ -20,7 +23,7 @@ const db = new Dexie('Prioritizationator') as Dexie & {
 
 db.version(1).stores({
 	projects: '++id, name',
-	tasks: '++id, projectId, name'
+	tasks: '++id, projectId, name, wins, losses, ties'
 });
 
 export { db };
@@ -52,11 +55,19 @@ export async function createProject({ name }: { name: string }) {
 }
 
 export async function deleteProject(id: number) {
+	const tasks = await db.tasks.where({ projectId: id }).toArray();
+	for (const task of tasks) {
+		await db.tasks.delete(task.id);
+	}
 	return db.projects.delete(id);
 }
 
+export async function getTask(id: number) {
+	return db.tasks.where({ id }).first();
+}
+
 export async function createTask({ name, projectId }: { name: string; projectId: number }) {
-	return db.tasks.add({ name, projectId });
+	return db.tasks.add({ name, projectId, wins: 0, losses: 0, ties: 0 });
 }
 
 export async function deleteTask(id: number) {
@@ -71,4 +82,32 @@ export async function getRandomTaskPair(projectId: number): Promise<[Task, Task]
 	const task2 = remainingTasks[Math.floor(Math.random() * remainingTasks.length)];
 
 	return [task1, task2];
+}
+
+export async function recordWin(taskId: number) {
+	const task = await getTask(taskId);
+	if (!task) return;
+
+	return db.tasks.update(taskId, { wins: task.wins + 1 });
+}
+
+export async function recordLoss(taskId: number) {
+	const task = await getTask(taskId);
+	if (!task) return;
+
+	return db.tasks.update(taskId, { losses: task.losses + 1 });
+}
+
+export async function recordTie(taskId: number) {
+	const task = await getTask(taskId);
+	if (!task) return;
+
+	return db.tasks.update(taskId, { ties: task.ties + 1 });
+}
+
+export async function resetRatings(projectId: number) {
+	const tasks = await db.tasks.where({ projectId }).toArray();
+	tasks.forEach(async (task) => {
+		await db.tasks.update(task.id, { wins: 0, losses: 0, ties: 0 });
+	});
 }
