@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { deleteTask, type ScoredTask } from '../db';
+	import { deleteTask, type Task } from '../db';
 	import TrashIcon from '../components/heroicons/micro/TrashIcon.svelte';
 
 	interface Props {
-		tasks?: ScoredTask[];
+		tasks?: Task[];
 	}
 
 	const { tasks }: Props = $props();

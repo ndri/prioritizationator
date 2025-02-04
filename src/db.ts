@@ -13,23 +13,52 @@ export interface Task {
 	wins: number;
 	losses: number;
 	ties: number;
+	score?: number;
+	votes?: number;
 }
 
-export interface ScoredTask extends Task {
-	score: number;
+class PrioritizationatorDB extends Dexie {
+	projects!: EntityTable<Project, 'id'>;
+	tasks!: EntityTable<Task, 'id'>;
+
+	constructor() {
+		super('Prioritizationator');
+
+		this.version(1).stores({
+			projects: '++id, name',
+			tasks: '++id, projectId, name, wins, losses, ties, *score, *votes'
+		});
+
+		this.tasks.hook('reading', (task: Task) => {
+			if (task) {
+				task.score = score0to100(task.wins, task.losses);
+				task.votes = task.wins + task.losses + task.ties;
+			}
+			return task;
+		});
+
+		this.tasks.hook('creating', (primKey: number, task: Task) => {
+			task.score = score0to100(task.wins, task.losses);
+			task.votes = task.wins + task.losses + task.ties;
+		});
+
+		this.tasks.hook('updating', (modifications: Partial<Task>, primKey: number, task: Task) => {
+			if (
+				modifications.wins !== undefined ||
+				modifications.losses !== undefined ||
+				modifications.ties !== undefined
+			) {
+				const wins = modifications.wins ?? task.wins;
+				const losses = modifications.losses ?? task.losses;
+				const ties = modifications.ties ?? task.ties;
+				modifications.score = score0to100(wins, losses);
+				modifications.votes = wins + losses + ties;
+			}
+		});
+	}
 }
 
-const db = new Dexie('Prioritizationator') as Dexie & {
-	projects: EntityTable<Project, 'id'>;
-	tasks: EntityTable<Task, 'id'>;
-};
-
-db.version(1).stores({
-	projects: '++id, name',
-	tasks: '++id, projectId, name, wins, losses, ties'
-});
-
-export { db };
+export const db = new PrioritizationatorDB();
 
 export async function getProjects() {
 	return db.projects.toArray();
@@ -72,7 +101,7 @@ export async function getAllTasks() {
 	}));
 }
 
-export async function getProjectTasks(projectId: number): Promise<ScoredTask[]> {
+export async function getProjectTasks(projectId: number) {
 	return (await db.tasks.where({ projectId }).toArray()).map((task) => ({
 		...task,
 		score: score0to100(task.wins, task.losses)
@@ -91,15 +120,11 @@ export async function deleteTask(id: number) {
 	return db.tasks.delete(id);
 }
 
-export async function getTaskPair(projectId: number): Promise<[Task, Task]> {
-	const tasks = await db.tasks.where({ projectId }).toArray();
-	const sortedByTotalVotes = tasks.toSorted((a, b) => {
-		const totalVotesA = a.wins + a.losses + a.ties;
-		const totalVotesB = b.wins + b.losses + b.ties;
-		return totalVotesB - totalVotesA;
-	});
-	const leastVotesTask = sortedByTotalVotes[sortedByTotalVotes.length - 1];
-	const otherTasks = sortedByTotalVotes.slice(0, sortedByTotalVotes.length - 1);
+export async function getTaskPair(projectId: number) {
+	const tasks = await db.tasks.where({ projectId }).sortBy('votes');
+
+	const leastVotesTask = tasks[0];
+	const otherTasks = tasks.slice(1);
 	const randomTask = otherTasks[Math.floor(Math.random() * otherTasks.length)];
 
 	return [leastVotesTask, randomTask];
