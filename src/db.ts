@@ -37,10 +37,10 @@ export async function getProjects() {
 
 export async function getProjectsWithTasks() {
 	const projects = await db.projects.toArray();
-	const tasks = await db.tasks.toArray();
+	const allTasks = await getAllTasks();
 	return projects.map((project) => ({
 		...project,
-		tasks: getProjectTasks(project.id)
+		tasks: allTasks.filter((task) => task.projectId === project.id)
 	}));
 }
 
@@ -65,6 +65,13 @@ export async function deleteProject(id: number) {
 	return db.projects.delete(id);
 }
 
+export async function getAllTasks() {
+	return (await db.tasks.toArray()).map((task) => ({
+		...task,
+		score: score0to100(task.wins, task.losses)
+	}));
+}
+
 export async function getProjectTasks(projectId: number): Promise<ScoredTask[]> {
 	return (await db.tasks.where({ projectId }).toArray()).map((task) => ({
 		...task,
@@ -84,14 +91,18 @@ export async function deleteTask(id: number) {
 	return db.tasks.delete(id);
 }
 
-export async function getRandomTaskPair(projectId: number): Promise<[Task, Task]> {
+export async function getTaskPair(projectId: number): Promise<[Task, Task]> {
 	const tasks = await db.tasks.where({ projectId }).toArray();
+	const sortedByTotalVotes = tasks.toSorted((a, b) => {
+		const totalVotesA = a.wins + a.losses + a.ties;
+		const totalVotesB = b.wins + b.losses + b.ties;
+		return totalVotesB - totalVotesA;
+	});
+	const leastVotesTask = sortedByTotalVotes[sortedByTotalVotes.length - 1];
+	const otherTasks = sortedByTotalVotes.slice(0, sortedByTotalVotes.length - 1);
+	const randomTask = otherTasks[Math.floor(Math.random() * otherTasks.length)];
 
-	const task1 = tasks[Math.floor(Math.random() * tasks.length)];
-	const remainingTasks = tasks.filter((task) => task.id !== task1.id);
-	const task2 = remainingTasks[Math.floor(Math.random() * remainingTasks.length)];
-
-	return [task1, task2];
+	return [leastVotesTask, randomTask];
 }
 
 export async function recordWin(taskId: number) {

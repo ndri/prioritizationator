@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { stateQuery } from '$lib/stateQuery.svelte';
 	import Button from '../../../../components/ui/Button.svelte';
-	import { getProject, getRandomTaskPair, recordLoss, recordWin } from '../../../../db';
+	import { getProject, getTaskPair, recordLoss, recordWin } from '../../../../db';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -10,10 +10,10 @@
 	const projectQuery = stateQuery(() => getProject(projectId));
 	const project = $derived(projectQuery.current);
 
-	let taskPairPromise = $state(getRandomTaskPair(projectId));
+	let taskPairPromise = $state(getTaskPair(projectId));
 
 	const handleClick = ({ winner, loser }: { winner: number; loser: number }) => {
-		taskPairPromise = getRandomTaskPair(projectId);
+		taskPairPromise = getTaskPair(projectId);
 		recordWin(winner);
 		recordLoss(loser);
 	};
