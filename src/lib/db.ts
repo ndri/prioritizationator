@@ -1,4 +1,4 @@
-import { score0to100 } from '$lib/utils';
+import { randomElement, score0to100 } from '$lib/utils';
 import Dexie, { type EntityTable } from 'dexie';
 
 export interface Project {
@@ -10,11 +10,11 @@ export interface Task {
 	id: number;
 	projectId: number;
 	name: string;
-	wins: number;
-	losses: number;
-	ties: number;
-	score?: number;
-	votes?: number;
+	valueWins: number;
+	valueLosses: number;
+	valueTies: number;
+	valueScore?: number;
+	valueVotes?: number;
 }
 
 class PrioritizationatorDB extends Dexie {
@@ -26,33 +26,33 @@ class PrioritizationatorDB extends Dexie {
 
 		this.version(1).stores({
 			projects: '++id, name',
-			tasks: '++id, projectId, name, wins, losses, ties, *score, *votes'
+			tasks: '++id, projectId, name, valueWins, valueLosses, valueTies, *valueScore, *valueVotes'
 		});
 
 		this.tasks.hook('reading', (task: Task) => {
 			if (task) {
-				task.score = score0to100(task.wins, task.losses);
-				task.votes = task.wins + task.losses + task.ties;
+				task.valueScore = score0to100(task.valueWins, task.valueLosses);
+				task.valueVotes = task.valueWins + task.valueLosses + task.valueTies;
 			}
 			return task;
 		});
 
 		this.tasks.hook('creating', (primKey: number, task: Task) => {
-			task.score = score0to100(task.wins, task.losses);
-			task.votes = task.wins + task.losses + task.ties;
+			task.valueScore = score0to100(task.valueWins, task.valueLosses);
+			task.valueVotes = task.valueWins + task.valueLosses + task.valueTies;
 		});
 
 		this.tasks.hook('updating', (modifications: Partial<Task>, primKey: number, task: Task) => {
 			if (
-				modifications.wins !== undefined ||
-				modifications.losses !== undefined ||
-				modifications.ties !== undefined
+				modifications.valueWins !== undefined ||
+				modifications.valueLosses !== undefined ||
+				modifications.valueTies !== undefined
 			) {
-				const wins = modifications.wins ?? task.wins;
-				const losses = modifications.losses ?? task.losses;
-				const ties = modifications.ties ?? task.ties;
-				modifications.score = score0to100(wins, losses);
-				modifications.votes = wins + losses + ties;
+				const valueWins = modifications.valueWins ?? task.valueWins;
+				const valueLosses = modifications.valueLosses ?? task.valueLosses;
+				const valueTies = modifications.valueTies ?? task.valueTies;
+				modifications.valueScore = score0to100(valueWins, valueLosses);
+				modifications.valueVotes = valueWins + valueLosses + valueTies;
 			}
 		});
 	}
@@ -97,14 +97,14 @@ export async function deleteProject(id: number) {
 export async function getAllTasks() {
 	return (await db.tasks.toArray()).map((task) => ({
 		...task,
-		score: score0to100(task.wins, task.losses)
+		valueScore: score0to100(task.valueWins, task.valueLosses)
 	}));
 }
 
 export async function getProjectTasks(projectId: number) {
 	return (await db.tasks.where({ projectId }).toArray()).map((task) => ({
 		...task,
-		score: score0to100(task.wins, task.losses)
+		valueScore: score0to100(task.valueWins, task.valueLosses)
 	}));
 }
 
@@ -113,7 +113,7 @@ export async function getTask(id: number) {
 }
 
 export async function createTask({ name, projectId }: { name: string; projectId: number }) {
-	return db.tasks.add({ name, projectId, wins: 0, losses: 0, ties: 0 });
+	return db.tasks.add({ name, projectId, valueWins: 0, valueLosses: 0, valueTies: 0 });
 }
 
 export async function deleteTask(id: number) {
@@ -121,11 +121,11 @@ export async function deleteTask(id: number) {
 }
 
 export async function getTaskPair(projectId: number) {
-	const tasks = await db.tasks.where({ projectId }).sortBy('votes');
+	const tasks = await db.tasks.where({ projectId }).sortBy('valueVotes');
 
 	const leastVotesTask = tasks[0];
 	const otherTasks = tasks.slice(1);
-	const randomTask = otherTasks[Math.floor(Math.random() * otherTasks.length)];
+	const randomTask = randomElement(otherTasks);
 
 	return [leastVotesTask, randomTask];
 }
@@ -134,26 +134,26 @@ export async function recordWin(taskId: number) {
 	const task = await getTask(taskId);
 	if (!task) return;
 
-	return db.tasks.update(taskId, { wins: task.wins + 1 });
+	return db.tasks.update(taskId, { valueWins: task.valueWins + 1 });
 }
 
 export async function recordLoss(taskId: number) {
 	const task = await getTask(taskId);
 	if (!task) return;
 
-	return db.tasks.update(taskId, { losses: task.losses + 1 });
+	return db.tasks.update(taskId, { valueLosses: task.valueLosses + 1 });
 }
 
 export async function recordTie(taskId: number) {
 	const task = await getTask(taskId);
 	if (!task) return;
 
-	return db.tasks.update(taskId, { ties: task.ties + 1 });
+	return db.tasks.update(taskId, { valueTies: task.valueTies + 1 });
 }
 
 export async function resetRatings(projectId: number) {
 	const tasks = await db.tasks.where({ projectId }).toArray();
 	tasks.forEach(async (task) => {
-		await db.tasks.update(task.id, { wins: 0, losses: 0, ties: 0 });
+		await db.tasks.update(task.id, { valueWins: 0, valueLosses: 0, valueTies: 0 });
 	});
 }

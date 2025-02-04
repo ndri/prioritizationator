@@ -27,3 +27,7 @@ export function score0to100(wins: number, losses: number): number {
 export function range(start: number, end: number): number[] {
 	return Array.from({ length: end - start + 1 }, (_, i) => start + i);
 }
+
+export function randomElement<T>(array: T[]): T {
+	return array[Math.floor(Math.random() * array.length)];
+}
