@@ -12,7 +12,7 @@
 {#if tasks?.length}
 	<section>
 		<h2 class="mb-4 text-xl font-medium">Tasks:</h2>
-		<ul class="ml-8 list-disc">
+		<ol class="ml-8 list-decimal">
 			{#each tasks as task}
 				<li>
 					<div class="flex items-center gap-1.5">
@@ -23,6 +23,6 @@
 					</div>
 				</li>
 			{/each}
-		</ul>
+		</ol>
 	</section>
 {/if}

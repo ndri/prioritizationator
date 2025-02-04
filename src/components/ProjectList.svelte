@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { deleteProject, getProjects } from '../db';
+	import { deleteProject, getProjectsWithTasks } from '../db';
 	import { stateQuery } from '$lib/stateQuery.svelte';
 	import TrashIcon from '../components/heroicons/micro/TrashIcon.svelte';
 
-	const projectsQuery = stateQuery(getProjects);
+	const projectsQuery = stateQuery(getProjectsWithTasks);
 	let projects = $derived(projectsQuery.current);
 </script>
 
@@ -15,6 +15,7 @@
 				<li>
 					<div class="flex items-center gap-1.5">
 						<a href="/projects/{project.id}">{project.name}</a>
+						<span class="text-xs text-slate-300">({project.tasks.length} tasks)</span>
 						<button
 							class="rounded-md p-1 hover:bg-slate-700"
 							onclick={() => deleteProject(project.id)}

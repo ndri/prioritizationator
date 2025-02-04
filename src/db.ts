@@ -29,6 +29,15 @@ export async function getProjects() {
 	return db.projects.toArray();
 }
 
+export async function getProjectsWithTasks() {
+	const projects = await db.projects.toArray();
+	const tasks = await db.tasks.toArray();
+	return projects.map((project) => ({
+		...project,
+		tasks: tasks.filter((task) => task.projectId === project.id)
+	}));
+}
+
 export async function getProject(id: number) {
 	const project = await db.projects.where({ id }).first();
 	if (project) {
