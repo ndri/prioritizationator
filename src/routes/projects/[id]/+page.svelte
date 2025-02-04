@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { stateQuery } from '$lib/stateQuery.svelte';
-	import NewTaskForm from '../../../components/NewTaskForm.svelte';
-	import TaskList from '../../../components/TaskList.svelte';
-	import Button from '../../../components/ui/Button.svelte';
-	import { getProject, resetRatings } from '../../../db';
+	import NewTaskForm from '$lib/components/NewTaskForm.svelte';
+	import TaskList from '$lib/components/TaskList.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
+	import { getProject, resetRatings } from '$lib/db';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();

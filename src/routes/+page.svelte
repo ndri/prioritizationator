@@ -1,6 +1,6 @@
 <script lang="ts">
-	import ProjectList from '../components/ProjectList.svelte';
-	import NewProjectForm from '../components/NewProjectForm.svelte';
+	import ProjectList from '$lib/components/ProjectList.svelte';
+	import NewProjectForm from '$lib/components/NewProjectForm.svelte';
 </script>
 
 <h1 class="text-3xl font-bold">Prioritizationator</h1>

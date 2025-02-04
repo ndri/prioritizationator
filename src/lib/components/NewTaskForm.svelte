@@ -7,7 +7,7 @@
 		projectId: number;
 	}
 
-	const { projectId } = $props();
+	const { projectId }: Props = $props();
 
 	let taskName = $state('');
 

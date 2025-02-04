@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { stateQuery } from '$lib/stateQuery.svelte';
-	import Button from '../../../../components/ui/Button.svelte';
-	import { getProject, getTaskPair, recordLoss, recordTie, recordWin } from '../../../../db';
+	import Button from '$lib/components/ui/Button.svelte';
+	import { getProject, getTaskPair, recordLoss, recordTie, recordWin } from '$lib/db';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
