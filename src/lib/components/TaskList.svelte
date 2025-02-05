@@ -9,6 +9,7 @@
 		sortTasks
 	} from '$lib/utils';
 	import { type Task } from '../db';
+	import PrioritizationMatrix from './PrioritizationMatrix.svelte';
 	import TaskCard from './TaskCard.svelte';
 
 	interface Props {
@@ -25,6 +26,12 @@
 	const quickWins = $derived(filterQuickWins(ratedTasks ?? []));
 	const leaps = $derived(filterLeaps(ratedTasks ?? []));
 </script>
+
+{#if tasks?.length === 0}
+	<p class="text-left text-slate-500 dark:text-slate-400">No tasks yet. Add some to get started!</p>
+{:else}
+	<PrioritizationMatrix tasks={tasks ?? []} />
+{/if}
 
 {#snippet tasksSection(title: string, description: string, tasks: Task[] | undefined)}
 	{#if tasks?.length}
