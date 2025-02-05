@@ -1,3 +1,5 @@
+import type { Task } from './db';
+
 /**
  * Calculates the score based on wins and losses.
  * Starts at 0.5 and goes up or down based on wins and losses.
@@ -30,4 +32,38 @@ export function range(start: number, end: number): number[] {
 
 export function randomElement<T>(array: T[]): T {
 	return array[Math.floor(Math.random() * array.length)];
+}
+
+export function sortTasks(tasks: Task[]) {
+	return tasks.toSorted((a, b) => {
+		const aScore = (a.valueScore ?? 1) * (a.easeScore ?? 1);
+		const bScore = (b.valueScore ?? 1) * (b.easeScore ?? 1);
+		return bScore - aScore;
+	});
+}
+
+export const minRatings = 3 as const;
+
+export function filterUnratedTasks(tasks: Task[]) {
+	return tasks.filter((task) => task.valueWins + task.valueLosses < minRatings);
+}
+
+export function filterRatedTasks(tasks: Task[]) {
+	return tasks.filter((task) => task.valueWins + task.valueLosses >= minRatings);
+}
+
+export function filterLowHangingFruits(tasks: Task[]) {
+	return tasks.filter((task) => (task.valueScore ?? 0) > 50 && (task.easeScore ?? 0) > 50);
+}
+
+export function filterTraps(tasks: Task[]) {
+	return tasks.filter((task) => (task.valueScore ?? 0) <= 50 && (task.easeScore ?? 0) <= 50);
+}
+
+export function filterQuickWins(tasks: Task[]) {
+	return tasks.filter((task) => (task.valueScore ?? 0) <= 50 && (task.easeScore ?? 0) > 50);
+}
+
+export function filterLeaps(tasks: Task[]) {
+	return tasks.filter((task) => (task.valueScore ?? 0) > 50 && (task.easeScore ?? 0) <= 50);
 }

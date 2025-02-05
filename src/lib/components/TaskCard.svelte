@@ -1,0 +1,37 @@
+<script lang="ts">
+	import { deleteTask, type Task } from '$lib/db';
+	import EllipsisVerticalIcon from './heroicons/mini/EllipsisVerticalIcon.svelte';
+	import TrashIcon from './heroicons/mini/TrashIcon.svelte';
+	import Menu from './Menu.svelte';
+	import ScoreBadge from './ScoreBadge.svelte';
+	import Button from './ui/Button.svelte';
+
+	interface Props {
+		task: Task;
+	}
+
+	const { task }: Props = $props();
+</script>
+
+<li class="flex items-center gap-2 py-3 pl-5 pr-3">
+	<div class="grow">{task.name}</div>
+	<ScoreBadge label="Value" score={task.valueScore ?? -1} />
+	<ScoreBadge label="Ease" score={task.easeScore ?? -1} />
+	<Menu
+		items={[
+			{
+				label: 'Delete',
+				Icon: TrashIcon,
+				onSelect: () => deleteTask(task.id)
+			}
+		]}
+	>
+		{#snippet button(props)}
+			<Button size="xs" variant="text" class="text-slate-400 dark:text-slate-500" {...props}>
+				{#snippet icon(className)}
+					<EllipsisVerticalIcon {className} />
+				{/snippet}
+			</Button>
+		{/snippet}
+	</Menu>
+</li>

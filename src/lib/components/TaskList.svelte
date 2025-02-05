@@ -1,10 +1,15 @@
 <script lang="ts">
-	import { deleteTask, type Task } from '../db';
-	import EllipsisVerticalIcon from './heroicons/mini/EllipsisVerticalIcon.svelte';
-	import TrashIcon from './heroicons/mini/TrashIcon.svelte';
-	import Menu from './Menu.svelte';
-	import ScoreBadge from './ScoreBadge.svelte';
-	import Button from './ui/Button.svelte';
+	import {
+		filterLeaps,
+		filterLowHangingFruits,
+		filterQuickWins,
+		filterRatedTasks,
+		filterTraps,
+		filterUnratedTasks,
+		sortTasks
+	} from '$lib/utils';
+	import { type Task } from '../db';
+	import TaskCard from './TaskCard.svelte';
 
 	interface Props {
 		tasks?: Task[];
@@ -12,50 +17,41 @@
 
 	const { tasks }: Props = $props();
 
-	const sortedTasks = $derived(
-		tasks?.toSorted((a, b) => {
-			const aScore = (a.valueScore ?? 1) * (a.easeScore ?? 1);
-			const bScore = (b.valueScore ?? 1) * (b.easeScore ?? 1);
-			return bScore - aScore;
-		})
-	);
+	const sortedTasks = $derived(sortTasks(tasks ?? []));
+	const unratedTasks = $derived(filterUnratedTasks(sortedTasks ?? []));
+	const ratedTasks = $derived(filterRatedTasks(sortedTasks ?? []));
+	const lowHangingFruits = $derived(filterLowHangingFruits(ratedTasks ?? []));
+	const traps = $derived(filterTraps(ratedTasks ?? []));
+	const quickWins = $derived(filterQuickWins(ratedTasks ?? []));
+	const leaps = $derived(filterLeaps(ratedTasks ?? []));
 </script>
 
-{#if sortedTasks?.length}
-	<section>
-		<h2 class="mb-4 text-xl font-medium">Tasks</h2>
-		<ol
-			class="flex flex-col divide-y divide-solid divide-slate-200 rounded-xl bg-slate-100 dark:divide-slate-900 dark:bg-slate-800"
-		>
-			{#each sortedTasks as task}
-				<li class="flex items-center gap-2 py-3 pl-5 pr-3">
-					<div class="grow">{task.name}</div>
-					<ScoreBadge label="Value" score={task.valueScore ?? -1} />
-					<ScoreBadge label="Ease" score={task.easeScore ?? -1} />
-					<Menu
-						items={[
-							{
-								label: 'Delete',
-								Icon: TrashIcon,
-								onSelect: () => deleteTask(task.id)
-							}
-						]}
-					>
-						{#snippet button(props)}
-							<Button
-								size="xs"
-								variant="text"
-								class="text-slate-400 dark:text-slate-500"
-								{...props}
-							>
-								{#snippet icon(className)}
-									<EllipsisVerticalIcon {className} />
-								{/snippet}
-							</Button>
-						{/snippet}
-					</Menu>
-				</li>
-			{/each}
-		</ol>
-	</section>
-{/if}
+{#snippet tasksSection(title: string, description: string, tasks: Task[] | undefined)}
+	{#if tasks?.length}
+		<section>
+			<h2 class="mb-4 text-xl font-medium">{title}</h2>
+			<p class="mb-4 text-slate-500 dark:text-slate-400">{description}</p>
+			<ol
+				class="flex flex-col divide-y divide-solid divide-slate-200 rounded-xl bg-slate-100 dark:divide-slate-900 dark:bg-slate-800"
+			>
+				{#each tasks as task}
+					<TaskCard {task} />
+				{/each}
+			</ol>
+		</section>
+	{/if}
+{/snippet}
+
+{@render tasksSection('Low Hanging Fruits', 'Do these first!', lowHangingFruits)}
+{@render tasksSection(
+	'Quick Wins',
+	'Do these only if you run out of Low Hanging Fruits.',
+	quickWins
+)}
+{@render tasksSection(
+	'Leaps',
+	"Do these only if you run out of Low Hanging Fruits and you're confident that they're valuable. Consider splitting them up to create multiple lower-effort tasks.",
+	leaps
+)}
+{@render tasksSection('Traps', 'Avoid these!', traps)}
+{@render tasksSection('Unrated Tasks', 'Rate them above to prioritize them!', unratedTasks)}
