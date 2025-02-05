@@ -3,6 +3,7 @@
 	import EllipsisVerticalIcon from './heroicons/mini/EllipsisVerticalIcon.svelte';
 	import TrashIcon from './heroicons/mini/TrashIcon.svelte';
 	import Menu from './Menu.svelte';
+	import ScoreBadge from './ScoreBadge.svelte';
 	import Button from './ui/Button.svelte';
 
 	interface Props {
@@ -29,8 +30,8 @@
 			{#each sortedTasks as task}
 				<li class="flex items-center gap-2 py-3 pl-5 pr-3">
 					<div class="grow">{task.name}</div>
-					<div>Value: {task.valueScore}</div>
-					<div>Ease: {task.easeScore}</div>
+					<ScoreBadge label="Value" score={task.valueScore ?? -1} />
+					<ScoreBadge label="Ease" score={task.easeScore ?? -1} />
 					<Menu
 						items={[
 							{
