@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { stateQuery } from '$lib/stateQuery.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
-	import { getProject, getTaskPair } from '$lib/db';
+	import { getTaskPair, type Task } from '$lib/db';
 	import PairingCard from './PairingCard.svelte';
 
 	interface Props {
@@ -35,22 +34,38 @@
 	};
 </script>
 
-{#await taskPairPromise then [task1, task2]}
+{#snippet pairing(task1: Task | undefined, task2: Task | undefined)}
 	<div class="flex flex-col gap-4">
 		<div class="grid grid-cols-2 gap-4">
-			<PairingCard onclick={() => recordResult({ winnerId: task1.id, loserId: task2.id })}>
-				{task1.name}
+			<PairingCard
+				onclick={task1 && task2
+					? () => recordResult({ winnerId: task1.id, loserId: task2.id })
+					: () => {}}
+			>
+				{#if task1}{task1.name}{:else}&nbsp;{/if}
 			</PairingCard>
-			<PairingCard onclick={() => recordResult({ winnerId: task2.id, loserId: task1.id })}>
-				{task2.name}
+			<PairingCard
+				onclick={task1 && task2
+					? () => recordResult({ winnerId: task2.id, loserId: task1.id })
+					: () => {}}
+			>
+				{#if task2}{task2.name}{:else}&nbsp;{/if}
 			</PairingCard>
 		</div>
 		<Button
 			variant="secondary"
 			size="xl"
-			onclick={() => recordTieResult({ task1Id: task1.id, task2Id: task2.id })}
+			onclick={task1 && task2
+				? () => recordTieResult({ task1Id: task1.id, task2Id: task2.id })
+				: () => {}}
 		>
 			Skip (both are equal)
 		</Button>
 	</div>
+{/snippet}
+
+{#await taskPairPromise}
+	{@render pairing(undefined, undefined)}
+{:then [task1, task2]}
+	{@render pairing(task1, task2)}
 {/await}
