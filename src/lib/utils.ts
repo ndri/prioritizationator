@@ -30,6 +30,10 @@ export function range(start: number, end: number): number[] {
 	return Array.from({ length: end - start + 1 }, (_, i) => start + i);
 }
 
+export function sum(array: number[]): number {
+	return array.reduce((a, b) => a + b, 0);
+}
+
 export function randomElement<T>(array: T[]): T {
 	return array[Math.floor(Math.random() * array.length)];
 }
@@ -42,14 +46,29 @@ export function sortTasks(tasks: Task[]) {
 	});
 }
 
-export const minRatings = 3 as const;
+export const minRatings = 5 as const;
 
 export function filterUnratedTasks(tasks: Task[]) {
-	return tasks.filter((task) => task.valueWins + task.valueLosses < minRatings);
+	return tasks.filter(
+		(task) =>
+			task.valueWins + task.valueLosses < minRatings || task.easeWins + task.easeLosses < minRatings
+	);
+}
+
+export function taskValueIsRated(task: Task) {
+	return (task.valueVotes ?? 0) >= minRatings;
+}
+
+export function taskEaseIsRated(task: Task) {
+	return (task.easeVotes ?? 0) >= minRatings;
+}
+
+export function taskIsRated(task: Task) {
+	return taskValueIsRated(task) && taskEaseIsRated(task);
 }
 
 export function filterRatedTasks(tasks: Task[]) {
-	return tasks.filter((task) => task.valueWins + task.valueLosses >= minRatings);
+	return tasks.filter(taskIsRated);
 }
 
 export function taskIsLowHangingFruit(task: Task) {
@@ -99,4 +118,24 @@ export function taskBubbleSize(task: Task) {
 	if (taskIsQuickWin(task) || taskIsLeap(task)) return 20;
 	if (taskIsTrap(task)) return 16;
 	return 20;
+}
+
+export function ratingsRequired(tasks: Task[]) {
+	return tasks.length * minRatings;
+}
+
+export function valueRatingsProgress(tasks: Task[]) {
+	const completedRatings = tasks.filter(taskValueIsRated).length * minRatings;
+	const inProgressRatings = sum(
+		tasks.filter((task) => !taskValueIsRated(task)).map((task) => task.valueVotes ?? 0)
+	);
+	return completedRatings + inProgressRatings;
+}
+
+export function easeRatingsProgress(tasks: Task[]) {
+	const completedRatings = tasks.filter(taskEaseIsRated).length * minRatings;
+	const inProgressRatings = sum(
+		tasks.filter((task) => !taskEaseIsRated(task)).map((task) => task.easeVotes ?? 0)
+	);
+	return completedRatings + inProgressRatings;
 }

@@ -4,6 +4,8 @@
 	import type { PageProps } from './$types';
 	import TaskPairing from '$lib/components/TaskPairing.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import ProgressBar from '$lib/components/ProgressBar.svelte';
+	import { easeRatingsProgress, ratingsRequired } from '$lib/utils';
 
 	let { data }: PageProps = $props();
 
@@ -22,6 +24,11 @@
 	recordWin={recordEaseWin}
 	recordLoss={recordEaseLoss}
 	recordTie={recordEaseTie}
+/>
+
+<ProgressBar
+	progress={easeRatingsProgress(project?.tasks ?? [])}
+	total={ratingsRequired(project?.tasks ?? [])}
 />
 
 <div class="flex justify-center">

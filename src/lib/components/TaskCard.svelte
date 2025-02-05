@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { deleteTask, type Task } from '$lib/db';
+	import { minRatings } from '$lib/utils';
 	import EllipsisVerticalIcon from './heroicons/mini/EllipsisVerticalIcon.svelte';
 	import TrashIcon from './heroicons/mini/TrashIcon.svelte';
 	import Menu from './Menu.svelte';
@@ -15,8 +16,16 @@
 
 <li class="flex items-center gap-2 py-3 pl-5 pr-3">
 	<div class="grow">{task.name}</div>
-	<ScoreBadge label="Value" score={task.valueScore ?? -1} />
-	<ScoreBadge label="Ease" score={task.easeScore ?? -1} />
+	<ScoreBadge
+		label="Value"
+		score={task.valueScore ?? -1}
+		rated={(task.valueVotes ?? 0) >= minRatings}
+	/>
+	<ScoreBadge
+		label="Ease"
+		score={task.easeScore ?? -1}
+		rated={(task.easeVotes ?? 0) >= minRatings}
+	/>
 	<Menu
 		items={[
 			{

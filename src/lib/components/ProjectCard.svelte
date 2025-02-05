@@ -13,7 +13,7 @@
 </script>
 
 <article
-	class="flex flex-col items-start gap-4 rounded-lg bg-white p-5 shadow-sm dark:bg-slate-950"
+	class="flex flex-col items-start justify-between gap-4 rounded-lg bg-white p-5 shadow-sm dark:bg-slate-950"
 >
 	<div class="flex flex-col gap-1">
 		<h3>
