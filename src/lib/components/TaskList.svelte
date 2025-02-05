@@ -7,13 +7,19 @@
 	}
 
 	const { tasks }: Props = $props();
+
+	const sortedTasks = tasks?.toSorted((a, b) => {
+		const aScore = (a.valueScore ?? 1) * (a.easeScore ?? 1);
+		const bScore = (b.valueScore ?? 1) * (b.easeScore ?? 1);
+		return bScore - aScore;
+	});
 </script>
 
-{#if tasks?.length}
+{#if sortedTasks?.length}
 	<section>
 		<h2 class="mb-4 text-xl font-medium">Tasks</h2>
 		<ol class="flex flex-col divide-y-2 divide-solid divide-slate-900 rounded-xl bg-slate-800">
-			{#each tasks as task}
+			{#each sortedTasks as task}
 				<li class="flex items-center gap-2 px-5 py-3">
 					<div class="grow">{task.name}</div>
 					<div>Value: {task.valueScore}</div>
