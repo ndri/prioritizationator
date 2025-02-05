@@ -39,7 +39,7 @@
 		secondary: [
 			'bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700',
 			'text-slate-900 dark:text-white',
-			'outline-1 outline-slate-300 dark:outline-slate-800'
+			'ring-1 ring-inset ring-slate-300 dark:ring-0'
 		]
 	} as const;
 

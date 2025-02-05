@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { createProject, db } from '../db';
+	import Button from './ui/Button.svelte';
+	import TextInput from './ui/TextInput.svelte';
 
 	let projectName = $state('');
 
@@ -12,22 +14,17 @@
 
 <section>
 	<h2 class="mb-4 text-xl font-medium">Add new project</h2>
-	<form class="flex flex-col items-start gap-2" onsubmit={submitForm}>
-		<div class="flex flex-col gap-1">
-			<label for="projectNameInput" class="text-sm">Project name:</label>
-			<input
-				type="text"
-				name="projectName"
+	<form class="flex items-center gap-2" onsubmit={submitForm}>
+		<div class="grow">
+			<TextInput
 				id="projectNameInput"
-				class="rounded-lg border-slate-700 bg-slate-900 text-sm"
+				label="Project name"
+				placeholder="Enter a project name"
+				size="xl"
 				bind:value={projectName}
+				hiddenLabel
 			/>
 		</div>
-		<button
-			type="submit"
-			class="hover:pointer rounded-lg bg-indigo-600 px-2.5 py-1.5 text-sm text-white hover:bg-indigo-500"
-		>
-			Add project
-		</button>
+		<Button type="submit" variant="primary" size="xl">Add project</Button>
 	</form>
 </section>

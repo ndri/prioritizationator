@@ -17,12 +17,16 @@
 
 <h1 class="text-3xl font-bold">{project?.name}</h1>
 
-<div class="grid grid-cols-2 gap-2">
-	<Button href={`/projects/${projectId}/value`} variant="secondary" size="xl">Rate value</Button>
-	<Button href={`/projects/${projectId}/ease`} variant="secondary" size="xl">Rate ease</Button>
-</div>
+{#if project?.tasks?.length}
+	<div class="grid grid-cols-2 gap-2">
+		<Button href={`/projects/${projectId}/value`} variant="secondary" size="xl">Rate value</Button>
+		<Button href={`/projects/${projectId}/ease`} variant="secondary" size="xl">Rate ease</Button>
+	</div>
 
-<Button onclick={() => resetRatings(projectId)} variant="secondary" size="xl">Reset ratings</Button>
+	<Button onclick={() => resetRatings(projectId)} variant="secondary" size="xl">
+		Reset ratings
+	</Button>
+{/if}
 
 <TaskList tasks={project?.tasks} />
 <NewTaskForm {projectId} />
