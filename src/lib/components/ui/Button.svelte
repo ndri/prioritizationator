@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
+	import type { Component, Snippet } from 'svelte';
 	import type { ClassValue } from 'svelte/elements';
 
 	interface Props {
@@ -11,6 +11,7 @@
 		onclick?: (event: MouseEvent) => void;
 		children: Snippet;
 		class?: ClassValue;
+		icon?: Snippet<[ClassValue]>;
 		[key: string]: any;
 	}
 
@@ -23,15 +24,16 @@
 		onclick,
 		children,
 		class: className,
+		icon,
 		...props
 	}: Props = $props();
 
 	const sizeClasses = {
-		xs: 'rounded px-2 py-1 text-xs',
-		sm: 'rounded px-2 py-1 text-sm',
-		md: 'rounded-md px-2.5 py-1.5 text-sm',
-		lg: 'rounded-md px-3 py-2 text-sm',
-		xl: 'rounded-md px-3.5 py-2.5 text-base'
+		xs: 'rounded px-2 py-1.5 text-xs gap-1',
+		sm: 'rounded px-2 py-1 text-sm gap-1',
+		md: 'rounded-md px-2.5 py-1.5 text-sm gap-1.5',
+		lg: 'rounded-md px-3 py-2 text-sm gap-1.5',
+		xl: 'rounded-md px-3.5 py-2.5 text-base gap-2'
 	} as const;
 
 	const variantClasses = {
@@ -52,14 +54,24 @@
 		'disabled:opacity-50 disabled:cursor-not-allowed',
 		className
 	];
+
+	const iconClasses = {
+		primary: 'text-white',
+		secondary: 'text-slate-400'
+	};
 </script>
+
+{#snippet contents()}
+	{@render icon?.(iconClasses[variant])}
+	{@render children()}
+{/snippet}
 
 {#if href}
 	<a {href} class={buttonClasses} {onclick} {...props}>
-		{@render children()}
+		{@render contents()}
 	</a>
 {:else}
 	<button {type} class={buttonClasses} {disabled} {onclick} {...props}>
-		{@render children()}
+		{@render contents()}
 	</button>
 {/if}

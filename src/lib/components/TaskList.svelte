@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { deleteTask, type Task } from '../db';
-	import TrashIcon from '../components/heroicons/micro/TrashIcon.svelte';
+	import TrashIcon from './heroicons/micro/TrashIcon.svelte';
 
 	interface Props {
 		tasks?: Task[];

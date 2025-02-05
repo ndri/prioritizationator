@@ -6,6 +6,10 @@ export interface Project {
 	name: string;
 }
 
+export interface ProjectWithTasks extends Project {
+	tasks: Task[];
+}
+
 export interface Task {
 	id: number;
 	projectId: number;
@@ -86,7 +90,7 @@ export async function getProjects() {
 	return db.projects.toArray();
 }
 
-export async function getProjectsWithTasks() {
+export async function getProjectsWithTasks(): Promise<ProjectWithTasks[]> {
 	const projects = await db.projects.toArray();
 	const allTasks = await db.tasks.toArray();
 	return projects.map((project) => ({

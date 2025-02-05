@@ -51,8 +51,7 @@
 		'placeholder:text-slate-400 dark:placeholder:text-slate-500',
 		'outline outline-1 -outline-offset-1',
 		'outline-slate-300 dark:outline-slate-700',
-		'focus:outline focus:outline-2 focus:-outline-offset-2',
-		'focus:outline-indigo-600 dark:focus:outline-indigo-500',
+		'focus:-outline-offset-1 focus:outline-indigo-600 dark:focus:outline-indigo-500',
 		'disabled:opacity-50 disabled:cursor-not-allowed',
 		'border-none',
 		className

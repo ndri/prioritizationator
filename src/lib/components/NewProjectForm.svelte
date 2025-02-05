@@ -7,6 +7,7 @@
 
 	const submitForm = (event: Event) => {
 		event.preventDefault();
+		if (!projectName) return;
 		createProject({ name: projectName });
 		projectName = '';
 	};
