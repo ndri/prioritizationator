@@ -27,13 +27,13 @@
 	</div>
 	<div class="grid w-full grid-cols-2 gap-2">
 		<Button size="xs" href="/projects/{project.id}">
-			{#snippet icon(className: ClassValue)}
+			{#snippet icon(className)}
 				<ChecklistIcon {className} />
 			{/snippet}
 			View tasks
 		</Button>
 		<Button variant="secondary" size="xs" onclick={() => deleteProject(project.id)}>
-			{#snippet icon(className: ClassValue)}
+			{#snippet icon(className)}
 				<TrashIcon {className} />
 			{/snippet}
 			Delete

@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { deleteTask, type Task } from '../db';
-	import TrashIcon from './heroicons/micro/TrashIcon.svelte';
+	import EllipsisVerticalIcon from './heroicons/mini/EllipsisVerticalIcon.svelte';
+	import TrashIcon from './heroicons/mini/TrashIcon.svelte';
+	import Menu from './Menu.svelte';
+	import Button from './ui/Button.svelte';
 
 	interface Props {
 		tasks?: Task[];
@@ -24,16 +27,32 @@
 			class="flex flex-col divide-y divide-solid divide-slate-200 rounded-xl bg-slate-100 dark:divide-slate-900 dark:bg-slate-800"
 		>
 			{#each sortedTasks as task}
-				<li class="flex items-center gap-2 px-5 py-3">
+				<li class="flex items-center gap-2 py-3 pl-5 pr-3">
 					<div class="grow">{task.name}</div>
 					<div>Value: {task.valueScore}</div>
 					<div>Ease: {task.easeScore}</div>
-					<button
-						class="flex justify-center rounded-md p-2.5 text-slate-400 hover:bg-red-100 dark:text-slate-200 dark:hover:bg-red-900"
-						onclick={() => deleteTask(task.id)}
+					<Menu
+						items={[
+							{
+								label: 'Delete',
+								Icon: TrashIcon,
+								onSelect: () => deleteTask(task.id)
+							}
+						]}
 					>
-						<TrashIcon />
-					</button>
+						{#snippet button(props)}
+							<Button
+								size="xs"
+								variant="text"
+								class="text-slate-400 dark:text-slate-500"
+								{...props}
+							>
+								{#snippet icon(className)}
+									<EllipsisVerticalIcon {className} />
+								{/snippet}
+							</Button>
+						{/snippet}
+					</Menu>
 				</li>
 			{/each}
 		</ol>

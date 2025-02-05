@@ -1,17 +1,22 @@
+<script module>
+	export type ButtonComponentRef = HTMLAnchorElement | HTMLButtonElement | undefined;
+</script>
+
 <script lang="ts">
-	import type { Component, Snippet } from 'svelte';
-	import type { ClassValue } from 'svelte/elements';
+	import type { Snippet } from 'svelte';
+	import type { ClassValue, MouseEventHandler } from 'svelte/elements';
 
 	interface Props {
-		variant?: 'primary' | 'secondary';
+		variant?: 'primary' | 'secondary' | 'text';
 		size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-		type?: 'button' | 'submit' | 'reset';
-		disabled?: boolean;
+		type?: 'button' | 'submit' | 'reset' | null;
+		disabled?: boolean | null;
 		href?: string;
-		onclick?: (event: MouseEvent) => void;
-		children: Snippet;
-		class?: ClassValue;
+		onclick?: MouseEventHandler<HTMLButtonElement> | null;
+		children?: Snippet;
+		class?: ClassValue | null;
 		icon?: Snippet<[ClassValue]>;
+		ref?: ButtonComponentRef;
 		[key: string]: any;
 	}
 
@@ -25,12 +30,13 @@
 		children,
 		class: className,
 		icon,
+		ref = $bindable(),
 		...props
 	}: Props = $props();
 
 	const sizeClasses = {
-		xs: 'rounded px-2 py-1.5 text-xs gap-1',
-		sm: 'rounded px-2 py-1 text-sm gap-1',
+		xs: 'rounded px-2 py-1.5 text-xs gap-1.5',
+		sm: 'rounded px-2 py-1 text-sm gap-1.5',
 		md: 'rounded-md px-2.5 py-1.5 text-sm gap-1.5',
 		lg: 'rounded-md px-3 py-2 text-sm gap-1.5',
 		xl: 'rounded-md px-3.5 py-2.5 text-base gap-2'
@@ -42,7 +48,8 @@
 			'bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700',
 			'text-slate-900 dark:text-white',
 			'ring-1 ring-inset ring-slate-300 dark:ring-0'
-		]
+		],
+		text: ['hover:opacity-70']
 	} as const;
 
 	const buttonClasses = [
@@ -57,21 +64,22 @@
 
 	const iconClasses = {
 		primary: 'text-white',
-		secondary: 'text-slate-400'
+		secondary: 'text-slate-400 dark:text-slate-500',
+		text: ''
 	};
 </script>
 
 {#snippet contents()}
 	{@render icon?.(iconClasses[variant])}
-	{@render children()}
+	{@render children?.()}
 {/snippet}
 
 {#if href}
-	<a {href} class={buttonClasses} {onclick} {...props}>
+	<a {href} class={buttonClasses} bind:this={ref} {...props}>
 		{@render contents()}
 	</a>
 {:else}
-	<button {type} class={buttonClasses} {disabled} {onclick} {...props}>
+	<button {type} class={buttonClasses} {disabled} {onclick} bind:this={ref} {...props}>
 		{@render contents()}
 	</button>
 {/if}
