@@ -3,6 +3,7 @@
 	import { getProject, recordEaseLoss, recordEaseTie, recordEaseWin } from '$lib/db';
 	import type { PageProps } from './$types';
 	import TaskPairing from '$lib/components/TaskPairing.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
 
 	let { data }: PageProps = $props();
 
@@ -11,11 +12,9 @@
 	const project = $derived(projectQuery.current);
 </script>
 
-<a href="/projects/{projectId}">Back to project</a>
+<h1 class="sr-only text-3xl font-bold">{project?.name} ease rating</h1>
 
-<h1 class="text-3xl font-bold">{project?.name} ease rating</h1>
-
-<h2 class="text-lg font-medium">Which of these requires less effort to complete?</h2>
+<h2 class="text-center text-2xl font-medium">Which of these requires less effort to complete?</h2>
 
 <TaskPairing
 	{projectId}
@@ -24,3 +23,7 @@
 	recordLoss={recordEaseLoss}
 	recordTie={recordEaseTie}
 />
+
+<div class="flex justify-center">
+	<Button variant="text" size="lg" href="/projects/{projectId}">Back to project</Button>
+</div>

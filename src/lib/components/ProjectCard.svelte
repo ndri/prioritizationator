@@ -26,7 +26,7 @@
 		</span>
 	</div>
 	<div class="grid w-full grid-cols-2 gap-2">
-		<Button size="xs" href="/projects/{project.id}">
+		<Button variant="secondary" size="xs" href="/projects/{project.id}">
 			{#snippet icon(className)}
 				<ChecklistIcon {className} />
 			{/snippet}

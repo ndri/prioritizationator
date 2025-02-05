@@ -2,6 +2,7 @@
 	import { stateQuery } from '$lib/stateQuery.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { getProject, getTaskPair } from '$lib/db';
+	import PairingCard from './PairingCard.svelte';
 
 	interface Props {
 		projectId: number;
@@ -35,27 +36,21 @@
 </script>
 
 {#await taskPairPromise then [task1, task2]}
-	<div class="grid grid-cols-2 gap-4">
+	<div class="flex flex-col gap-4">
+		<div class="grid grid-cols-2 gap-4">
+			<PairingCard onclick={() => recordResult({ winnerId: task1.id, loserId: task2.id })}>
+				{task1.name}
+			</PairingCard>
+			<PairingCard onclick={() => recordResult({ winnerId: task2.id, loserId: task1.id })}>
+				{task2.name}
+			</PairingCard>
+		</div>
 		<Button
 			variant="secondary"
 			size="xl"
-			onclick={() => recordResult({ winnerId: task1.id, loserId: task2.id })}
+			onclick={() => recordTieResult({ task1Id: task1.id, task2Id: task2.id })}
 		>
-			{task1.name}
-		</Button>
-		<Button
-			variant="secondary"
-			size="xl"
-			onclick={() => recordResult({ winnerId: task2.id, loserId: task1.id })}
-		>
-			{task2.name}
+			Skip (both are equal)
 		</Button>
 	</div>
-	<Button
-		variant="secondary"
-		size="xl"
-		onclick={() => recordTieResult({ task1Id: task1.id, task2Id: task2.id })}
-	>
-		Skip (both are equal)
-	</Button>
 {/await}
