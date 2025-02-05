@@ -52,18 +52,51 @@ export function filterRatedTasks(tasks: Task[]) {
 	return tasks.filter((task) => task.valueWins + task.valueLosses >= minRatings);
 }
 
+export function taskIsLowHangingFruit(task: Task) {
+	return (task.valueScore ?? 0) > 50 && (task.easeScore ?? 0) > 50;
+}
+
+export function taskIsTrap(task: Task) {
+	return (task.valueScore ?? 0) <= 50 && (task.easeScore ?? 0) <= 50;
+}
+
+export function taskIsQuickWin(task: Task) {
+	return (task.valueScore ?? 0) <= 50 && (task.easeScore ?? 0) > 50;
+}
+
+export function taskIsLeap(task: Task) {
+	return (task.valueScore ?? 0) > 50 && (task.easeScore ?? 0) <= 50;
+}
+
 export function filterLowHangingFruits(tasks: Task[]) {
-	return tasks.filter((task) => (task.valueScore ?? 0) > 50 && (task.easeScore ?? 0) > 50);
+	return tasks.filter(taskIsLowHangingFruit);
 }
 
 export function filterTraps(tasks: Task[]) {
-	return tasks.filter((task) => (task.valueScore ?? 0) <= 50 && (task.easeScore ?? 0) <= 50);
+	return tasks.filter(taskIsTrap);
 }
 
 export function filterQuickWins(tasks: Task[]) {
-	return tasks.filter((task) => (task.valueScore ?? 0) <= 50 && (task.easeScore ?? 0) > 50);
+	return tasks.filter(taskIsQuickWin);
 }
 
 export function filterLeaps(tasks: Task[]) {
-	return tasks.filter((task) => (task.valueScore ?? 0) > 50 && (task.easeScore ?? 0) <= 50);
+	return tasks.filter(taskIsLeap);
+}
+
+export function taskColorClasses(task: Task) {
+	if (taskIsLowHangingFruit(task))
+		return 'bg-indigo-500/80 hover:bg-indigo-600/80 dark:bg-indigo-700/80 dark:hover:bg-indigo-600/80';
+	if (taskIsQuickWin(task) || taskIsLeap(task))
+		return 'bg-indigo-500/50 hover:bg-indigo-600/50 dark:bg-indigo-700/50 dark:hover:bg-indigo-600/50';
+	if (taskIsTrap(task))
+		return 'bg-indigo-500/20 hover:bg-indigo-600/20 dark:bg-indigo-700/20 dark:hover:bg-indigo-600/20';
+	return 'bg-slate-700 hover:bg-slate-600 dark:bg-slate-800 dark:hover:bg-slate-700';
+}
+
+export function taskBubbleSize(task: Task) {
+	if (taskIsLowHangingFruit(task)) return 24;
+	if (taskIsQuickWin(task) || taskIsLeap(task)) return 20;
+	if (taskIsTrap(task)) return 16;
+	return 20;
 }

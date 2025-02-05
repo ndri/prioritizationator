@@ -60,5 +60,5 @@
 	"Do these only if you run out of Low Hanging Fruits and you're confident that they're valuable. Consider splitting them up to create multiple lower-effort tasks.",
 	leaps
 )}
-{@render tasksSection('Traps', 'Avoid these!', traps)}
+{@render tasksSection('Traps', 'Consider dropping these.', traps)}
 {@render tasksSection('Unrated Tasks', 'Rate them above to prioritize them!', unratedTasks)}
