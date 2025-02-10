@@ -46,14 +46,7 @@ export function sortTasks(tasks: Task[]) {
 	});
 }
 
-export const minRatings = 5 as const;
-
-export function filterUnratedTasks(tasks: Task[]) {
-	return tasks.filter(
-		(task) =>
-			task.valueWins + task.valueLosses < minRatings || task.easeWins + task.easeLosses < minRatings
-	);
-}
+export const minRatings = 4 as const;
 
 export function taskValueIsRated(task: Task) {
 	return (task.valueVotes ?? 0) >= minRatings;
@@ -65,6 +58,10 @@ export function taskEaseIsRated(task: Task) {
 
 export function taskIsRated(task: Task) {
 	return taskValueIsRated(task) && taskEaseIsRated(task);
+}
+
+export function filterUnratedTasks(tasks: Task[]) {
+	return tasks.filter((task) => !taskIsRated(task));
 }
 
 export function filterRatedTasks(tasks: Task[]) {
@@ -107,17 +104,10 @@ export function taskColorClasses(task: Task) {
 	if (taskIsLowHangingFruit(task))
 		return 'bg-indigo-500/80 hover:bg-indigo-600/80 dark:bg-indigo-700/80 dark:hover:bg-indigo-600/80';
 	if (taskIsQuickWin(task) || taskIsLeap(task))
-		return 'bg-indigo-500/50 hover:bg-indigo-600/50 dark:bg-indigo-700/50 dark:hover:bg-indigo-600/50';
+		return 'bg-indigo-500/70 hover:bg-indigo-600/60 dark:bg-indigo-700/60 dark:hover:bg-indigo-600/60';
 	if (taskIsTrap(task))
-		return 'bg-indigo-500/20 hover:bg-indigo-600/20 dark:bg-indigo-700/20 dark:hover:bg-indigo-600/20';
+		return 'bg-indigo-500/40 hover:bg-indigo-600/40 dark:bg-indigo-700/40 dark:hover:bg-indigo-600/40';
 	return 'bg-slate-700 hover:bg-slate-600 dark:bg-slate-800 dark:hover:bg-slate-700';
-}
-
-export function taskBubbleSize(task: Task) {
-	if (taskIsLowHangingFruit(task)) return 24;
-	if (taskIsQuickWin(task) || taskIsLeap(task)) return 20;
-	if (taskIsTrap(task)) return 16;
-	return 20;
 }
 
 export function ratingsRequired(tasks: Task[]) {

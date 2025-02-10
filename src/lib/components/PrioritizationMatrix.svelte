@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Task } from '$lib/db';
-	import { taskBubbleSize, taskColorClasses } from '$lib/utils';
+	import { taskColorClasses } from '$lib/utils';
 	import Tooltip from './Tooltip.svelte';
 
 	interface Props {
@@ -65,7 +65,7 @@
 
 		<!-- Tasks -->
 		{#each tasks as task}
-			{@const bubbleSize = taskBubbleSize(task)}
+			{@const bubbleSize = 20}
 			{@const topPosition = `calc(${100 - (task.valueScore ?? 0)}% - ${bubbleSize / 2}px)`}
 			{@const leftPosition = `calc(${task.easeScore ?? 0}% - ${bubbleSize / 2}px)`}
 			{@const style = `top:${topPosition}; left:${leftPosition}`}

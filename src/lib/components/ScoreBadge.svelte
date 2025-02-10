@@ -9,7 +9,7 @@
 </script>
 
 <div class="flex flex-col items-center px-1">
-	<span class="whitespace-nowrap text-xs font-medium text-slate-400 dark:text-slate-500">
+	<span class="whitespace-nowrap text-xs font-medium text-slate-500 dark:text-slate-400">
 		{label}
 	</span>
 	<span
@@ -18,6 +18,6 @@
 			rated ? 'text-slate-700 dark:text-slate-300' : 'text-slate-400 dark:text-slate-500'
 		]}
 	>
-		{score}
+		{score}{rated ? '' : '?'}
 	</span>
 </div>
