@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import type { ClassValue, FullAutoFill, HTMLInputTypeAttribute } from 'svelte/elements';
 
 	interface Props {
@@ -16,6 +17,8 @@
 		hiddenLabel?: boolean;
 		class?: ClassValue;
 		[key: string]: any;
+		autofocus?: boolean;
+		ref?: HTMLInputElement;
 	}
 
 	let {
@@ -32,6 +35,8 @@
 		hiddenLabel = false,
 		value = $bindable(''),
 		class: className,
+		autofocus = false,
+		ref = $bindable(),
 		...props
 	}: Props = $props();
 
@@ -68,6 +73,8 @@
 		size === 'xs' ? 'text-xs' : 'text-sm/6',
 		'text-slate-600 dark:text-slate-400'
 	];
+
+	if (autofocus) onMount(() => ref?.focus());
 </script>
 
 <div class="flex flex-col gap-2">
@@ -84,6 +91,7 @@
 		{autocomplete}
 		bind:value
 		class={inputClasses}
+		bind:this={ref}
 		{...props}
 	/>
 	{#if helpText}

@@ -1,20 +1,22 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 	import { createProject, db } from '../db';
 	import Button from './ui/Button.svelte';
 	import TextInput from './ui/TextInput.svelte';
 
 	let projectName = $state('');
 
-	const submitForm = (event: Event) => {
+	const submitForm = async (event: Event) => {
 		event.preventDefault();
 		if (!projectName) return;
-		createProject({ name: projectName });
-		projectName = '';
+		const projectId = await createProject({ name: projectName });
+		goto(`/projects/${projectId}/tasks`);
 	};
 </script>
 
 <section>
-	<h2 class="mb-4 text-xl font-medium">Add new project</h2>
+	<h2 class="mb-4 text-xl font-medium">Create new project</h2>
 	<form class="flex items-center gap-2" onsubmit={submitForm}>
 		<div class="grow">
 			<TextInput
@@ -24,8 +26,9 @@
 				size="xl"
 				bind:value={projectName}
 				hiddenLabel
+				autofocus
 			/>
 		</div>
-		<Button type="submit" variant="primary" size="xl">Add project</Button>
+		<Button type="submit" variant="primary" size="xl">Create</Button>
 	</form>
 </section>

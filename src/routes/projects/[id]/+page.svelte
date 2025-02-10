@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { stateQuery } from '$lib/stateQuery.svelte';
 	import NewTaskForm from '$lib/components/NewTaskForm.svelte';
-	import TaskList from '$lib/components/TaskList.svelte';
+	import OrganizedTaskLists from '$lib/components/OrganizedTaskLists.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { getProject, resetRatings } from '$lib/db';
 	import type { PageProps } from './$types';
@@ -44,11 +44,9 @@
 	</div>
 {/if}
 
-{#if filterRatedTasks(project?.tasks ?? []).length === 0}
-	<p class="text-left text-slate-500 dark:text-slate-400">No tasks yet. Add some to get started!</p>
-{:else}
+{#if filterRatedTasks(project?.tasks ?? []).length}
 	<PrioritizationMatrix tasks={project?.tasks ?? []} />
 {/if}
 
-<TaskList tasks={project?.tasks} />
+<OrganizedTaskLists tasks={project?.tasks} />
 <NewTaskForm {projectId} />
