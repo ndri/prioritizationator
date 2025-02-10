@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Task } from '$lib/db';
-	import { taskColorClasses } from '$lib/utils';
+	import { taskColorClasses } from '$lib/utils/tasks';
 	import Tooltip from './Tooltip.svelte';
 
 	interface Props {

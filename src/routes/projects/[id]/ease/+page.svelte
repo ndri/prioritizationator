@@ -5,7 +5,7 @@
 	import TaskPairing from '$lib/components/TaskPairing.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
-	import { easeRatingsProgress, ratingsRequired } from '$lib/utils';
+	import { easeRatingsProgress, ratingsRequired } from '$lib/utils/tasks';
 
 	let { data }: PageProps = $props();
 

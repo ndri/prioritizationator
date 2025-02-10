@@ -7,9 +7,8 @@
 		filterTraps,
 		filterUnratedTasks,
 		sortTasks
-	} from '$lib/utils';
+	} from '$lib/utils/tasks';
 	import { type Task } from '../db';
-	import PrioritizationMatrix from './PrioritizationMatrix.svelte';
 	import TaskCard from './TaskCard.svelte';
 
 	interface Props {

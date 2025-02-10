@@ -10,7 +10,7 @@
 		filterRatedTasks,
 		ratingsRequired,
 		valueRatingsProgress
-	} from '$lib/utils';
+	} from '$lib/utils/tasks';
 	import PrioritizationMatrix from '$lib/components/PrioritizationMatrix.svelte';
 
 	let { data }: PageProps = $props();

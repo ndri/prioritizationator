@@ -1,4 +1,5 @@
-import { randomElement, score0to100 } from '$lib/utils';
+import { randomElement } from '$lib/utils/array';
+import { score0to100 } from './utils/scoring';
 import Dexie, { type EntityTable } from 'dexie';
 
 export interface Project {

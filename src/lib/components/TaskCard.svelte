@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { deleteTask, type Task } from '$lib/db';
-	import { minRatings } from '$lib/utils';
+	import { minRatings } from '$lib/utils/tasks';
 	import EllipsisVerticalIcon from './heroicons/mini/EllipsisVerticalIcon.svelte';
 	import TrashIcon from './heroicons/mini/TrashIcon.svelte';
 	import Menu from './Menu.svelte';
