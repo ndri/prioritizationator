@@ -1,0 +1,29 @@
+<script lang="ts">
+	import { goto } from '$app/navigation';
+	import { TEMPLATES, type Template } from '$lib/data/templates';
+	import { createProject, createTask } from '$lib/db';
+
+	const createProjectFromTemplate = async (template: Template) => {
+		const projectId = await createProject({ name: template.name });
+		await Promise.all(template.tasks.map((task) => createTask({ name: task, projectId })));
+		goto(`/projects/${projectId}/tasks`);
+	};
+</script>
+
+<section class="flex flex-col gap-4">
+	<h2 class="text-xl font-medium">...or choose a template</h2>
+	<p class="text-slate-500 dark:text-slate-400">
+		Get started quickly with some pre-selected tasks.
+	</p>
+	<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+		{#each TEMPLATES as template}
+			<button
+				class="flex flex-col items-start justify-between gap-2 rounded-lg bg-white p-5 text-sm shadow-sm hover:bg-slate-100 dark:bg-slate-950 dark:hover:bg-slate-800"
+				onclick={() => createProjectFromTemplate(template)}
+			>
+				<h3 class="font-medium">{template.name}</h3>
+				<p class="text-xs">{template.tasks.length} tasks</p>
+			</button>
+		{/each}
+	</div>
+</section>

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { onMount } from 'svelte';
-	import { createProject, db } from '../db';
+	import { createProject } from '../db';
 	import Button from './ui/Button.svelte';
 	import TextInput from './ui/TextInput.svelte';
 

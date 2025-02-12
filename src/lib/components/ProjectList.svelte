@@ -11,10 +11,10 @@
 
 <section>
 	<h2 class="mb-4 text-xl font-medium">Your projects</h2>
-	<ul class="grid grid-cols-1 gap-3 md:grid-cols-2">
+	<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
 		<NewProjectCard />
 		{#each reversedProjects as project}
 			<ProjectCard {project} />
 		{/each}
-	</ul>
+	</div>
 </section>
