@@ -12,6 +12,7 @@
 		valueRatingsProgress
 	} from '$lib/utils/tasks';
 	import PrioritizationMatrix from '$lib/components/PrioritizationMatrix.svelte';
+	import RankingCard from '$lib/components/RankingCard.svelte';
 
 	let { data }: PageProps = $props();
 
@@ -25,23 +26,23 @@
 <h1 class="text-3xl font-bold">{project?.name}</h1>
 
 {#if project?.tasks?.length}
-	<div class="flex flex-col gap-2">
-		<p class="text-xl font-medium">
-			Value rated: {valueRatingsProgress(project.tasks)}/{ratingsRequired(project.tasks)}
-		</p>
-		<p class="text-xl font-medium">
-			Ease rated: {easeRatingsProgress(project.tasks)}/{ratingsRequired(project.tasks)}
-		</p>
-		<div class="grid grid-cols-2 gap-2">
-			<Button href={`/projects/${projectId}/value`} variant="secondary" size="xl">
-				Rate value
-			</Button>
-			<Button href={`/projects/${projectId}/ease`} variant="secondary" size="xl">Rate ease</Button>
-		</div>
-		<!-- <Button onclick={() => resetRatings(projectId)} variant="secondary" size="sm">
+	<div class="grid grid-cols-2 gap-4">
+		<RankingCard
+			title="Value"
+			ratingsProgress={valueRatingsProgress(project.tasks)}
+			ratingsRequired={ratingsRequired(project.tasks)}
+			rankingPath="/projects/{projectId}/value"
+		/>
+		<RankingCard
+			title="Ease"
+			ratingsProgress={easeRatingsProgress(project.tasks)}
+			ratingsRequired={ratingsRequired(project.tasks)}
+			rankingPath="/projects/{projectId}/ease"
+		/>
+	</div>
+	<!-- <Button onclick={() => resetRatings(projectId)} variant="secondary" size="sm">
 			Reset ratings
 		</Button> -->
-	</div>
 {/if}
 
 {#if filterRatedTasks(project?.tasks ?? []).length}
