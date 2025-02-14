@@ -17,7 +17,8 @@
 <h1 class="sr-only text-3xl font-bold">{project?.name} value rating</h1>
 
 <h2 class="text-center text-2xl font-medium">
-	Which of these provides more value in your project?
+	Which of these provides <span class="text-indigo-600 dark:text-indigo-500">more value</span>
+	 in your project?
 </h2>
 
 <TaskPairing

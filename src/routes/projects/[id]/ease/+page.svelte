@@ -16,7 +16,10 @@
 
 <h1 class="sr-only text-3xl font-bold">{project?.name} ease rating</h1>
 
-<h2 class="text-center text-2xl font-medium">Which of these requires less effort to complete?</h2>
+<h2 class="text-center text-2xl font-medium">
+	Which of these requires <span class="text-indigo-600 dark:text-indigo-500">less effort</span>
+	 to complete?
+</h2>
 
 <TaskPairing
 	{projectId}
