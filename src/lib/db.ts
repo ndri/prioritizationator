@@ -146,8 +146,15 @@ export async function deleteTask(id: number) {
 	return db.tasks.delete(id);
 }
 
-export async function getTaskPair(projectId: number, sortBy: 'value' | 'ease') {
-	const tasks = await db.tasks.where({ projectId }).sortBy(sortBy + 'Votes');
+export async function getTaskPair(
+	projectId: number,
+	sortBy: 'value' | 'ease',
+	avoidTasks: number[] = []
+) {
+	const tasks = await db.tasks
+		.where({ projectId })
+		.filter((task) => !avoidTasks.includes(task.id))
+		.sortBy(sortBy + 'Votes');
 
 	const leastVotesTask = tasks[0];
 	const otherTasks = tasks.slice(1);

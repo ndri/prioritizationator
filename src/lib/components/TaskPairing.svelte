@@ -13,22 +13,22 @@
 
 	const { projectId, dimension, recordWin, recordLoss, recordTie }: Props = $props();
 
-	const newTasks = () => getTaskPair(projectId, dimension);
+	const newTasks = (avoid?: number[]) => getTaskPair(projectId, dimension, avoid);
 
 	let taskPairPromise = $state(newTasks());
 
-	const resetTasks = () => {
-		taskPairPromise = newTasks();
+	const resetTasks = (avoid?: number[]) => {
+		taskPairPromise = newTasks(avoid);
 	};
 
 	const recordResult = ({ winnerId, loserId }: { winnerId: number; loserId: number }) => {
-		resetTasks();
+		resetTasks([winnerId, loserId]);
 		recordWin(winnerId);
 		recordLoss(loserId);
 	};
 
 	const recordTieResult = ({ task1Id, task2Id }: { task1Id: number; task2Id: number }) => {
-		resetTasks();
+		resetTasks([task1Id, task2Id]);
 		recordTie(task1Id);
 		recordTie(task2Id);
 	};
