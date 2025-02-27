@@ -43,11 +43,12 @@
 	} as const;
 
 	const variantClasses = {
-		primary: ['bg-indigo-600 hover:bg-indigo-500', 'text-white'],
+		primary: ['bg-indigo-600 hover:bg-indigo-500', 'text-white', 'shadow-sm'],
 		secondary: [
 			'bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700',
 			'text-slate-900 dark:text-white',
-			'ring-1 ring-inset ring-slate-300 dark:ring-0'
+			'ring-1 ring-inset ring-slate-300 dark:ring-0',
+			'shadow-sm'
 		],
 		text: ['hover:opacity-70']
 	} as const;
@@ -55,7 +56,7 @@
 	const buttonClasses = [
 		sizeClasses[size],
 		variantClasses[variant],
-		'font-semibold inline-flex items-center justify-center shadow-sm',
+		'font-semibold inline-flex items-center justify-center',
 		'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
 		'focus-visible:outline-indigo-600 dark:focus-visible:outline-indigo-500',
 		'disabled:opacity-50 disabled:cursor-not-allowed',

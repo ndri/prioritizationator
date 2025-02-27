@@ -41,8 +41,8 @@
 		/>
 	</div>
 	<!-- <Button onclick={() => resetRatings(projectId)} variant="secondary" size="sm">
-			Reset ratings
-		</Button> -->
+		Reset ratings
+	</Button> -->
 {/if}
 
 {#if filterRatedTasks(project?.tasks ?? []).length}

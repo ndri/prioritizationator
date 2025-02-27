@@ -1,7 +1,7 @@
 import type { Task } from '../db';
 import { sum } from './array';
 
-export const minRatings = 4 as const;
+export const minRatings = 5 as const;
 
 export function sortTasks(tasks: Task[]) {
 	return tasks.toSorted((a, b) => {
@@ -11,12 +11,12 @@ export function sortTasks(tasks: Task[]) {
 	});
 }
 
-function taskValueIsRated(task: Task) {
-	return (task.valueVotes ?? 0) >= minRatings;
+export function taskValueIsRated(task: Task) {
+	return (task.valueWins ?? 0) + (task.valueLosses ?? 0) >= minRatings;
 }
 
-function taskEaseIsRated(task: Task) {
-	return (task.easeVotes ?? 0) >= minRatings;
+export function taskEaseIsRated(task: Task) {
+	return (task.easeWins ?? 0) + (task.easeLosses ?? 0) >= minRatings;
 }
 
 function taskIsRated(task: Task) {
@@ -80,7 +80,9 @@ export function ratingsRequired(tasks: Task[]) {
 export function valueRatingsProgress(tasks: Task[]) {
 	const completedRatings = tasks.filter(taskValueIsRated).length * minRatings;
 	const inProgressRatings = sum(
-		tasks.filter((task) => !taskValueIsRated(task)).map((task) => task.valueVotes ?? 0)
+		tasks
+			.filter((task) => !taskValueIsRated(task))
+			.map((task) => task.valueWins ?? 0 + task.valueLosses ?? 0)
 	);
 	return completedRatings + inProgressRatings;
 }
@@ -88,7 +90,9 @@ export function valueRatingsProgress(tasks: Task[]) {
 export function easeRatingsProgress(tasks: Task[]) {
 	const completedRatings = tasks.filter(taskEaseIsRated).length * minRatings;
 	const inProgressRatings = sum(
-		tasks.filter((task) => !taskEaseIsRated(task)).map((task) => task.easeVotes ?? 0)
+		tasks
+			.filter((task) => !taskEaseIsRated(task))
+			.map((task) => task.easeWins ?? 0 + task.easeLosses ?? 0)
 	);
 	return completedRatings + inProgressRatings;
 }

@@ -18,7 +18,7 @@
 
 <h2 class="text-center text-2xl font-medium">
 	Which of these requires <span class="text-indigo-600 dark:text-indigo-500">less effort</span>
-	 to complete?
+	to complete?
 </h2>
 
 <TaskPairing
@@ -29,6 +29,7 @@
 	recordTie={recordEaseTie}
 />
 
+<div>{easeRatingsProgress(project?.tasks ?? [])}/{ratingsRequired(project?.tasks ?? [])}</div>
 <ProgressBar
 	progress={easeRatingsProgress(project?.tasks ?? [])}
 	total={ratingsRequired(project?.tasks ?? [])}

@@ -18,7 +18,7 @@
 
 <h2 class="text-center text-2xl font-medium">
 	Which of these provides <span class="text-indigo-600 dark:text-indigo-500">more value</span>
-	 in your project?
+	in your project?
 </h2>
 
 <TaskPairing
@@ -29,6 +29,7 @@
 	recordTie={recordValueTie}
 />
 
+<div>{valueRatingsProgress(project?.tasks ?? [])}/{ratingsRequired(project?.tasks ?? [])}</div>
 <ProgressBar
 	progress={valueRatingsProgress(project?.tasks ?? [])}
 	total={ratingsRequired(project?.tasks ?? [])}
