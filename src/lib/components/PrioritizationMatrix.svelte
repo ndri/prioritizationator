@@ -14,30 +14,29 @@
 </script>
 
 <section class="relative w-full p-16">
-	<!-- Value label -->
-	<div
-		class="absolute left-6 top-1/2 -translate-y-1/2 -rotate-90 text-slate-700 dark:text-slate-300"
-	>
-		Value
-	</div>
-	<!-- Ease label -->
-	<div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-slate-700 dark:text-slate-300">
-		Ease
-	</div>
-	<!-- Numbers -->
-	<div class="absolute bottom-10 left-10 text-slate-500 dark:text-slate-500">0</div>
-	<div class="absolute bottom-10 right-10 text-slate-500 dark:text-slate-500">100</div>
-	<div class="absolute left-8 top-14 text-slate-500 dark:text-slate-500">100</div>
-
 	<div class="relative" style="height:{chartWidth}px" bind:this={chartRef}>
-		<!-- Vertical halves separator -->
+		<!-- Vertical halves separator with labels -->
 		<div class="absolute left-1/2 top-0 h-full w-px bg-slate-300 dark:bg-slate-700"></div>
-		<!-- Horizontal halves separator -->
+		<div class="absolute left-0 top-1/2 -translate-y-1/2 text-sm text-slate-500">
+			more
+			<br />
+			effort
+		</div>
+		<div class="absolute right-0 top-1/2 -translate-y-1/2 text-right text-sm text-slate-500">
+			less
+			<br />
+			effort
+		</div>
+
+		<!-- Horizontal halves separator with labels -->
 		<div class="absolute left-0 top-1/2 h-px w-full bg-slate-300 dark:bg-slate-700"></div>
-		<!-- Bottom axis -->
-		<div class="absolute bottom-0 left-0 h-[2px] w-full bg-slate-500 dark:bg-slate-500"></div>
-		<!-- Left axis -->
-		<div class="absolute left-0 top-0 h-full w-[2px] bg-slate-500 dark:bg-slate-500"></div>
+		<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-sm text-slate-500">
+			more valuable
+		</div>
+		<div class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-sm text-slate-500">
+			less valuable
+		</div>
+
 		<!-- Top right quadrant -->
 		<div
 			class="absolute right-0 top-0 flex h-1/2 w-1/2 items-start justify-end p-4 text-right font-medium text-slate-500"
