@@ -17,7 +17,11 @@
 		{#if title}<h2 class="text-xl font-medium">{title}</h2>{/if}
 		{#if description}<p class="text-slate-500 dark:text-slate-400">{description}</p>{/if}
 		<ol
-			class="flex flex-col divide-y divide-solid divide-slate-200 rounded-xl bg-slate-100 dark:divide-slate-900 dark:bg-slate-800"
+			class={[
+				'flex flex-col divide-y divide-solid rounded-xl',
+				'divide-slate-200 bg-slate-50',
+				'dark:divide-slate-950 dark:bg-slate-900'
+			]}
 		>
 			{#each tasks as task}
 				<TaskCard {task} {showBadges} />

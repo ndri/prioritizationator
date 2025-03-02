@@ -18,7 +18,11 @@
 	<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
 		{#each TEMPLATES as template}
 			<button
-				class="flex flex-col items-start justify-between gap-2 rounded-lg bg-white p-5 text-sm shadow-sm hover:bg-slate-100 dark:bg-slate-950 dark:hover:bg-slate-800"
+				class={[
+					'flex flex-col items-start justify-between gap-2 rounded-lg border p-5 text-sm shadow-sm',
+					'border-slate-200 hover:bg-slate-50',
+					'dark:border-slate-800 dark:hover:bg-slate-900'
+				]}
 				onclick={() => createProjectFromTemplate(template)}
 			>
 				<h3 class="font-medium">{template.name}</h3>

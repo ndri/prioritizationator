@@ -1,6 +1,12 @@
 <a
 	href="/projects/new"
-	class="flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-slate-300 p-5 text-slate-500 hover:border-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:border-slate-700 dark:text-slate-400 dark:hover:border-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-300"
+	class={[
+		'flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-5',
+		'border-slate-300 text-slate-500',
+		'hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-600',
+		'dark:border-slate-700 dark:text-slate-400',
+		'dark:hover:border-indigo-400 dark:hover:bg-indigo-950 dark:hover:text-indigo-400'
+	]}
 >
 	<svg
 		xmlns="http://www.w3.org/2000/svg"

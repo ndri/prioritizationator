@@ -14,7 +14,7 @@
 </script>
 
 <div
-	class="flex flex-col justify-between gap-4 rounded-lg bg-white p-5 shadow-sm dark:bg-slate-950"
+	class="flex flex-col justify-between gap-4 rounded-lg bg-slate-50 p-5 shadow-sm dark:bg-slate-900"
 >
 	{#if ratingsProgress === ratingsRequired}
 		<div class="flex flex-row gap-2.5">
