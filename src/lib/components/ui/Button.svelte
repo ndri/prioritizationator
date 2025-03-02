@@ -35,11 +35,11 @@
 	}: Props = $props();
 
 	const sizeClasses = {
-		xs: 'rounded px-2 py-1.5 text-xs gap-1.5',
-		sm: 'rounded px-2 py-1 text-sm gap-1.5',
-		md: 'rounded-md px-2.5 py-1.5 text-sm gap-1.5',
-		lg: 'rounded-md px-3 py-2 text-sm gap-1.5',
-		xl: 'rounded-md px-3.5 py-2.5 text-base gap-2'
+		xs: ['text-xs gap-1.5', variant !== 'text' && 'rounded px-2 py-1.5'],
+		sm: ['text-sm gap-1.5', variant !== 'text' && 'rounded px-2 py-1'],
+		md: ['text-sm gap-1.5', variant !== 'text' && 'rounded-md px-2.5 py-1.5'],
+		lg: ['text-sm gap-1.5', variant !== 'text' && 'rounded-md px-3 py-2'],
+		xl: ['text-base gap-2', variant !== 'text' && 'rounded-md px-3.5 py-2.5']
 	} as const;
 
 	const variantClasses = {

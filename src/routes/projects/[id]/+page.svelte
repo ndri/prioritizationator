@@ -2,7 +2,6 @@
 	import { stateQuery } from '$lib/stateQuery.svelte';
 	import NewTaskForm from '$lib/components/NewTaskForm.svelte';
 	import OrganizedTaskLists from '$lib/components/OrganizedTaskLists.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
 	import { getProject, resetRatings } from '$lib/db';
 	import type { PageProps } from './$types';
 	import {
@@ -13,6 +12,7 @@
 	} from '$lib/utils/tasks';
 	import PrioritizationMatrix from '$lib/components/PrioritizationMatrix.svelte';
 	import RankingCard from '$lib/components/RankingCard.svelte';
+	import BackLink from '$lib/components/BackLink.svelte';
 
 	let { data }: PageProps = $props();
 
@@ -21,7 +21,7 @@
 	const project = $derived(projectQuery.current);
 </script>
 
-<a href="/">Back to projects</a>
+<BackLink href="/" text="Back to projects" />
 
 <h1 class="text-3xl font-bold">{project?.name}</h1>
 

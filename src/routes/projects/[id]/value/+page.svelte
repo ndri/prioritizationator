@@ -3,9 +3,9 @@
 	import { getProject, recordValueLoss, recordValueTie, recordValueWin } from '$lib/db';
 	import type { PageProps } from './$types';
 	import TaskPairing from '$lib/components/TaskPairing.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import { ratingsRequired, valueRatingsProgress } from '$lib/utils/tasks';
+	import BackLink from '$lib/components/BackLink.svelte';
 
 	let { data }: PageProps = $props();
 
@@ -13,6 +13,8 @@
 	const projectQuery = stateQuery(() => getProject(projectId));
 	const project = $derived(projectQuery.current);
 </script>
+
+<BackLink href="/projects/{projectId}" text="Back to project" />
 
 <h1 class="sr-only text-3xl font-bold">{project?.name} value rating</h1>
 
@@ -34,7 +36,3 @@
 	progress={valueRatingsProgress(project?.tasks ?? [])}
 	total={ratingsRequired(project?.tasks ?? [])}
 />
-
-<div class="flex justify-center">
-	<Button variant="text" size="lg" href="/projects/{projectId}">Back to project</Button>
-</div>
