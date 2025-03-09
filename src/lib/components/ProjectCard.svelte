@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { deleteProject, type ProjectWithTasks } from '$lib/db';
-	import type { ClassValue } from 'svelte/elements';
-	import Button from './ui/Button.svelte';
 	import ChecklistIcon from './heroicons/micro/ChecklistIcon.svelte';
 	import TrashIcon from './heroicons/micro/TrashIcon.svelte';
+	import Button from './ui/Button.svelte';
 
 	interface Props {
 		project: ProjectWithTasks;
@@ -30,16 +29,15 @@
 		</span>
 	</div>
 	<div class="grid w-full grid-cols-2 gap-2">
-		<Button variant="secondary" size="xs" href="/projects/{project.id}">
-			{#snippet icon(className)}
-				<ChecklistIcon {className} />
-			{/snippet}
+		<Button variant="secondary" size="xs" href="/projects/{project.id}" Icon={ChecklistIcon}>
 			View tasks
 		</Button>
-		<Button variant="secondary" size="xs" onclick={() => deleteProject(project.id)}>
-			{#snippet icon(className)}
-				<TrashIcon {className} />
-			{/snippet}
+		<Button
+			variant="secondary"
+			size="xs"
+			onclick={() => deleteProject(project.id)}
+			Icon={TrashIcon}
+		>
 			Delete
 		</Button>
 	</div>

@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-	import type { Snippet } from 'svelte';
+	import type { Component, Snippet } from 'svelte';
 	import type { ClassValue, MouseEventHandler } from 'svelte/elements';
 
 	interface Props {
@@ -15,7 +15,7 @@
 		onclick?: MouseEventHandler<HTMLButtonElement> | null;
 		children?: Snippet;
 		class?: ClassValue | null;
-		icon?: Snippet<[ClassValue]>;
+		Icon?: Component;
 		ref?: ButtonComponentRef;
 		[key: string]: any;
 	}
@@ -29,7 +29,7 @@
 		onclick,
 		children,
 		class: className,
-		icon,
+		Icon,
 		ref = $bindable(),
 		...props
 	}: Props = $props();
@@ -66,12 +66,14 @@
 	const iconClasses = {
 		primary: 'text-white',
 		secondary: 'text-slate-400 dark:text-slate-500',
-		text: ''
+		text: 'text-slate-400 dark:text-slate-500'
 	};
 </script>
 
 {#snippet contents()}
-	{@render icon?.(iconClasses[variant])}
+	{#if Icon}
+		<Icon class={iconClasses[variant]} />
+	{/if}
 	{@render children?.()}
 {/snippet}
 

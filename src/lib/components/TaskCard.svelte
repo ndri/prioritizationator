@@ -29,13 +29,10 @@
 				onSelect: () => deleteTask(task.id)
 			}
 		]}
+		class="flex items-center p-1"
 	>
 		{#snippet button(props)}
-			<Button size="xs" variant="text" class="text-slate-400 dark:text-slate-500" {...props}>
-				{#snippet icon(className)}
-					<EllipsisVerticalIcon {className} />
-				{/snippet}
-			</Button>
+			<Button size="xl" variant="text" Icon={EllipsisVerticalIcon} {...props} />
 		{/snippet}
 	</Menu>
 </li>

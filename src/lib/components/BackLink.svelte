@@ -11,8 +11,7 @@
 </script>
 
 <div>
-	<Button variant="text" {href}>
-		<ArrowLeftIcon />
+	<Button variant="text" {href} Icon={ArrowLeftIcon}>
 		{text}
 	</Button>
 </div>

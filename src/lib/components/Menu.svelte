@@ -1,14 +1,15 @@
 <script lang="ts">
 	import type { Component, Snippet } from 'svelte';
-	import type { HTMLButtonAttributes } from 'svelte/elements';
+	import type { ClassValue, HTMLButtonAttributes } from 'svelte/elements';
 
 	interface Props {
+		class: ClassValue;
 		items: { label: string; Icon: Component; onSelect: () => void }[];
 		button: Snippet<[HTMLButtonAttributes]>;
 		label?: string;
 	}
 
-	const { items, button, label = 'Menu' }: Props = $props();
+	const { class: className, items, button, label = 'Menu' }: Props = $props();
 
 	let isOpen = $state(false);
 	let menuRef = $state<HTMLDivElement>();
@@ -48,7 +49,7 @@
 	};
 </script>
 
-<div class="relative" bind:this={dropdownRef} onfocusout={handleCloseOnFocusOut}>
+<div class={['relative', className]} bind:this={dropdownRef} onfocusout={handleCloseOnFocusOut}>
 	{@render button({ onclick: toggleMenu, 'aria-expanded': isOpen, 'aria-haspopup': true })}
 	{#if isOpen}
 		<div
