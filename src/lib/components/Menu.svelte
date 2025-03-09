@@ -53,7 +53,7 @@
 	{@render button({ onclick: toggleMenu, 'aria-expanded': isOpen, 'aria-haspopup': true })}
 	{#if isOpen}
 		<div
-			class="absolute right-0 z-10 mt-2 flex w-36 origin-top-right flex-col rounded-md bg-white shadow-lg shadow-slate-500/25 ring-1 ring-slate-300 dark:bg-slate-950 dark:shadow-slate-900/50 dark:ring-0"
+			class="absolute right-0 top-full z-10 mt-2 flex w-36 origin-top-right flex-col rounded-md bg-white shadow-lg shadow-slate-500/25 ring-1 ring-slate-300 dark:bg-slate-950 dark:shadow-slate-900/50 dark:ring-slate-800"
 			role="menu"
 			aria-orientation="vertical"
 			aria-label={label}
