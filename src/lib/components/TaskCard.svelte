@@ -24,7 +24,7 @@
 	<Menu
 		items={[
 			{
-				label: 'Delete',
+				label: 'Delete task',
 				Icon: TrashIcon,
 				onSelect: () => deleteTask(task.id)
 			}

@@ -2,7 +2,7 @@
 	import { stateQuery } from '$lib/stateQuery.svelte';
 	import NewTaskForm from '$lib/components/NewTaskForm.svelte';
 	import OrganizedTaskLists from '$lib/components/OrganizedTaskLists.svelte';
-	import { getProject, resetRatings } from '$lib/db';
+	import { deleteProject, getProject, resetRatings } from '$lib/db';
 	import type { PageProps } from './$types';
 	import {
 		easeRatingsProgress,
@@ -13,6 +13,10 @@
 	import PrioritizationMatrix from '$lib/components/PrioritizationMatrix.svelte';
 	import RankingCard from '$lib/components/RankingCard.svelte';
 	import BackLink from '$lib/components/BackLink.svelte';
+	import Menu from '$lib/components/Menu.svelte';
+	import TrashIcon from '$lib/components/heroicons/mini/TrashIcon.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
+	import EllipsisVerticalIcon from '$lib/components/heroicons/mini/EllipsisVerticalIcon.svelte';
 
 	let { data }: PageProps = $props();
 
@@ -23,7 +27,23 @@
 
 <BackLink href="/" text="Back to projects" />
 
-<h1 class="text-3xl font-bold">{project?.name}</h1>
+<div class="flex justify-between">
+	<h1 class="text-3xl font-bold">{project?.name}</h1>
+	<Menu
+		items={[
+			{
+				label: 'Delete project',
+				Icon: TrashIcon,
+				onSelect: () => deleteProject(projectId)
+			}
+		]}
+		class="flex items-center p-1"
+	>
+		{#snippet button(props)}
+			<Button size="xl" variant="text" Icon={EllipsisVerticalIcon} {...props} />
+		{/snippet}
+	</Menu>
+</div>
 
 {#if project?.tasks?.length}
 	<div class="grid grid-cols-2 gap-4">

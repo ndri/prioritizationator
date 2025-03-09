@@ -3,8 +3,9 @@
 </script>
 
 <script lang="ts">
-	import type { Component, Snippet } from 'svelte';
+	import type { Snippet } from 'svelte';
 	import type { ClassValue, MouseEventHandler } from 'svelte/elements';
+	import type { Heroicon } from '../heroicons/Heroicon';
 
 	interface Props {
 		variant?: 'primary' | 'secondary' | 'text';
@@ -15,7 +16,7 @@
 		onclick?: MouseEventHandler<HTMLButtonElement> | null;
 		children?: Snippet;
 		class?: ClassValue | null;
-		Icon?: Component;
+		Icon?: Heroicon;
 		ref?: ButtonComponentRef;
 		[key: string]: any;
 	}
