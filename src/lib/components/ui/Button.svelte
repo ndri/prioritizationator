@@ -13,6 +13,7 @@
 		type?: 'button' | 'submit' | 'reset' | null;
 		disabled?: boolean | null;
 		href?: string;
+		label?: string;
 		onclick?: MouseEventHandler<HTMLButtonElement> | null;
 		children?: Snippet;
 		class?: ClassValue | null;
@@ -27,6 +28,7 @@
 		type = 'button',
 		disabled = false,
 		href,
+		label,
 		onclick,
 		children,
 		class: className,
@@ -74,6 +76,9 @@
 {#snippet contents()}
 	{#if Icon}
 		<Icon class={iconClasses[variant]} />
+	{/if}
+	{#if label}
+		{label}
 	{/if}
 	{@render children?.()}
 {/snippet}
