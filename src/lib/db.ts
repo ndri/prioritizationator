@@ -150,6 +150,10 @@ export async function deleteTask(id: number) {
 	return db.tasks.delete(id);
 }
 
+export async function editTaskName(id: number, name: string) {
+	return db.tasks.update(id, { name });
+}
+
 export async function getTaskPair(
 	projectId: number,
 	sortBy: 'value' | 'ease',
