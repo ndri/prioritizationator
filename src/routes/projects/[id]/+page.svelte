@@ -17,8 +17,8 @@
 	import TrashIcon from '$lib/components/heroicons/mini/TrashIcon.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import EllipsisVerticalIcon from '$lib/components/heroicons/mini/EllipsisVerticalIcon.svelte';
-	import Dialog from '$lib/components/ui/Dialog.svelte';
 	import { goto } from '$app/navigation';
+	import SimpleDialog from '$lib/components/ui/SimpleDialog.svelte';
 
 	let { data }: PageProps = $props();
 
@@ -26,7 +26,7 @@
 	const projectQuery = stateQuery(() => getProject(projectId));
 	const project = $derived(projectQuery.current);
 
-	let deleteDialogOpen = $state(false);
+	let deleteDialog = $state<SimpleDialog>();
 </script>
 
 <BackLink href="/" text="Back to projects" />
@@ -38,7 +38,7 @@
 			{
 				label: 'Delete project',
 				Icon: TrashIcon,
-				onSelect: () => (deleteDialogOpen = true)
+				onSelect: () => deleteDialog?.open()
 			}
 		]}
 		class="flex items-center p-1"
@@ -76,8 +76,8 @@
 <OrganizedTaskLists tasks={project?.tasks} />
 <NewTaskForm {projectId} />
 
-<Dialog
-	bind:open={deleteDialogOpen}
+<SimpleDialog
+	bind:this={deleteDialog}
 	title="Delete project"
 	description="Are you sure you want to delete this project? This action cannot be undone."
 	buttons={[
@@ -87,13 +87,13 @@
 			onclick: () => {
 				deleteProject(projectId);
 				goto('/');
-				deleteDialogOpen = false;
+				deleteDialog?.close();
 			}
 		},
 		{
 			label: 'Cancel',
 			variant: 'secondary',
-			onclick: () => (deleteDialogOpen = false)
+			onclick: () => deleteDialog?.close()
 		}
 	]}
 />
