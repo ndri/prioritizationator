@@ -3,7 +3,7 @@
 	import ChecklistIcon from './heroicons/micro/ChecklistIcon.svelte';
 	import TrashIcon from './heroicons/micro/TrashIcon.svelte';
 	import Button from './ui/Button.svelte';
-	import Dialog from './ui/Dialog.svelte';
+	import SimpleDialog from './ui/SimpleDialog.svelte';
 
 	interface Props {
 		project: ProjectWithTasks;
@@ -11,7 +11,7 @@
 
 	const { project }: Props = $props();
 
-	let deleteDialogOpen = $state(false);
+	let deleteDialog = $state<SimpleDialog>();
 </script>
 
 <article
@@ -35,19 +35,14 @@
 		<Button variant="secondary" size="xs" href="/projects/{project.id}" Icon={ChecklistIcon}>
 			View tasks
 		</Button>
-		<Button
-			variant="secondary"
-			size="xs"
-			onclick={() => (deleteDialogOpen = true)}
-			Icon={TrashIcon}
-		>
+		<Button variant="secondary" size="xs" onclick={() => deleteDialog?.open()} Icon={TrashIcon}>
 			Delete
 		</Button>
 	</div>
 </article>
 
-<Dialog
-	bind:open={deleteDialogOpen}
+<SimpleDialog
+	bind:this={deleteDialog}
 	title="Delete project"
 	description="Are you sure you want to delete this project? This action cannot be undone."
 	buttons={[
@@ -56,13 +51,13 @@
 			variant: 'primary',
 			onclick: () => {
 				deleteProject(project.id);
-				deleteDialogOpen = false;
+				deleteDialog?.close();
 			}
 		},
 		{
 			label: 'Cancel',
 			variant: 'secondary',
-			onclick: () => (deleteDialogOpen = false)
+			onclick: () => deleteDialog?.close()
 		}
 	]}
 />
