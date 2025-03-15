@@ -1,12 +1,15 @@
 <script lang="ts">
 	import {
+		filterCompletedTasks,
+		filterIncompleteTasks,
 		filterLeaps,
 		filterLowHangingFruits,
 		filterQuickWins,
 		filterRatedTasks,
 		filterTraps,
 		filterUnratedTasks,
-		sortTasks
+		sortTasksByCompletedAt,
+		sortTasksByScore
 	} from '$lib/utils/tasks';
 	import { type Task } from '../db';
 	import TaskList from './TaskList.svelte';
@@ -15,15 +18,19 @@
 		tasks?: Task[];
 	}
 
-	const { tasks }: Props = $props();
+	const { tasks = [] }: Props = $props();
 
-	const sortedTasks = $derived(sortTasks(tasks ?? []));
-	const unratedTasks = $derived(filterUnratedTasks(sortedTasks ?? []));
-	const ratedTasks = $derived(filterRatedTasks(sortedTasks ?? []));
-	const lowHangingFruits = $derived(filterLowHangingFruits(ratedTasks ?? []));
-	const traps = $derived(filterTraps(ratedTasks ?? []));
-	const quickWins = $derived(filterQuickWins(ratedTasks ?? []));
-	const leaps = $derived(filterLeaps(ratedTasks ?? []));
+	const incompleteTasks = $derived(filterIncompleteTasks(tasks));
+	const sortedIncompleteTasks = $derived(sortTasksByScore(incompleteTasks));
+	const unratedTasks = $derived(filterUnratedTasks(sortedIncompleteTasks));
+	const ratedTasks = $derived(filterRatedTasks(sortedIncompleteTasks));
+	const lowHangingFruits = $derived(filterLowHangingFruits(ratedTasks));
+	const traps = $derived(filterTraps(ratedTasks));
+	const quickWins = $derived(filterQuickWins(ratedTasks));
+	const leaps = $derived(filterLeaps(ratedTasks));
+
+	const completedTasks = $derived(filterCompletedTasks(tasks));
+	const sortedCompletedTasks = $derived(sortTasksByCompletedAt(completedTasks));
 </script>
 
 <TaskList
@@ -45,6 +52,12 @@
 	showBadges
 />
 <TaskList title="Traps" description="Consider dropping these." tasks={traps} showBadges />
+<TaskList
+	title="Completed Tasks"
+	description="Well done!"
+	tasks={sortedCompletedTasks}
+	showBadges
+/>
 <TaskList
 	title="Unrated Tasks"
 	description="Rate them above to prioritize them!"

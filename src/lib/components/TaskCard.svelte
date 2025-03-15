@@ -19,13 +19,17 @@
 
 	let editDialog = $state<EditDialog>();
 	let complete = $state<boolean>(task.complete);
-
-	$effect(() => void markTaskComplete(task.id, complete));
 </script>
 
 <li class="flex items-center gap-3 py-3 pl-5 pr-3">
 	{#if showBadges}
-		<Checkbox id="taskCheckbox{task.id}" label={task.name} bind:checked={complete} size="lg" />
+		<Checkbox
+			id="taskCheckbox{task.id}"
+			label={task.name}
+			bind:checked={complete}
+			size="lg"
+			onblur={() => markTaskComplete(task.id, complete)}
+		/>
 	{/if}
 	<div class="grow">{task.name}</div>
 	{#if showBadges}

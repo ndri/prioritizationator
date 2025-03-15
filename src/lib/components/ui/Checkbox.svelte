@@ -1,6 +1,5 @@
 <script lang="ts">
-	import type { ClassValue } from 'svelte/elements';
-	import type { Snippet } from 'svelte';
+	import type { ChangeEventHandler, ClassValue, FocusEventHandler } from 'svelte/elements';
 
 	interface Props {
 		id: string;
@@ -11,6 +10,8 @@
 		size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 		class?: ClassValue;
 		checked: boolean;
+		onchange?: ChangeEventHandler<HTMLInputElement>;
+		onblur?: FocusEventHandler<HTMLInputElement>;
 	}
 
 	let {
@@ -20,7 +21,9 @@
 		disabled = false,
 		size = 'md',
 		class: className,
-		checked = $bindable()
+		checked = $bindable(),
+		onchange,
+		onblur
 	}: Props = $props();
 
 	// Size classes for checkbox
@@ -46,6 +49,9 @@
 		'disabled:border-slate-300 disabled:bg-slate-100 disabled:checked:bg-slate-100',
 		'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
 		'focus:ring-0! focus:border-none focus:outline-indigo-600 focus:[box-shadow:none]',
-		sizeClasses[size]
+		sizeClasses[size],
+		className
 	]}
+	{onchange}
+	{onblur}
 />

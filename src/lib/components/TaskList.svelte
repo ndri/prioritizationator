@@ -23,7 +23,7 @@
 				'dark:divide-slate-950 dark:bg-slate-900'
 			]}
 		>
-			{#each tasks as task}
+			{#each tasks as task (task.id)}
 				<TaskCard {task} {showBadges} />
 			{/each}
 		</ol>

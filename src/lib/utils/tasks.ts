@@ -3,11 +3,19 @@ import { sum } from './array';
 
 export const minRatings = 3 as const;
 
-export function sortTasks(tasks: Task[]) {
+export function sortTasksByScore(tasks: Task[]) {
 	return tasks.toSorted((a, b) => {
 		const aScore = (a.valueScore ?? 1) * (a.easeScore ?? 1);
 		const bScore = (b.valueScore ?? 1) * (b.easeScore ?? 1);
 		return bScore - aScore;
+	});
+}
+
+export function sortTasksByCompletedAt(tasks: Task[]) {
+	return tasks.toSorted((a, b) => {
+		const aDate = a.completedAt?.getTime() ?? 0;
+		const bDate = b.completedAt?.getTime() ?? 0;
+		return bDate - aDate;
 	});
 }
 
@@ -61,6 +69,14 @@ export function filterQuickWins(tasks: Task[]) {
 
 export function filterLeaps(tasks: Task[]) {
 	return tasks.filter(taskIsLeap);
+}
+
+export function filterIncompleteTasks(tasks: Task[]) {
+	return tasks.filter((task) => !task.complete);
+}
+
+export function filterCompletedTasks(tasks: Task[]) {
+	return tasks.filter((task) => task.complete);
 }
 
 export function taskColorClasses(task: Task) {
