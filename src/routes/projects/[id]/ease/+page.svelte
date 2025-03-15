@@ -6,6 +6,7 @@
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import {
 		easeRatingsProgress,
+		filterIncompleteTasks,
 		minTasksForRating,
 		ratingsRequired,
 		tasksReadyForRating
@@ -25,6 +26,8 @@
 	<h1 class="sr-only text-3xl font-bold">{project.name} ease rating</h1>
 
 	{#if tasksReadyForRating(project.tasks)}
+		{@const incompleteTasks = filterIncompleteTasks(project.tasks)}
+
 		<h2 class="text-center text-2xl font-medium">
 			Which of these requires <span class="text-indigo-600 dark:text-indigo-500">less effort</span>
 			to complete?
@@ -39,8 +42,8 @@
 		/>
 
 		<ProgressBar
-			progress={easeRatingsProgress(project.tasks)}
-			total={ratingsRequired(project.tasks)}
+			progress={easeRatingsProgress(incompleteTasks)}
+			total={ratingsRequired(incompleteTasks)}
 		/>
 	{:else}
 		<p class="text-slate-500 dark:text-slate-400">

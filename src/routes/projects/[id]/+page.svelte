@@ -6,6 +6,7 @@
 	import type { PageProps } from './$types';
 	import {
 		easeRatingsProgress,
+		filterIncompleteTasks,
 		filterRatedTasks,
 		minTasksForRating,
 		ratingsRequired,
@@ -67,17 +68,18 @@
 
 	{#if project.tasks}
 		{#if tasksReadyForRating(project.tasks)}
+			{@const incompleteTasks = filterIncompleteTasks(project.tasks)}
 			<div class="grid grid-cols-2 gap-4">
 				<RankingCard
 					title="Value"
-					ratingsProgress={valueRatingsProgress(project.tasks)}
-					ratingsRequired={ratingsRequired(project.tasks)}
+					ratingsProgress={valueRatingsProgress(incompleteTasks)}
+					ratingsRequired={ratingsRequired(incompleteTasks)}
 					rankingPath="/projects/{projectId}/value"
 				/>
 				<RankingCard
 					title="Ease"
-					ratingsProgress={easeRatingsProgress(project.tasks)}
-					ratingsRequired={ratingsRequired(project.tasks)}
+					ratingsProgress={easeRatingsProgress(incompleteTasks)}
+					ratingsRequired={ratingsRequired(incompleteTasks)}
 					rankingPath="/projects/{projectId}/ease"
 				/>
 			</div>

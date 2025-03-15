@@ -5,6 +5,7 @@
 	import TaskPairing from '$lib/components/TaskPairing.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import {
+		filterIncompleteTasks,
 		minTasksForRating,
 		ratingsRequired,
 		tasksReadyForRating,
@@ -25,6 +26,8 @@
 	<h1 class="sr-only text-3xl font-bold">{project.name} value rating</h1>
 
 	{#if tasksReadyForRating(project.tasks)}
+		{@const incompleteTasks = filterIncompleteTasks(project.tasks)}
+
 		<h2 class="text-center text-2xl font-medium">
 			Which of these provides <span class="text-indigo-600 dark:text-indigo-500">more value</span>
 			in your project?
@@ -39,8 +42,8 @@
 		/>
 
 		<ProgressBar
-			progress={valueRatingsProgress(project.tasks)}
-			total={ratingsRequired(project.tasks)}
+			progress={valueRatingsProgress(incompleteTasks)}
+			total={ratingsRequired(incompleteTasks)}
 		/>
 	{:else}
 		<p class="text-slate-500 dark:text-slate-400">
