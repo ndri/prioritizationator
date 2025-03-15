@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import Button from './Button.svelte';
+	import { tick } from 'svelte';
 
 	interface Props {
 		body: Snippet;
@@ -10,6 +10,14 @@
 	let { body, footer }: Props = $props();
 
 	let isOpen = $state(false);
+
+	$effect(() => {
+		if (isOpen) {
+			document.body.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = '';
+		}
+	});
 
 	export function open() {
 		isOpen = true;
