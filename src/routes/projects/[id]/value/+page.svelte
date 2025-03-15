@@ -4,7 +4,12 @@
 	import type { PageProps } from './$types';
 	import TaskPairing from '$lib/components/TaskPairing.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
-	import { ratingsRequired, valueRatingsProgress } from '$lib/utils/tasks';
+	import {
+		minTasksForRating,
+		ratingsRequired,
+		tasksReadyForRating,
+		valueRatingsProgress
+	} from '$lib/utils/tasks';
 	import BackLink from '$lib/components/BackLink.svelte';
 
 	let { data }: PageProps = $props();
@@ -16,22 +21,30 @@
 
 <BackLink href="/projects/{projectId}" text="Back to project" />
 
-<h1 class="sr-only text-3xl font-bold">{project?.name} value rating</h1>
+{#if project}
+	<h1 class="sr-only text-3xl font-bold">{project.name} value rating</h1>
 
-<h2 class="text-center text-2xl font-medium">
-	Which of these provides <span class="text-indigo-600 dark:text-indigo-500">more value</span>
-	in your project?
-</h2>
+	{#if tasksReadyForRating(project.tasks)}
+		<h2 class="text-center text-2xl font-medium">
+			Which of these provides <span class="text-indigo-600 dark:text-indigo-500">more value</span>
+			in your project?
+		</h2>
 
-<TaskPairing
-	{projectId}
-	dimension="value"
-	recordWin={recordValueWin}
-	recordLoss={recordValueLoss}
-	recordTie={recordValueTie}
-/>
+		<TaskPairing
+			{projectId}
+			dimension="value"
+			recordWin={recordValueWin}
+			recordLoss={recordValueLoss}
+			recordTie={recordValueTie}
+		/>
 
-<ProgressBar
-	progress={valueRatingsProgress(project?.tasks ?? [])}
-	total={ratingsRequired(project?.tasks ?? [])}
-/>
+		<ProgressBar
+			progress={valueRatingsProgress(project.tasks)}
+			total={ratingsRequired(project.tasks)}
+		/>
+	{:else}
+		<p class="text-slate-500 dark:text-slate-400">
+			You need at least {minTasksForRating} incomplete tasks to rate them.
+		</p>
+	{/if}
+{/if}

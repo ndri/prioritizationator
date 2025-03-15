@@ -177,6 +177,7 @@ export async function getTaskPair(
 ) {
 	const tasks = await db.tasks
 		.where({ projectId })
+		.filter((task) => task.complete === false)
 		.filter((task) => !avoidTasks.includes(task.id))
 		.sortBy(sortBy + 'Votes');
 

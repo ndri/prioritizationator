@@ -4,7 +4,12 @@
 	import type { PageProps } from './$types';
 	import TaskPairing from '$lib/components/TaskPairing.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
-	import { easeRatingsProgress, ratingsRequired } from '$lib/utils/tasks';
+	import {
+		easeRatingsProgress,
+		minTasksForRating,
+		ratingsRequired,
+		tasksReadyForRating
+	} from '$lib/utils/tasks';
 	import BackLink from '$lib/components/BackLink.svelte';
 
 	let { data }: PageProps = $props();
@@ -16,22 +21,30 @@
 
 <BackLink href="/projects/{projectId}" text="Back to project" />
 
-<h1 class="sr-only text-3xl font-bold">{project?.name} ease rating</h1>
+{#if project}
+	<h1 class="sr-only text-3xl font-bold">{project.name} ease rating</h1>
 
-<h2 class="text-center text-2xl font-medium">
-	Which of these requires <span class="text-indigo-600 dark:text-indigo-500">less effort</span>
-	to complete?
-</h2>
+	{#if tasksReadyForRating(project.tasks)}
+		<h2 class="text-center text-2xl font-medium">
+			Which of these requires <span class="text-indigo-600 dark:text-indigo-500">less effort</span>
+			to complete?
+		</h2>
 
-<TaskPairing
-	{projectId}
-	dimension="ease"
-	recordWin={recordEaseWin}
-	recordLoss={recordEaseLoss}
-	recordTie={recordEaseTie}
-/>
+		<TaskPairing
+			{projectId}
+			dimension="ease"
+			recordWin={recordEaseWin}
+			recordLoss={recordEaseLoss}
+			recordTie={recordEaseTie}
+		/>
 
-<ProgressBar
-	progress={easeRatingsProgress(project?.tasks ?? [])}
-	total={ratingsRequired(project?.tasks ?? [])}
-/>
+		<ProgressBar
+			progress={easeRatingsProgress(project.tasks)}
+			total={ratingsRequired(project.tasks)}
+		/>
+	{:else}
+		<p class="text-slate-500 dark:text-slate-400">
+			You need at least {minTasksForRating} incomplete tasks to rate them.
+		</p>
+	{/if}
+{/if}

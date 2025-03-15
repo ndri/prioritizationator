@@ -7,7 +7,9 @@
 	import {
 		easeRatingsProgress,
 		filterRatedTasks,
+		minTasksForRating,
 		ratingsRequired,
+		tasksReadyForRating,
 		valueRatingsProgress
 	} from '$lib/utils/tasks';
 	import PrioritizationMatrix from '$lib/components/PrioritizationMatrix.svelte';
@@ -34,85 +36,93 @@
 
 <BackLink href="/" text="Back to projects" />
 
-<div class="flex justify-between">
-	<h1 class="text-3xl font-bold">{project?.name}</h1>
-	<Menu
-		items={[
-			{
-				label: 'Edit project name',
-				Icon: PencilSquareIcon,
-				onSelect: () => {
-					if (editDialog && project) {
-						editDialog.setValue(project.name);
-						editDialog.open();
+{#if project}
+	<div class="flex justify-between">
+		<h1 class="text-3xl font-bold">{project.name}</h1>
+		<Menu
+			items={[
+				{
+					label: 'Edit project name',
+					Icon: PencilSquareIcon,
+					onSelect: () => {
+						if (editDialog) {
+							editDialog.setValue(project.name);
+							editDialog.open();
+						}
 					}
+				},
+				{
+					label: 'Delete project',
+					Icon: TrashIcon,
+					onSelect: () => deleteDialog?.open()
+				}
+			]}
+			class="flex items-center p-1"
+		>
+			{#snippet button(props)}
+				<Button size="xl" variant="text" Icon={EllipsisVerticalIcon} {...props} />
+			{/snippet}
+		</Menu>
+	</div>
+
+	{#if project.tasks}
+		{#if tasksReadyForRating(project.tasks)}
+			<div class="grid grid-cols-2 gap-4">
+				<RankingCard
+					title="Value"
+					ratingsProgress={valueRatingsProgress(project.tasks)}
+					ratingsRequired={ratingsRequired(project.tasks)}
+					rankingPath="/projects/{projectId}/value"
+				/>
+				<RankingCard
+					title="Ease"
+					ratingsProgress={easeRatingsProgress(project.tasks)}
+					ratingsRequired={ratingsRequired(project.tasks)}
+					rankingPath="/projects/{projectId}/ease"
+				/>
+			</div>
+			<!-- <Button onclick={() => resetRatings(projectId)} variant="secondary" size="sm">
+			Reset ratings
+		</Button> -->
+		{:else}
+			<p class="text-slate-500 dark:text-slate-400">
+				You need at least {minTasksForRating} incomplete tasks to rate them.
+			</p>
+		{/if}
+
+		{#if filterRatedTasks(project.tasks).length}
+			<PrioritizationMatrix tasks={project.tasks} />
+		{/if}
+	{/if}
+
+	<OrganizedTaskLists tasks={project.tasks} />
+	<NewTaskForm {projectId} />
+
+	<SimpleDialog
+		bind:this={deleteDialog}
+		title="Delete project"
+		description="Are you sure you want to delete this project? This action cannot be undone."
+		buttons={[
+			{
+				label: 'Delete',
+				variant: 'primary',
+				onclick: () => {
+					deleteProject(projectId);
+					goto('/');
+					deleteDialog?.close();
 				}
 			},
 			{
-				label: 'Delete project',
-				Icon: TrashIcon,
-				onSelect: () => deleteDialog?.open()
+				label: 'Cancel',
+				variant: 'secondary',
+				onclick: () => deleteDialog?.close()
 			}
 		]}
-		class="flex items-center p-1"
-	>
-		{#snippet button(props)}
-			<Button size="xl" variant="text" Icon={EllipsisVerticalIcon} {...props} />
-		{/snippet}
-	</Menu>
-</div>
+	/>
 
-{#if project?.tasks?.length}
-	<div class="grid grid-cols-2 gap-4">
-		<RankingCard
-			title="Value"
-			ratingsProgress={valueRatingsProgress(project.tasks)}
-			ratingsRequired={ratingsRequired(project.tasks)}
-			rankingPath="/projects/{projectId}/value"
-		/>
-		<RankingCard
-			title="Ease"
-			ratingsProgress={easeRatingsProgress(project.tasks)}
-			ratingsRequired={ratingsRequired(project.tasks)}
-			rankingPath="/projects/{projectId}/ease"
-		/>
-	</div>
-	<!-- <Button onclick={() => resetRatings(projectId)} variant="secondary" size="sm">
-		Reset ratings
-	</Button> -->
+	<EditDialog
+		bind:this={editDialog}
+		label="Project name"
+		submit={(value) => editProjectName(projectId, value)}
+	/>
 {/if}
-
-{#if filterRatedTasks(project?.tasks ?? []).length}
-	<PrioritizationMatrix tasks={project?.tasks ?? []} />
-{/if}
-
-<OrganizedTaskLists tasks={project?.tasks} />
-<NewTaskForm {projectId} />
-
-<SimpleDialog
-	bind:this={deleteDialog}
-	title="Delete project"
-	description="Are you sure you want to delete this project? This action cannot be undone."
-	buttons={[
-		{
-			label: 'Delete',
-			variant: 'primary',
-			onclick: () => {
-				deleteProject(projectId);
-				goto('/');
-				deleteDialog?.close();
-			}
-		},
-		{
-			label: 'Cancel',
-			variant: 'secondary',
-			onclick: () => deleteDialog?.close()
-		}
-	]}
-/>
-
-<EditDialog
-	bind:this={editDialog}
-	label="Project name"
-	submit={(value) => editProjectName(projectId, value)}
-/>

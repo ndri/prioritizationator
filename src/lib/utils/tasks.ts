@@ -2,6 +2,7 @@ import type { Task } from '../db';
 import { sum } from './array';
 
 export const minRatings = 3 as const;
+export const minTasksForRating = 5 as const;
 
 export function sortTasksByScore(tasks: Task[]) {
 	return tasks.toSorted((a, b) => {
@@ -111,4 +112,8 @@ export function easeRatingsProgress(tasks: Task[]) {
 			.map((task) => task.easeWins ?? 0 + task.easeLosses ?? 0)
 	);
 	return completedRatings + inProgressRatings;
+}
+
+export function tasksReadyForRating(tasks: Task[]) {
+	return filterIncompleteTasks(tasks).length >= minTasksForRating;
 }
