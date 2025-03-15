@@ -2,7 +2,7 @@
 	import { stateQuery } from '$lib/stateQuery.svelte';
 	import NewTaskForm from '$lib/components/NewTaskForm.svelte';
 	import OrganizedTaskLists from '$lib/components/OrganizedTaskLists.svelte';
-	import { deleteProject, getProject, resetRatings } from '$lib/db';
+	import { deleteProject, editProjectName, getProject, resetRatings } from '$lib/db';
 	import type { PageProps } from './$types';
 	import {
 		easeRatingsProgress,
@@ -19,6 +19,8 @@
 	import EllipsisVerticalIcon from '$lib/components/heroicons/mini/EllipsisVerticalIcon.svelte';
 	import { goto } from '$app/navigation';
 	import SimpleDialog from '$lib/components/ui/SimpleDialog.svelte';
+	import PencilSquareIcon from '$lib/components/heroicons/mini/PencilSquareIcon.svelte';
+	import EditDialog from '$lib/components/ui/EditDialog.svelte';
 
 	let { data }: PageProps = $props();
 
@@ -27,6 +29,7 @@
 	const project = $derived(projectQuery.current);
 
 	let deleteDialog = $state<SimpleDialog>();
+	let editDialog = $state<EditDialog>();
 </script>
 
 <BackLink href="/" text="Back to projects" />
@@ -35,6 +38,16 @@
 	<h1 class="text-3xl font-bold">{project?.name}</h1>
 	<Menu
 		items={[
+			{
+				label: 'Edit project name',
+				Icon: PencilSquareIcon,
+				onSelect: () => {
+					if (editDialog && project) {
+						editDialog.setValue(project.name);
+						editDialog.open();
+					}
+				}
+			},
 			{
 				label: 'Delete project',
 				Icon: TrashIcon,
@@ -96,4 +109,10 @@
 			onclick: () => deleteDialog?.close()
 		}
 	]}
+/>
+
+<EditDialog
+	bind:this={editDialog}
+	label="Project name"
+	submit={(value) => editProjectName(projectId, value)}
 />

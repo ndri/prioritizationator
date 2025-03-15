@@ -121,6 +121,10 @@ export async function deleteProject(id: number) {
 	return db.projects.delete(id);
 }
 
+export async function editProjectName(id: number, name: string) {
+	return db.projects.update(id, { name });
+}
+
 export async function getProjectTasks(projectId: number) {
 	return db.tasks.where({ projectId }).toArray();
 }
