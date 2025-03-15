@@ -1,7 +1,7 @@
 import type { Task } from '../db';
 import { sum } from './array';
 
-export const minRatings = 5 as const;
+export const minRatings = 3 as const;
 
 export function sortTasks(tasks: Task[]) {
 	return tasks.toSorted((a, b) => {

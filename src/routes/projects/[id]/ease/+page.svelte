@@ -31,7 +31,6 @@
 	recordTie={recordEaseTie}
 />
 
-<div>{easeRatingsProgress(project?.tasks ?? [])}/{ratingsRequired(project?.tasks ?? [])}</div>
 <ProgressBar
 	progress={easeRatingsProgress(project?.tasks ?? [])}
 	total={ratingsRequired(project?.tasks ?? [])}

@@ -24,7 +24,9 @@
 </script>
 
 <li class="flex items-center gap-3 py-3 pl-5 pr-3">
-	<Checkbox id="taskCheckbox{task.id}" label={task.name} bind:checked={complete} size="lg" />
+	{#if showBadges}
+		<Checkbox id="taskCheckbox{task.id}" label={task.name} bind:checked={complete} size="lg" />
+	{/if}
 	<div class="grow">{task.name}</div>
 	{#if showBadges}
 		<ScoreBadge label="Value" score={task.valueScore ?? -1} rated={taskValueIsRated(task)} />
