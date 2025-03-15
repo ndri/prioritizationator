@@ -15,6 +15,7 @@ export interface Task {
 	id: number;
 	projectId: number;
 	name: string;
+	complete: boolean;
 	valueWins: number;
 	valueLosses: number;
 	valueTies: number;
@@ -37,7 +38,7 @@ class PrioritizationatorDB extends Dexie {
 		this.version(1).stores({
 			projects: '++id, name',
 			tasks:
-				'++id, projectId, name, valueWins, valueLosses, valueTies, *valueScore, *valueVotes, easeWins, easeLosses, easeTies, *easeScore, *easeVotes'
+				'++id, projectId, name, complete, valueWins, valueLosses, valueTies, *valueScore, *valueVotes, easeWins, easeLosses, easeTies, *easeScore, *easeVotes'
 		});
 
 		this.tasks.hook('reading', (task: Task) => {
@@ -137,6 +138,7 @@ export async function createTask({ name, projectId }: { name: string; projectId:
 	return db.tasks.add({
 		name,
 		projectId,
+		complete: false,
 		valueWins: 0,
 		valueLosses: 0,
 		valueTies: 0,
@@ -152,6 +154,10 @@ export async function deleteTask(id: number) {
 
 export async function editTaskName(id: number, name: string) {
 	return db.tasks.update(id, { name });
+}
+
+export async function markTaskComplete(id: number, complete: boolean) {
+	return db.tasks.update(id, { complete });
 }
 
 export async function getTaskPair(

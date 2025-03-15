@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { deleteTask, editTaskName, type Task } from '$lib/db';
+	import { deleteTask, editTaskName, markTaskComplete, type Task } from '$lib/db';
 	import { taskEaseIsRated, taskValueIsRated } from '$lib/utils/tasks';
 	import EllipsisVerticalIcon from './heroicons/mini/EllipsisVerticalIcon.svelte';
 	import PencilSquareIcon from './heroicons/mini/PencilSquareIcon.svelte';
@@ -7,6 +7,7 @@
 	import Menu from './Menu.svelte';
 	import ScoreBadge from './ScoreBadge.svelte';
 	import Button from './ui/Button.svelte';
+	import Checkbox from './ui/Checkbox.svelte';
 	import EditDialog from './ui/EditDialog.svelte';
 
 	interface Props {
@@ -17,9 +18,13 @@
 	const { task, showBadges = false }: Props = $props();
 
 	let editDialog = $state<EditDialog>();
+	let complete = $state<boolean>(task.complete);
+
+	$effect(() => void markTaskComplete(task.id, complete));
 </script>
 
-<li class="flex items-center gap-2 py-3 pl-5 pr-3">
+<li class="flex items-center gap-3 py-3 pl-5 pr-3">
+	<Checkbox id="taskCheckbox{task.id}" label={task.name} bind:checked={complete} size="lg" />
 	<div class="grow">{task.name}</div>
 	{#if showBadges}
 		<ScoreBadge label="Value" score={task.valueScore ?? -1} rated={taskValueIsRated(task)} />
