@@ -5,6 +5,8 @@ import Dexie, { type EntityTable } from 'dexie';
 export interface Project {
 	id: number;
 	name: string;
+	createdAt: Date;
+	modifiedAt: Date;
 }
 
 export interface ProjectWithTasks extends Project {
@@ -26,6 +28,9 @@ export interface Task {
 	easeTies: number;
 	easeScore?: number;
 	easeVotes?: number;
+	createdAt: Date;
+	modifiedAt: Date;
+	completedAt?: Date;
 }
 
 class PrioritizationatorDB extends Dexie {
@@ -36,9 +41,9 @@ class PrioritizationatorDB extends Dexie {
 		super('Prioritizationator');
 
 		this.version(1).stores({
-			projects: '++id, name',
+			projects: '++id, name, createdAt, modifiedAt',
 			tasks:
-				'++id, projectId, name, complete, valueWins, valueLosses, valueTies, *valueScore, *valueVotes, easeWins, easeLosses, easeTies, *easeScore, *easeVotes'
+				'++id, projectId, name, complete, valueWins, valueLosses, valueTies, *valueScore, *valueVotes, easeWins, easeLosses, easeTies, *easeScore, *easeVotes, createdAt, modifiedAt, completedAt'
 		});
 
 		this.tasks.hook('reading', (task: Task) => {
@@ -111,7 +116,7 @@ export async function getProject(id: number) {
 }
 
 export async function createProject({ name }: { name: string }) {
-	return db.projects.add({ name });
+	return db.projects.add({ name, createdAt: new Date(), modifiedAt: new Date() });
 }
 
 export async function deleteProject(id: number) {
@@ -123,7 +128,7 @@ export async function deleteProject(id: number) {
 }
 
 export async function editProjectName(id: number, name: string) {
-	return db.projects.update(id, { name });
+	return db.projects.update(id, { name, modifiedAt: new Date() });
 }
 
 export async function getProjectTasks(projectId: number) {
@@ -144,7 +149,9 @@ export async function createTask({ name, projectId }: { name: string; projectId:
 		valueTies: 0,
 		easeWins: 0,
 		easeLosses: 0,
-		easeTies: 0
+		easeTies: 0,
+		createdAt: new Date(),
+		modifiedAt: new Date()
 	});
 }
 
@@ -153,10 +160,13 @@ export async function deleteTask(id: number) {
 }
 
 export async function editTaskName(id: number, name: string) {
-	return db.tasks.update(id, { name });
+	return db.tasks.update(id, { name, modifiedAt: new Date() });
 }
 
 export async function markTaskComplete(id: number, complete: boolean) {
+	if (complete) {
+		return db.tasks.update(id, { complete, completedAt: new Date() });
+	}
 	return db.tasks.update(id, { complete });
 }
 
