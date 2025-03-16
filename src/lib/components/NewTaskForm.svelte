@@ -5,9 +5,10 @@
 
 	interface Props {
 		projectId: number;
+		autofocus?: boolean;
 	}
 
-	const { projectId }: Props = $props();
+	const { projectId, autofocus = false }: Props = $props();
 
 	let taskName = $state('');
 
@@ -30,6 +31,7 @@
 				size="xl"
 				bind:value={taskName}
 				hiddenLabel
+				{autofocus}
 			/>
 		</div>
 		<Button type="submit" variant="primary" size="xl">Add task</Button>

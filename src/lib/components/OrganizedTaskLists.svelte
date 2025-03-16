@@ -9,7 +9,7 @@
 		filterTraps,
 		filterUnratedTasks,
 		sortTasksByCompletedAt,
-		sortTasksByScore
+		sortTasksByRating
 	} from '$lib/utils/tasks';
 	import { type Task } from '../db';
 	import TaskList from './TaskList.svelte';
@@ -21,7 +21,7 @@
 	const { tasks = [] }: Props = $props();
 
 	const incompleteTasks = $derived(filterIncompleteTasks(tasks));
-	const sortedIncompleteTasks = $derived(sortTasksByScore(incompleteTasks));
+	const sortedIncompleteTasks = $derived(sortTasksByRating(incompleteTasks));
 	const unratedTasks = $derived(filterUnratedTasks(sortedIncompleteTasks));
 	const ratedTasks = $derived(filterRatedTasks(sortedIncompleteTasks));
 	const lowHangingFruits = $derived(filterLowHangingFruits(ratedTasks));

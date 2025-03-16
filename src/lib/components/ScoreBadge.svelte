@@ -18,6 +18,6 @@
 			rated ? 'text-slate-700 dark:text-slate-300' : 'text-slate-400 dark:text-slate-500'
 		]}
 	>
-		{score}{rated ? '' : '?'}
+		{Math.round(score)}{rated ? '' : '?'}
 	</span>
 </div>

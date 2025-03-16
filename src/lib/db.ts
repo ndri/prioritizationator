@@ -1,4 +1,5 @@
 import { randomElement } from '$lib/utils/array';
+import { calculateDraw, calculateWin } from './utils/ratings';
 import { score0to100 } from './utils/scoring';
 import Dexie, { type EntityTable } from 'dexie';
 
@@ -18,6 +19,10 @@ export interface Task {
 	projectId: number;
 	name: string;
 	complete: boolean;
+	valueRating: number;
+	valueRatings: number;
+	easeRating: number;
+	easeRatings: number;
 	valueWins: number;
 	valueLosses: number;
 	valueTies: number;
@@ -43,7 +48,7 @@ class PrioritizationatorDB extends Dexie {
 		this.version(1).stores({
 			projects: '++id, name, createdAt, modifiedAt',
 			tasks:
-				'++id, projectId, name, complete, valueWins, valueLosses, valueTies, *valueScore, *valueVotes, easeWins, easeLosses, easeTies, *easeScore, *easeVotes, createdAt, modifiedAt, completedAt'
+				'++id, projectId, name, complete, valueRating, valueRatings, easeRating, easeRatings, valueWins, valueLosses, valueTies, *valueScore, *valueVotes, easeWins, easeLosses, easeTies, *easeScore, *easeVotes, createdAt, modifiedAt, completedAt'
 		});
 
 		this.tasks.hook('reading', (task: Task) => {
@@ -144,6 +149,10 @@ export async function createTask({ name, projectId }: { name: string; projectId:
 		name,
 		projectId,
 		complete: false,
+		valueRating: 50.0,
+		valueRatings: 0,
+		easeRating: 50.0,
+		easeRatings: 0,
 		valueWins: 0,
 		valueLosses: 0,
 		valueTies: 0,
@@ -186,6 +195,53 @@ export async function getTaskPair(
 	const randomTask = randomElement(otherTasks);
 
 	return [leastVotesTask, randomTask];
+}
+
+async function recordMatchup(
+	taskId1: number,
+	taskId2: number,
+	ratingField: 'valueRating' | 'easeRating',
+	ratingsField: 'valueRatings' | 'easeRatings',
+	result: 'win' | 'draw'
+) {
+	const task1 = await getTask(taskId1);
+	if (!task1) throw `Task ${taskId1} not found.`;
+	const task2 = await getTask(taskId2);
+	if (!task2) throw `Task ${taskId2} not found.`;
+
+	if (task1.projectId !== task2.projectId)
+		throw `Tasks ${taskId1} and ${taskId2} are not in the same project.`;
+
+	const { newRating1, newRating2 } =
+		result === 'win'
+			? calculateWin(task1[ratingField], task2[ratingField], 1024)
+			: calculateDraw(task1[ratingField], task2[ratingField], 1024);
+
+	await db.tasks.update(taskId1, {
+		[ratingField]: newRating1,
+		[ratingsField]: task1[ratingsField] + 1
+	});
+
+	await db.tasks.update(taskId2, {
+		[ratingField]: newRating2,
+		[ratingsField]: task2[ratingsField] + 1
+	});
+}
+
+export async function recordValueMatchupWin(taskId1: number, taskId2: number) {
+	return recordMatchup(taskId1, taskId2, 'valueRating', 'valueRatings', 'win');
+}
+
+export async function recordValueMatchupDraw(taskId1: number, taskId2: number) {
+	return recordMatchup(taskId1, taskId2, 'valueRating', 'valueRatings', 'draw');
+}
+
+export async function recordEaseMatchupWin(taskId1: number, taskId2: number) {
+	return recordMatchup(taskId1, taskId2, 'easeRating', 'easeRatings', 'win');
+}
+
+export async function recordEaseMatchupDraw(taskId1: number, taskId2: number) {
+	return recordMatchup(taskId1, taskId2, 'easeRating', 'easeRatings', 'draw');
 }
 
 export async function recordValueWin(taskId: number) {

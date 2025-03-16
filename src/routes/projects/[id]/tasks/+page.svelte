@@ -25,7 +25,7 @@
 			<TaskList tasks={project.tasks} />
 		{/if}
 
-		<NewTaskForm {projectId} />
+		<NewTaskForm {projectId} autofocus />
 
 		{#if project.tasks.length >= MIN_TASKS}
 			<Button href="/projects/{projectId}" size="xl">Continue</Button>

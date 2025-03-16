@@ -65,8 +65,8 @@
 		<!-- Tasks -->
 		{#each tasks as task}
 			{@const bubbleSize = 20}
-			{@const topPosition = `calc(${100 - (task.valueScore ?? 0)}% - ${bubbleSize / 2}px)`}
-			{@const leftPosition = `calc(${task.easeScore ?? 0}% - ${bubbleSize / 2}px)`}
+			{@const topPosition = `calc(${100 - (task.valueRating ?? 0)}% - ${bubbleSize / 2}px)`}
+			{@const leftPosition = `calc(${task.easeRating ?? 0}% - ${bubbleSize / 2}px)`}
 			{@const style = `top:${topPosition}; left:${leftPosition}`}
 			{@const bubbleStyle = `width:${bubbleSize}px; height:${bubbleSize}px`}
 			{@const bubbleColor = taskColorClasses(task)}

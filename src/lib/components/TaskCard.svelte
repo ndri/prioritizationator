@@ -28,13 +28,13 @@
 			label={task.name}
 			bind:checked={complete}
 			size="lg"
-			onblur={() => markTaskComplete(task.id, complete)}
+			onchange={() => markTaskComplete(task.id, complete)}
 		/>
 	{/if}
 	<div class="grow">{task.name}</div>
 	{#if showBadges}
-		<ScoreBadge label="Value" score={task.valueScore ?? -1} rated={taskValueIsRated(task)} />
-		<ScoreBadge label="Ease" score={task.easeScore ?? -1} rated={taskEaseIsRated(task)} />
+		<ScoreBadge label="Value" score={task.valueRating ?? -1} rated={taskValueIsRated(task)} />
+		<ScoreBadge label="Ease" score={task.easeRating ?? -1} rated={taskEaseIsRated(task)} />
 	{/if}
 	<Menu
 		items={[

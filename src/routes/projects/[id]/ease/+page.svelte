@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { stateQuery } from '$lib/stateQuery.svelte';
-	import { getProject, recordEaseLoss, recordEaseTie, recordEaseWin } from '$lib/db';
+	import { getProject, recordEaseMatchupDraw, recordEaseMatchupWin } from '$lib/db';
 	import type { PageProps } from './$types';
 	import TaskPairing from '$lib/components/TaskPairing.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
@@ -36,9 +36,8 @@
 		<TaskPairing
 			{projectId}
 			dimension="ease"
-			recordWin={recordEaseWin}
-			recordLoss={recordEaseLoss}
-			recordTie={recordEaseTie}
+			recordWin={recordEaseMatchupWin}
+			recordDraw={recordEaseMatchupDraw}
 		/>
 
 		<ProgressBar

@@ -4,10 +4,10 @@ import { sum } from './array';
 export const minRatings = 3 as const;
 export const minTasksForRating = 5 as const;
 
-export function sortTasksByScore(tasks: Task[]) {
+export function sortTasksByRating(tasks: Task[]) {
 	return tasks.toSorted((a, b) => {
-		const aScore = (a.valueScore ?? 1) * (a.easeScore ?? 1);
-		const bScore = (b.valueScore ?? 1) * (b.easeScore ?? 1);
+		const aScore = (a.valueRating ?? 1) * (a.easeRating ?? 1);
+		const bScore = (b.valueRating ?? 1) * (b.easeRating ?? 1);
 		return bScore - aScore;
 	});
 }
@@ -21,11 +21,11 @@ export function sortTasksByCompletedAt(tasks: Task[]) {
 }
 
 export function taskValueIsRated(task: Task) {
-	return (task.valueWins ?? 0) + (task.valueLosses ?? 0) >= minRatings;
+	return task.valueRatings >= minRatings;
 }
 
 export function taskEaseIsRated(task: Task) {
-	return (task.easeWins ?? 0) + (task.easeLosses ?? 0) >= minRatings;
+	return task.easeRatings >= minRatings;
 }
 
 function taskIsRated(task: Task) {
@@ -33,19 +33,19 @@ function taskIsRated(task: Task) {
 }
 
 function taskIsLowHangingFruit(task: Task) {
-	return (task.valueScore ?? 0) > 50 && (task.easeScore ?? 0) > 50;
+	return task.valueRating > 50 && task.easeRating > 50;
 }
 
 function taskIsTrap(task: Task) {
-	return (task.valueScore ?? 0) <= 50 && (task.easeScore ?? 0) <= 50;
+	return task.valueRating <= 50 && task.easeRating <= 50;
 }
 
 function taskIsQuickWin(task: Task) {
-	return (task.valueScore ?? 0) <= 50 && (task.easeScore ?? 0) > 50;
+	return task.valueRating <= 50 && task.easeRating > 50;
 }
 
 function taskIsLeap(task: Task) {
-	return (task.valueScore ?? 0) > 50 && (task.easeScore ?? 0) <= 50;
+	return task.valueRating > 50 && task.easeRating <= 50;
 }
 
 export function filterUnratedTasks(tasks: Task[]) {
@@ -97,9 +97,7 @@ export function ratingsRequired(tasks: Task[]) {
 export function valueRatingsProgress(tasks: Task[]) {
 	const completedRatings = tasks.filter(taskValueIsRated).length * minRatings;
 	const inProgressRatings = sum(
-		tasks
-			.filter((task) => !taskValueIsRated(task))
-			.map((task) => task.valueWins ?? 0 + task.valueLosses ?? 0)
+		tasks.filter((task) => !taskValueIsRated(task)).map((task) => task.valueRatings)
 	);
 	return completedRatings + inProgressRatings;
 }
@@ -107,9 +105,7 @@ export function valueRatingsProgress(tasks: Task[]) {
 export function easeRatingsProgress(tasks: Task[]) {
 	const completedRatings = tasks.filter(taskEaseIsRated).length * minRatings;
 	const inProgressRatings = sum(
-		tasks
-			.filter((task) => !taskEaseIsRated(task))
-			.map((task) => task.easeWins ?? 0 + task.easeLosses ?? 0)
+		tasks.filter((task) => !taskEaseIsRated(task)).map((task) => task.easeRatings)
 	);
 	return completedRatings + inProgressRatings;
 }
