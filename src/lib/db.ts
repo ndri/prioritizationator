@@ -1,4 +1,4 @@
-import { randomElement } from '$lib/utils/array';
+import { argMin, range } from '$lib/utils/array';
 import { calculateDraw, calculateWin } from './utils/ratings';
 import { score0to100 } from './utils/scoring';
 import Dexie, { type EntityTable } from 'dexie';
@@ -179,22 +179,25 @@ export async function markTaskComplete(id: number, complete: boolean) {
 	return db.tasks.update(id, { complete });
 }
 
-export async function getTaskPair(
-	projectId: number,
-	sortBy: 'value' | 'ease',
-	avoidTasks: number[] = []
-) {
+export async function getTaskPair(projectId: number, dimension: 'value' | 'ease') {
+	const ratingField = (dimension + 'Rating') as 'valueRating' | 'easeRating';
+
 	const tasks = await db.tasks
 		.where({ projectId })
 		.filter((task) => task.complete === false)
-		.filter((task) => !avoidTasks.includes(task.id))
-		.sortBy(sortBy + 'Votes');
+		.sortBy(ratingField);
 
-	const leastVotesTask = tasks[0];
-	const otherTasks = tasks.slice(1);
-	const randomTask = randomElement(otherTasks);
+	const differences = range(0, tasks.length - 2).map((index) => ({
+		task1: tasks[index],
+		task2: tasks[index + 1],
+		ratingDifference: tasks[index + 1][ratingField] - tasks[index][ratingField]
+	}));
 
-	return [leastVotesTask, randomTask];
+	const smallestDifference = argMin(differences, 'ratingDifference');
+	if (!smallestDifference) return;
+
+	const { task1, task2 } = smallestDifference;
+	return [task1, task2];
 }
 
 async function recordMatchup(
