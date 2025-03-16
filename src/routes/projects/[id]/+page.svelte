@@ -34,6 +34,7 @@
 
 	let deleteDialog = $state<SimpleDialog>();
 	let editDialog = $state<EditDialog>();
+	let resetDialog = $state<SimpleDialog>();
 </script>
 
 <BackLink href="/" text="Back to projects" />
@@ -56,9 +57,7 @@
 				{
 					label: 'Reset task ratings',
 					Icon: ArrowPathIcon,
-					onSelect: () => {
-						resetRatings(projectId);
-					}
+					onSelect: () => resetDialog?.open()
 				},
 				{
 					label: 'Delete project',
@@ -131,5 +130,26 @@
 		bind:this={editDialog}
 		label="Project name"
 		submit={(value) => editProjectName(projectId, value)}
+	/>
+
+	<SimpleDialog
+		bind:this={resetDialog}
+		title="Reset ratings"
+		description="Are you sure you want to reset ratings for all tasks? This action cannot be undone."
+		buttons={[
+			{
+				label: 'Reset',
+				variant: 'primary',
+				onclick: () => {
+					resetRatings(projectId);
+					resetDialog?.close();
+				}
+			},
+			{
+				label: 'Cancel',
+				variant: 'secondary',
+				onclick: () => resetDialog?.close()
+			}
+		]}
 	/>
 {/if}
