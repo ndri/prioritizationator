@@ -93,7 +93,7 @@
 		{/if}
 
 		{#if filterRatedTasks(project.tasks).length}
-			<PrioritizationMatrix tasks={project.tasks} />
+			<PrioritizationMatrix tasks={filterIncompleteTasks(project.tasks)} />
 		{/if}
 	{/if}
 
