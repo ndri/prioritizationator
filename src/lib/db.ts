@@ -1,6 +1,5 @@
 import { argMin, range } from '$lib/utils/array';
 import { calculateDraw, calculateWin } from './utils/ratings';
-import { score0to100 } from './utils/scoring';
 import Dexie, { type EntityTable } from 'dexie';
 
 export interface Project {
@@ -23,16 +22,6 @@ export interface Task {
 	valueRatings: number;
 	easeRating: number;
 	easeRatings: number;
-	valueWins: number;
-	valueLosses: number;
-	valueTies: number;
-	valueScore?: number;
-	valueVotes?: number;
-	easeWins: number;
-	easeLosses: number;
-	easeTies: number;
-	easeScore?: number;
-	easeVotes?: number;
 	createdAt: Date;
 	modifiedAt: Date;
 	completedAt?: Date;
@@ -48,50 +37,7 @@ class PrioritizationatorDB extends Dexie {
 		this.version(1).stores({
 			projects: '++id, name, createdAt, modifiedAt',
 			tasks:
-				'++id, projectId, name, complete, valueRating, valueRatings, easeRating, easeRatings, valueWins, valueLosses, valueTies, *valueScore, *valueVotes, easeWins, easeLosses, easeTies, *easeScore, *easeVotes, createdAt, modifiedAt, completedAt'
-		});
-
-		this.tasks.hook('reading', (task: Task) => {
-			if (task) {
-				task.valueScore = score0to100(task.valueWins, task.valueLosses);
-				task.valueVotes = task.valueWins + task.valueLosses + task.valueTies;
-				task.easeScore = score0to100(task.easeWins, task.easeLosses);
-				task.easeVotes = task.easeWins + task.easeLosses + task.easeTies;
-			}
-			return task;
-		});
-
-		this.tasks.hook('creating', (primKey: number, task: Task) => {
-			task.valueScore = score0to100(task.valueWins, task.valueLosses);
-			task.valueVotes = task.valueWins + task.valueLosses + task.valueTies;
-			task.easeScore = score0to100(task.easeWins, task.easeLosses);
-			task.easeVotes = task.easeWins + task.easeLosses + task.easeTies;
-		});
-
-		this.tasks.hook('updating', (modifications: Partial<Task>, primKey: number, task: Task) => {
-			if (
-				modifications.valueWins !== undefined ||
-				modifications.valueLosses !== undefined ||
-				modifications.valueTies !== undefined
-			) {
-				const valueWins = modifications.valueWins ?? task.valueWins;
-				const valueLosses = modifications.valueLosses ?? task.valueLosses;
-				const valueTies = modifications.valueTies ?? task.valueTies;
-				modifications.valueScore = score0to100(valueWins, valueLosses);
-				modifications.valueVotes = valueWins + valueLosses + valueTies;
-			}
-
-			if (
-				modifications.easeWins !== undefined ||
-				modifications.easeLosses !== undefined ||
-				modifications.easeTies !== undefined
-			) {
-				const easeWins = modifications.easeWins ?? task.easeWins;
-				const easeLosses = modifications.easeLosses ?? task.easeLosses;
-				const easeTies = modifications.easeTies ?? task.easeTies;
-				modifications.easeScore = score0to100(easeWins, easeLosses);
-				modifications.easeVotes = easeWins + easeLosses + easeTies;
-			}
+				'++id, projectId, name, complete, valueRating, valueRatings, easeRating, easeRatings, createdAt, modifiedAt, completedAt'
 		});
 	}
 }
@@ -153,12 +99,6 @@ export async function createTask({ name, projectId }: { name: string; projectId:
 		valueRatings: 0,
 		easeRating: 50.0,
 		easeRatings: 0,
-		valueWins: 0,
-		valueLosses: 0,
-		valueTies: 0,
-		easeWins: 0,
-		easeLosses: 0,
-		easeTies: 0,
 		createdAt: new Date(),
 		modifiedAt: new Date()
 	});
@@ -247,58 +187,14 @@ export async function recordEaseMatchupDraw(taskId1: number, taskId2: number) {
 	return recordMatchup(taskId1, taskId2, 'easeRating', 'easeRatings', 'draw');
 }
 
-export async function recordValueWin(taskId: number) {
-	const task = await getTask(taskId);
-	if (!task) return;
-
-	return db.tasks.update(taskId, { valueWins: task.valueWins + 1 });
-}
-
-export async function recordValueLoss(taskId: number) {
-	const task = await getTask(taskId);
-	if (!task) return;
-
-	return db.tasks.update(taskId, { valueLosses: task.valueLosses + 1 });
-}
-
-export async function recordValueTie(taskId: number) {
-	const task = await getTask(taskId);
-	if (!task) return;
-
-	return db.tasks.update(taskId, { valueTies: task.valueTies + 1 });
-}
-
-export async function recordEaseWin(taskId: number) {
-	const task = await getTask(taskId);
-	if (!task) return;
-
-	return db.tasks.update(taskId, { easeWins: task.easeWins + 1 });
-}
-
-export async function recordEaseLoss(taskId: number) {
-	const task = await getTask(taskId);
-	if (!task) return;
-
-	return db.tasks.update(taskId, { easeLosses: task.easeLosses + 1 });
-}
-
-export async function recordEaseTie(taskId: number) {
-	const task = await getTask(taskId);
-	if (!task) return;
-
-	return db.tasks.update(taskId, { easeTies: task.easeTies + 1 });
-}
-
 export async function resetRatings(projectId: number) {
 	const tasks = await db.tasks.where({ projectId }).toArray();
 	tasks.forEach(async (task) => {
 		await db.tasks.update(task.id, {
-			valueWins: 0,
-			valueLosses: 0,
-			valueTies: 0,
-			easeWins: 0,
-			easeLosses: 0,
-			easeTies: 0
+			valueRating: 50.0,
+			valueRatings: 0,
+			easeRating: 50.0,
+			easeRatings: 0
 		});
 	});
 }

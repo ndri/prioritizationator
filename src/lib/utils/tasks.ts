@@ -6,9 +6,9 @@ export const minTasksForRating = 5 as const;
 
 export function sortTasksByRating(tasks: Task[]) {
 	return tasks.toSorted((a, b) => {
-		const aScore = (a.valueRating ?? 1) * (a.easeRating ?? 1);
-		const bScore = (b.valueRating ?? 1) * (b.easeRating ?? 1);
-		return bScore - aScore;
+		const aRating = (a.valueRating ?? 1) * (a.easeRating ?? 1);
+		const bRating = (b.valueRating ?? 1) * (b.easeRating ?? 1);
+		return bRating - aRating;
 	});
 }
 

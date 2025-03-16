@@ -5,7 +5,7 @@
 	import PencilSquareIcon from './heroicons/mini/PencilSquareIcon.svelte';
 	import TrashIcon from './heroicons/mini/TrashIcon.svelte';
 	import Menu from './Menu.svelte';
-	import ScoreBadge from './ScoreBadge.svelte';
+	import RatingBadge from './RatingBadge.svelte';
 	import Button from './ui/Button.svelte';
 	import Checkbox from './ui/Checkbox.svelte';
 	import EditDialog from './ui/EditDialog.svelte';
@@ -33,8 +33,8 @@
 	{/if}
 	<div class="grow">{task.name}</div>
 	{#if showBadges}
-		<ScoreBadge label="Value" score={task.valueRating ?? -1} rated={taskValueIsRated(task)} />
-		<ScoreBadge label="Ease" score={task.easeRating ?? -1} rated={taskEaseIsRated(task)} />
+		<RatingBadge label="Value" rating={task.valueRating ?? -1} rated={taskValueIsRated(task)} />
+		<RatingBadge label="Ease" rating={task.easeRating ?? -1} rated={taskEaseIsRated(task)} />
 	{/if}
 	<Menu
 		items={[

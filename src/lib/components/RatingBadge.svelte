@@ -1,11 +1,11 @@
 <script lang="ts">
 	interface Props {
 		label: string;
-		score: number;
+		rating: number;
 		rated: boolean;
 	}
 
-	const { label, score, rated = true }: Props = $props();
+	const { label, rating, rated = true }: Props = $props();
 </script>
 
 <div class="flex flex-col items-center px-1">
@@ -18,6 +18,6 @@
 			rated ? 'text-slate-700 dark:text-slate-300' : 'text-slate-400 dark:text-slate-500'
 		]}
 	>
-		{Math.round(score)}{rated ? '' : '?'}
+		{Math.round(rating)}{rated ? '' : '?'}
 	</span>
 </div>
