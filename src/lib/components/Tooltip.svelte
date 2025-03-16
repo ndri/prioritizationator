@@ -32,11 +32,13 @@
 	{...props}
 >
 	{@render children()}
-	{#if showingTooltip}
-		<div
-			class="absolute bottom-full left-1/2 z-10 -translate-x-1/2 -translate-y-1 transform whitespace-nowrap rounded-lg bg-slate-700 px-2.5 py-1.5 text-xs font-medium text-white dark:bg-slate-950"
-		>
-			{text}
-		</div>
-	{/if}
+	<div
+		class={[
+			'absolute bottom-full left-1/2 z-10 w-max max-w-xs -translate-x-1/2 -translate-y-1 rounded-lg px-2.5 py-1.5 text-center text-xs font-medium',
+			'bg-slate-700 text-white dark:border dark:border-slate-800 dark:bg-slate-950',
+			!showingTooltip && 'sr-only'
+		]}
+	>
+		{text}
+	</div>
 </div>
