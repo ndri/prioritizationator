@@ -3,9 +3,9 @@
 	class={[
 		'flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-5',
 		'border-slate-300 text-slate-500',
-		'hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-600',
+		'hover:border-indigo-500 hover:bg-indigo-50 hover:text-indigo-500',
 		'dark:border-slate-700 dark:text-slate-400',
-		'dark:hover:border-indigo-400 dark:hover:bg-indigo-950 dark:hover:text-indigo-400'
+		'dark:hover:border-indigo-400 dark:hover:bg-slate-900 dark:hover:text-indigo-400'
 	]}
 >
 	<svg
