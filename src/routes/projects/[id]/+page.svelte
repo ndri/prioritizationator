@@ -24,6 +24,7 @@
 	import SimpleDialog from '$lib/components/ui/SimpleDialog.svelte';
 	import PencilSquareIcon from '$lib/components/heroicons/mini/PencilSquareIcon.svelte';
 	import EditDialog from '$lib/components/ui/EditDialog.svelte';
+	import ArrowPathIcon from '$lib/components/heroicons/mini/ArrowPathIcon.svelte';
 
 	let { data }: PageProps = $props();
 
@@ -50,6 +51,13 @@
 							editDialog.setValue(project.name);
 							editDialog.open();
 						}
+					}
+				},
+				{
+					label: 'Reset task ratings',
+					Icon: ArrowPathIcon,
+					onSelect: () => {
+						resetRatings(projectId);
 					}
 				},
 				{
@@ -83,9 +91,6 @@
 					rankingPath="/projects/{projectId}/ease"
 				/>
 			</div>
-			<!-- <Button onclick={() => resetRatings(projectId)} variant="secondary" size="sm">
-			Reset ratings
-		</Button> -->
 		{:else}
 			<p class="text-slate-500 dark:text-slate-400">
 				You need at least {minTasksForRating} incomplete tasks to rate them.
