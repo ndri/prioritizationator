@@ -26,7 +26,8 @@
 
 {#snippet body()}
 	<form
-		onsubmit={() => {
+		onsubmit={(e) => {
+			e.preventDefault();
 			submit(value);
 			close();
 		}}
