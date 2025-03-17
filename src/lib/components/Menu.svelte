@@ -5,7 +5,7 @@
 
 	interface Props {
 		class: ClassValue;
-		items: { label: string; Icon: Heroicon; onSelect: () => void }[];
+		items: { label: string; Icon: Heroicon; onSelect?: () => void; href?: string }[];
 		button: Snippet<[HTMLButtonAttributes]>;
 		label?: string;
 	}
@@ -48,6 +48,11 @@
 		if (!closeOnEscapeHandler) return;
 		window.removeEventListener('keydown', closeOnEscapeHandler);
 	};
+
+	const itemClasses =
+		'group/menuitem dark:hover:text-slate flex gap-2.5 whitespace-nowrap rounded-md px-3 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 dark:text-slate-300 dark:hover:bg-slate-900';
+	const iconClasses =
+		'text-slate-400 group-hover/menuitem:text-slate-500 dark:text-slate-500 dark:group-hover/menuitem:text-slate-400';
 </script>
 
 <div class={['relative', className]} bind:this={dropdownRef} onfocusout={handleCloseOnFocusOut}>
@@ -60,20 +65,25 @@
 			aria-label={label}
 			bind:this={menuRef}
 		>
-			{#each items as { label, Icon, onSelect }}
-				<button
-					class="group/menuitem dark:hover:text-slate flex gap-2.5 whitespace-nowrap rounded-md px-3 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 dark:text-slate-300 dark:hover:bg-slate-900"
-					role="menuitem"
-					onclick={() => {
-						onSelect();
-						closeMenu();
-					}}
-				>
-					<Icon
-						class="text-slate-400 group-hover/menuitem:text-slate-500 dark:text-slate-500 dark:group-hover/menuitem:text-slate-400"
-					/>
-					<span>{label}</span>
-				</button>
+			{#each items as { label, Icon, onSelect, href }}
+				{#if href}
+					<a class={itemClasses} role="menuitem" {href}>
+						<Icon class={iconClasses} />
+						<span>{label}</span>
+					</a>
+				{:else if onSelect}
+					<button
+						class={itemClasses}
+						role="menuitem"
+						onclick={() => {
+							onSelect();
+							closeMenu();
+						}}
+					>
+						<Icon class={iconClasses} />
+						<span>{label}</span>
+					</button>
+				{/if}
 			{/each}
 		</div>
 	{/if}

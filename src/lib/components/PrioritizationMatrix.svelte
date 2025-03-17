@@ -13,7 +13,7 @@
 	let chartWidth = $derived(chartRef?.clientWidth ?? 0);
 </script>
 
-<section class="relative w-full p-16">
+<section class="relative w-full p-4 md:p-16">
 	<div class="relative" style="height:{chartWidth}px" bind:this={chartRef}>
 		<!-- Vertical halves separator with labels -->
 		<div class="absolute left-1/2 top-0 h-full w-px bg-slate-300 dark:bg-slate-700"></div>
