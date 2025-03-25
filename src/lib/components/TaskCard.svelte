@@ -9,6 +9,7 @@
 	import Button from './ui/Button.svelte';
 	import Checkbox from './ui/Checkbox.svelte';
 	import EditDialog from './ui/EditDialog.svelte';
+	import { slide } from 'svelte/transition';
 
 	interface Props {
 		task: Task;
@@ -21,7 +22,7 @@
 	let complete = $state<boolean>(task.complete);
 </script>
 
-<li class="flex items-center gap-3 py-3 pl-5 pr-3">
+<li class="flex items-center gap-3 py-3 pl-5 pr-3" transition:slide>
 	{#if showBadges}
 		<Checkbox
 			id="taskCheckbox{task.id}"

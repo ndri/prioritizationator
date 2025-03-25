@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Task } from '$lib/db';
 	import TaskCard from './TaskCard.svelte';
+	import { slide } from 'svelte/transition';
 
 	interface Props {
 		title?: string;
@@ -13,7 +14,7 @@
 </script>
 
 {#if tasks.length}
-	<section class="flex flex-col gap-4">
+	<section class="flex flex-col gap-4 pb-6" transition:slide>
 		{#if title}<h2 class="text-xl font-medium">{title}</h2>{/if}
 		{#if description}<p class="text-slate-500 dark:text-slate-400">{description}</p>{/if}
 		<ol

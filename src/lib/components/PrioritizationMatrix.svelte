@@ -10,7 +10,7 @@
 	const { tasks }: Props = $props();
 
 	let chartRef = $state<HTMLDivElement>();
-	let chartWidth = $state<number>();
+	let chartWidth = $state<number>(0);
 
 	$effect(() => {
 		chartWidth = chartRef?.clientWidth ?? 0;
@@ -26,7 +26,7 @@
 </script>
 
 <section class="relative w-full p-4 md:p-16">
-	<div class="relative" style="height:{chartWidth}px" bind:this={chartRef}>
+	<div class="relative transition-[height]" style="height:{chartWidth}px" bind:this={chartRef}>
 		<!-- Vertical halves separator with labels -->
 		<div class="absolute left-1/2 top-0 h-full w-px bg-slate-300 dark:bg-slate-700"></div>
 		<div class="absolute left-0 top-1/2 -translate-y-1/2 text-sm text-slate-500">

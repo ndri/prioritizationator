@@ -25,6 +25,7 @@
 	import PencilSquareIcon from '$lib/components/heroicons/mini/PencilSquareIcon.svelte';
 	import EditDialog from '$lib/components/ui/EditDialog.svelte';
 	import ArrowPathIcon from '$lib/components/heroicons/mini/ArrowPathIcon.svelte';
+	import { slide } from 'svelte/transition';
 
 	let { data }: PageProps = $props();
 
@@ -74,35 +75,41 @@
 	</div>
 
 	{#if project.tasks}
-		{#if tasksReadyForRating(project.tasks)}
-			{@const incompleteTasks = filterIncompleteTasks(project.tasks)}
-			<div class="grid grid-cols-2 gap-4">
-				<RankingCard
-					title="Value"
-					ratingsProgress={valueRatingsProgress(incompleteTasks)}
-					ratingsRequired={ratingsRequired(incompleteTasks)}
-					rankingPath="/projects/{projectId}/value"
-				/>
-				<RankingCard
-					title="Ease"
-					ratingsProgress={easeRatingsProgress(incompleteTasks)}
-					ratingsRequired={ratingsRequired(incompleteTasks)}
-					rankingPath="/projects/{projectId}/ease"
-				/>
-			</div>
-		{:else}
-			<p class="text-slate-500 dark:text-slate-400">
-				You need at least {minTasksForRating} incomplete tasks to rate them.
-			</p>
-		{/if}
+		<div class="flex flex-col">
+			{#if tasksReadyForRating(project.tasks)}
+				{@const incompleteTasks = filterIncompleteTasks(project.tasks)}
+				<div class="grid grid-cols-2 gap-4" transition:slide>
+					<RankingCard
+						title="Value"
+						ratingsProgress={valueRatingsProgress(incompleteTasks)}
+						ratingsRequired={ratingsRequired(incompleteTasks)}
+						rankingPath="/projects/{projectId}/value"
+					/>
+					<RankingCard
+						title="Ease"
+						ratingsProgress={easeRatingsProgress(incompleteTasks)}
+						ratingsRequired={ratingsRequired(incompleteTasks)}
+						rankingPath="/projects/{projectId}/ease"
+					/>
+				</div>
+			{:else}
+				<p class="text-slate-500 dark:text-slate-400" transition:slide>
+					You need at least {minTasksForRating} incomplete tasks to rate them.
+				</p>
+			{/if}
+		</div>
 
-		{#if filterRatedTasks(project.tasks).length}
-			<PrioritizationMatrix tasks={filterIncompleteTasks(project.tasks)} />
+		{#if filterIncompleteTasks(project.tasks).length}
+			<div transition:slide>
+				<PrioritizationMatrix tasks={filterIncompleteTasks(project.tasks)} />
+			</div>
 		{/if}
 	{/if}
 
-	<OrganizedTaskLists tasks={project.tasks} />
-	<NewTaskForm {projectId} />
+	<div class="flex flex-col">
+		<OrganizedTaskLists tasks={project.tasks} />
+		<NewTaskForm {projectId} />
+	</div>
 
 	<SimpleDialog
 		bind:this={deleteDialog}

@@ -33,34 +33,36 @@
 	const sortedCompletedTasks = $derived(sortTasksByCompletedAt(completedTasks));
 </script>
 
-<TaskList
-	title="Low Hanging Fruits"
-	description="Do these first!"
-	tasks={lowHangingFruits}
-	showBadges
-/>
-<TaskList
-	title="Quick Wins"
-	description="Do these only if you run out of Low Hanging Fruits."
-	tasks={quickWins}
-	showBadges
-/>
-<TaskList
-	title="Leaps"
-	description="Do these only if you run out of Low Hanging Fruits and you're confident that they're valuable. Consider splitting them up to create multiple lower-effort tasks."
-	tasks={leaps}
-	showBadges
-/>
-<TaskList title="Traps" description="Consider dropping these." tasks={traps} showBadges />
-<TaskList
-	title="Completed Tasks"
-	description="Well done!"
-	tasks={sortedCompletedTasks}
-	showBadges
-/>
-<TaskList
-	title="Unrated Tasks"
-	description="Rate them above to prioritize them!"
-	tasks={unratedTasks}
-	showBadges
-/>
+<div class="flex flex-col">
+	<TaskList
+		title="Low Hanging Fruits"
+		description="Do these first!"
+		tasks={lowHangingFruits}
+		showBadges
+	/>
+	<TaskList
+		title="Quick Wins"
+		description="Do these only if you run out of Low Hanging Fruits."
+		tasks={quickWins}
+		showBadges
+	/>
+	<TaskList
+		title="Leaps"
+		description="Do these only if you run out of Low Hanging Fruits and you're confident that they're valuable. Consider splitting them up to create multiple lower-effort tasks."
+		tasks={leaps}
+		showBadges
+	/>
+	<TaskList title="Traps" description="Consider dropping these." tasks={traps} showBadges />
+	<TaskList
+		title="Completed Tasks"
+		description="Well done!"
+		tasks={sortedCompletedTasks}
+		showBadges
+	/>
+	<TaskList
+		title="Unrated Tasks"
+		description="Rate them above to prioritize them!"
+		tasks={unratedTasks}
+		showBadges
+	/>
+</div>
