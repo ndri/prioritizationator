@@ -10,7 +10,19 @@
 	const { tasks }: Props = $props();
 
 	let chartRef = $state<HTMLDivElement>();
-	let chartWidth = $derived(chartRef?.clientWidth ?? 0);
+	let chartWidth = $state<number>();
+
+	$effect(() => {
+		chartWidth = chartRef?.clientWidth ?? 0;
+
+		const resizeObserver = new ResizeObserver((entries) => {
+			chartWidth = entries[0].contentRect.width;
+		});
+		if (chartRef) {
+			resizeObserver.observe(chartRef);
+		}
+		return () => resizeObserver.disconnect();
+	});
 </script>
 
 <section class="relative w-full p-4 md:p-16">
