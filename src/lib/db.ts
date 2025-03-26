@@ -157,8 +157,8 @@ async function recordMatchup(
 
 	const { newRating1, newRating2 } =
 		result === 'win'
-			? calculateWin(task1[ratingField], task2[ratingField], 1024)
-			: calculateDraw(task1[ratingField], task2[ratingField], 1024);
+			? calculateWin(task1[ratingField], task2[ratingField])
+			: calculateDraw(task1[ratingField], task2[ratingField]);
 
 	await db.tasks.update(taskId1, {
 		[ratingField]: newRating1,

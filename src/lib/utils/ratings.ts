@@ -1,3 +1,6 @@
+// higher k factor = more volatile rating changes
+export const defaultKFactor = 512;
+
 /**
  * Private helper function to calculate new Elo ratings
  * @param rating1 Current rating of player 1 (1-100)
@@ -47,7 +50,7 @@ function calculateEloChange(
 export function calculateWin(
 	rating1: number,
 	rating2: number,
-	kFactor = 32
+	kFactor = defaultKFactor
 ): {
 	newRating1: number;
 	newRating2: number;
