@@ -31,7 +31,6 @@
 			submit(value);
 			close();
 		}}
-		class="flex flex-col gap-2"
 		id="editDialogForm"
 	>
 		<TextInput id="editDialogInput" {label} bind:value autofocus />

@@ -1,6 +1,6 @@
 import { argMin, range } from '$lib/utils/array';
 import { calculateDraw, calculateWin } from './utils/ratings';
-import Dexie, { type EntityTable } from 'dexie';
+import Dexie, { type EntityTable, type Table } from 'dexie';
 
 export interface Project {
 	id: number;
@@ -27,9 +27,16 @@ export interface Task {
 	completedAt?: Date;
 }
 
+export interface TaskBlocking {
+	taskId: number;
+	blockedById: number;
+	createdAt: Date;
+}
+
 class PrioritizationatorDB extends Dexie {
 	projects!: EntityTable<Project, 'id'>;
 	tasks!: EntityTable<Task, 'id'>;
+	taskBlockings!: Table<TaskBlocking, [number, number]>;
 
 	constructor() {
 		super('Prioritizationator');
@@ -39,11 +46,16 @@ class PrioritizationatorDB extends Dexie {
 			tasks:
 				'++id, projectId, name, complete, valueRating, valueRatings, easeRating, easeRatings, createdAt, modifiedAt, completedAt'
 		});
+
+		this.version(2).stores({
+			taskBlockings: '[taskId+blockedById], taskId, blockedById, createdAt'
+		});
 	}
 }
 
 export const db = new PrioritizationatorDB();
 
+/* Projects */
 export async function getProjects() {
 	return db.projects.toArray();
 }
@@ -86,8 +98,18 @@ export async function getProjectTasks(projectId: number) {
 	return db.tasks.where({ projectId }).toArray();
 }
 
+export async function getOtherTasksInProject(projectId: number, taskId: number) {
+	const tasks = await db.tasks.where({ projectId: projectId }).toArray();
+	return tasks.filter((task) => task.id !== taskId);
+}
+
+/* Tasks */
 export async function getTask(id: number) {
 	return db.tasks.where({ id }).first();
+}
+
+export async function getTasks(ids: number[]) {
+	return db.tasks.bulkGet(ids);
 }
 
 export async function createTask({ name, projectId }: { name: string; projectId: number }) {
@@ -197,4 +219,49 @@ export async function resetRatings(projectId: number) {
 			easeRatings: 0
 		});
 	});
+}
+
+/* Task Blockings */
+export async function createBlocking(taskId: number, blockedById: number) {
+	return db.taskBlockings.put({ taskId, blockedById, createdAt: new Date() });
+}
+
+export async function deleteBlocking(taskId: number, blockedById: number) {
+	return db.taskBlockings.delete([taskId, blockedById]);
+}
+
+export async function getTasksBlockingToTask(taskId: number) {
+	return db.taskBlockings.where({ taskId }).toArray();
+}
+
+export async function getTaskIdsBlockingToTask(taskId: number) {
+	const tasks = await getTasksBlockingToTask(taskId);
+	return tasks.map((task) => task.blockedById);
+}
+
+export async function getTasksBlockedByTask(blockedById: number) {
+	return db.taskBlockings.where({ blockedById }).toArray();
+}
+
+export async function getTaskIdsBlockedByTask(blockedById: number) {
+	const tasks = await getTasksBlockedByTask(blockedById);
+	return tasks.map((task) => task.taskId);
+}
+
+export async function markTaskBlockedBy(taskId: number, blockedByIds: number[]) {
+	const currentBlockings = await getTaskIdsBlockingToTask(taskId);
+	const newBlockings = blockedByIds.filter((id) => !currentBlockings.includes(id));
+	const blockingsToDelete = currentBlockings.filter((id) => !blockedByIds.includes(id));
+
+	await Promise.all(newBlockings.map((blockedById) => createBlocking(taskId, blockedById)));
+	await Promise.all(blockingsToDelete.map((blockedById) => deleteBlocking(taskId, blockedById)));
+}
+
+export async function markTaskBlockingTo(taskId: number, blockingToIds: number[]) {
+	const currentBlockings = await getTaskIdsBlockedByTask(taskId);
+	const newBlockings = blockingToIds.filter((id) => !currentBlockings.includes(id));
+	const blockingsToDelete = currentBlockings.filter((id) => !blockingToIds.includes(id));
+
+	await Promise.all(newBlockings.map((blockedById) => createBlocking(blockedById, taskId)));
+	await Promise.all(blockingsToDelete.map((blockedById) => deleteBlocking(blockedById, taskId)));
 }

@@ -1,7 +1,19 @@
 <script lang="ts">
-	import { deleteTask, editTaskName, markTaskComplete, type Task } from '$lib/db';
+	import {
+		deleteTask,
+		editTaskName,
+		getOtherTasksInProject,
+		getTaskIdsBlockedByTask,
+		getTaskIdsBlockingToTask,
+		markTaskBlockedBy,
+		markTaskBlockingTo,
+		markTaskComplete,
+		type Task
+	} from '$lib/db';
 	import { taskEaseIsRated, taskValueIsRated } from '$lib/utils/tasks';
 	import EllipsisVerticalIcon from './heroicons/mini/EllipsisVerticalIcon.svelte';
+	import HandRaisedIcon from './heroicons/mini/HandRaisedIcon.svelte';
+	import NoSymbolIcon from './heroicons/mini/NoSymbolIcon.svelte';
 	import PencilSquareIcon from './heroicons/mini/PencilSquareIcon.svelte';
 	import TrashIcon from './heroicons/mini/TrashIcon.svelte';
 	import Menu from './Menu.svelte';
@@ -10,6 +22,8 @@
 	import Checkbox from './ui/Checkbox.svelte';
 	import EditDialog from './ui/EditDialog.svelte';
 	import { slide } from 'svelte/transition';
+	import { stateQuery } from '$lib/stateQuery.svelte';
+	import MultiSelectDialog from './ui/MultiSelectDialog.svelte';
 
 	interface Props {
 		task: Task;
@@ -19,7 +33,18 @@
 	const { task, showBadges = false }: Props = $props();
 
 	let editDialog = $state<EditDialog>();
+	let blockedByDialog = $state<MultiSelectDialog<number>>();
+	let blockingToDialog = $state<MultiSelectDialog<number>>();
 	let complete = $state<boolean>(task.complete);
+
+	const taskIdsBlockingToTaskQuery = stateQuery(() => getTaskIdsBlockingToTask(task.id));
+	const taskIdsBlockingToTask = $derived(taskIdsBlockingToTaskQuery.current ?? []);
+
+	const taskIdsBlockedByTaskQuery = stateQuery(() => getTaskIdsBlockedByTask(task.id));
+	const taskIdsBlockedByTask = $derived(taskIdsBlockedByTaskQuery.current ?? []);
+
+	const otherTasksQuery = stateQuery(() => getOtherTasksInProject(task.projectId, task.id));
+	const otherTasks = $derived(otherTasksQuery.current ?? []);
 </script>
 
 <li class="flex items-center gap-3 py-3 pl-5 pr-3" transition:slide>
@@ -32,6 +57,7 @@
 			onchange={() => markTaskComplete(task.id, complete)}
 		/>
 	{/if}
+	<!-- <div class="text-slate-500 dark:text-slate-500">{task.id}</div> -->
 	<div class="grow">{task.name}</div>
 	{#if showBadges}
 		<RatingBadge label="Value" rating={task.valueRating ?? -1} rated={taskValueIsRated(task)} />
@@ -50,6 +76,26 @@
 				}
 			},
 			{
+				label: 'Mark blocked by...',
+				Icon: NoSymbolIcon,
+				onSelect: () => {
+					if (blockedByDialog) {
+						blockedByDialog.setValues(taskIdsBlockingToTask);
+						blockedByDialog.open();
+					}
+				}
+			},
+			{
+				label: 'Mark blocking to...',
+				Icon: HandRaisedIcon,
+				onSelect: () => {
+					if (blockingToDialog) {
+						blockingToDialog.setValues(taskIdsBlockedByTask);
+						blockingToDialog.open();
+					}
+				}
+			},
+			{
 				label: 'Delete task',
 				Icon: TrashIcon,
 				onSelect: () => deleteTask(task.id)
@@ -64,3 +110,29 @@
 </li>
 
 <EditDialog bind:this={editDialog} label="Task" submit={(value) => editTaskName(task.id, value)} />
+
+<MultiSelectDialog
+	bind:this={blockedByDialog}
+	options={otherTasks.map((task) => ({ value: task.id, label: task.name }))}
+	submit={(value) => markTaskBlockedBy(task.id, value)}
+>
+	{#snippet label()}
+		<p>
+			Task <span class="font-medium text-indigo-600 dark:text-indigo-500">{task.name}</span>
+			is blocked by these tasks:
+		</p>
+	{/snippet}
+</MultiSelectDialog>
+
+<MultiSelectDialog
+	bind:this={blockingToDialog}
+	options={otherTasks.map((task) => ({ value: task.id, label: task.name }))}
+	submit={(value) => markTaskBlockingTo(task.id, value)}
+>
+	{#snippet label()}
+		<p>
+			Task <span class="font-medium text-indigo-600 dark:text-indigo-500">{task.name}</span>
+			is blocking these tasks:
+		</p>
+	{/snippet}
+</MultiSelectDialog>
