@@ -27,6 +27,11 @@ export interface Task {
 	completedAt?: Date;
 }
 
+export interface TaskWithBlockings extends Task {
+	blockedBy: number[];
+	blockingTo: number[];
+}
+
 export interface TaskBlocking {
 	taskId: number;
 	blockedById: number;
@@ -95,7 +100,15 @@ export async function editProjectName(id: number, name: string) {
 }
 
 export async function getProjectTasks(projectId: number) {
-	return db.tasks.where({ projectId }).toArray();
+	const tasks = await db.tasks.where({ projectId }).toArray();
+	const tasksWithBlockings = await Promise.all(
+		tasks.map(async (task) => {
+			const blockedBy = await getTaskIdsBlockingToTask(task.id);
+			const blockingTo = await getTaskIdsBlockedByTask(task.id);
+			return { ...task, blockedBy, blockingTo };
+		})
+	);
+	return tasksWithBlockings;
 }
 
 export async function getOtherTasksInProject(projectId: number, taskId: number) {
@@ -141,6 +154,7 @@ export async function markTaskComplete(id: number, complete: boolean) {
 	return db.tasks.update(id, { complete });
 }
 
+/* Matchups */
 export async function getTaskPair(projectId: number, dimension: 'value' | 'ease') {
 	const ratingField = (dimension + 'Rating') as 'valueRating' | 'easeRating';
 

@@ -1,10 +1,10 @@
-import type { Task } from '../db';
+import type { Task, TaskWithBlockings } from '../db';
 import { sum } from './array';
 
 export const minRatings = 3 as const;
 export const minTasksForRating = 5 as const;
 
-export function sortTasksByRating(tasks: Task[]) {
+export function sortTasksByRating(tasks: TaskWithBlockings[]) {
 	return tasks.toSorted((a, b) => {
 		const aRating = (a.valueRating ?? 1) * (a.easeRating ?? 1);
 		const bRating = (b.valueRating ?? 1) * (b.easeRating ?? 1);
@@ -72,12 +72,20 @@ export function filterLeaps(tasks: Task[]) {
 	return tasks.filter(taskIsLeap);
 }
 
-export function filterIncompleteTasks(tasks: Task[]) {
+export function filterIncompleteTasks(tasks: TaskWithBlockings[]) {
 	return tasks.filter((task) => !task.complete);
 }
 
 export function filterCompletedTasks(tasks: Task[]) {
 	return tasks.filter((task) => task.complete);
+}
+
+export function filterBlockedTasks(tasks: TaskWithBlockings[]) {
+	return tasks.filter((task) => task.blockedBy.length > 0);
+}
+
+export function filterUnblockedTasks(tasks: TaskWithBlockings[]) {
+	return tasks.filter((task) => task.blockedBy.length === 0);
 }
 
 export function taskColorClasses(task: Task) {
@@ -110,6 +118,6 @@ export function easeRatingsProgress(tasks: Task[]) {
 	return completedRatings + inProgressRatings;
 }
 
-export function tasksReadyForRating(tasks: Task[]) {
+export function tasksReadyForRating(tasks: TaskWithBlockings[]) {
 	return filterIncompleteTasks(tasks).length >= minTasksForRating;
 }

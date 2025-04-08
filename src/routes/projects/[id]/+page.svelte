@@ -7,7 +7,6 @@
 	import {
 		easeRatingsProgress,
 		filterIncompleteTasks,
-		filterRatedTasks,
 		minTasksForRating,
 		ratingsRequired,
 		tasksReadyForRating,

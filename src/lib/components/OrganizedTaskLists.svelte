@@ -1,5 +1,6 @@
 <script lang="ts">
 	import {
+		filterBlockedTasks,
 		filterCompletedTasks,
 		filterIncompleteTasks,
 		filterLeaps,
@@ -7,23 +8,28 @@
 		filterQuickWins,
 		filterRatedTasks,
 		filterTraps,
+		filterUnblockedTasks,
 		filterUnratedTasks,
 		sortTasksByCompletedAt,
 		sortTasksByRating
 	} from '$lib/utils/tasks';
-	import { type Task } from '../db';
+	import { type TaskWithBlockings } from '../db';
 	import TaskList from './TaskList.svelte';
 
 	interface Props {
-		tasks?: Task[];
+		tasks?: TaskWithBlockings[];
 	}
 
 	const { tasks = [] }: Props = $props();
 
 	const incompleteTasks = $derived(filterIncompleteTasks(tasks));
 	const sortedIncompleteTasks = $derived(sortTasksByRating(incompleteTasks));
-	const unratedTasks = $derived(filterUnratedTasks(sortedIncompleteTasks));
-	const ratedTasks = $derived(filterRatedTasks(sortedIncompleteTasks));
+	const blockedTasks = $derived(filterBlockedTasks(sortedIncompleteTasks));
+
+	const unblockedTasks = $derived(filterUnblockedTasks(sortedIncompleteTasks));
+	const unratedTasks = $derived(filterUnratedTasks(unblockedTasks));
+	const ratedTasks = $derived(filterRatedTasks(unblockedTasks));
+
 	const lowHangingFruits = $derived(filterLowHangingFruits(ratedTasks));
 	const traps = $derived(filterTraps(ratedTasks));
 	const quickWins = $derived(filterQuickWins(ratedTasks));
@@ -57,6 +63,12 @@
 		title="Completed Tasks"
 		description="Well done!"
 		tasks={sortedCompletedTasks}
+		showBadges
+	/>
+	<TaskList
+		title="Blocked Tasks"
+		description="These tasks are blocked by other tasks. Complete the blocking tasks to prioritize them."
+		tasks={blockedTasks}
 		showBadges
 	/>
 	<TaskList

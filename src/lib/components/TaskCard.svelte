@@ -24,7 +24,6 @@
 	import { slide } from 'svelte/transition';
 	import { stateQuery } from '$lib/stateQuery.svelte';
 	import MultiSelectDialog from './ui/MultiSelectDialog.svelte';
-	import Tooltip from './Tooltip.svelte';
 	import BlockedByIndicator from './BlockedByIndicator.svelte';
 
 	interface Props {
@@ -51,27 +50,28 @@
 
 <li class="flex items-center gap-3 py-3 pl-5 pr-3" transition:slide>
 	{#if showBadges}
-		<Checkbox
-			id="taskCheckbox{task.id}"
-			label={task.name}
-			bind:checked={complete}
-			size="lg"
-			onchange={() => markTaskComplete(task.id, complete)}
-		/>
+		{#if taskIdsBlockingToTask.length && !task.complete}
+			<BlockedByIndicator
+				tasksCount={taskIdsBlockingToTask.length}
+				onclick={() => {
+					if (blockingToDialog) {
+						blockingToDialog.setValues(taskIdsBlockingToTask);
+						blockingToDialog.open();
+					}
+				}}
+			/>
+		{:else}
+			<Checkbox
+				id="taskCheckbox{task.id}"
+				label={task.name}
+				bind:checked={complete}
+				size="lg"
+				onchange={() => markTaskComplete(task.id, complete)}
+			/>
+		{/if}
 	{/if}
 	<!-- <div class="text-slate-500 dark:text-slate-500">{task.id}</div> -->
 	<div class="grow">{task.name}</div>
-	{#if showBadges && taskIdsBlockingToTask.length}
-		<BlockedByIndicator
-			tasksCount={taskIdsBlockingToTask.length}
-			onclick={() => {
-				if (blockingToDialog) {
-					blockingToDialog.setValues(taskIdsBlockingToTask);
-					blockingToDialog.open();
-				}
-			}}
-		/>
-	{/if}
 	{#if showBadges}
 		<RatingBadge label="Value" rating={task.valueRating ?? -1} rated={taskValueIsRated(task)} />
 		<RatingBadge label="Ease" rating={task.easeRating ?? -1} rated={taskEaseIsRated(task)} />
