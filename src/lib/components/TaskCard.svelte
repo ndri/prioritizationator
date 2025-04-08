@@ -10,7 +10,7 @@
 		markTaskComplete,
 		type Task
 	} from '$lib/db';
-	import { taskEaseIsRated, taskValueIsRated } from '$lib/utils/tasks';
+	import { filterIncompleteTasks, taskEaseIsRated, taskValueIsRated } from '$lib/utils/tasks';
 	import EllipsisVerticalIcon from './heroicons/mini/EllipsisVerticalIcon.svelte';
 	import HandRaisedIcon from './heroicons/mini/HandRaisedIcon.svelte';
 	import NoSymbolIcon from './heroicons/mini/NoSymbolIcon.svelte';
@@ -46,6 +46,7 @@
 
 	const otherTasksQuery = stateQuery(() => getOtherTasksInProject(task.projectId, task.id));
 	const otherTasks = $derived(otherTasksQuery.current ?? []);
+	const otherIncompleteTasks = $derived(filterIncompleteTasks(otherTasks));
 </script>
 
 <li class="flex items-center gap-3 py-3 pl-5 pr-3" transition:slide>
@@ -126,7 +127,7 @@
 
 <MultiSelectDialog
 	bind:this={blockedByDialog}
-	options={otherTasks.map((task) => ({ value: task.id, label: task.name }))}
+	options={otherIncompleteTasks.map((task) => ({ value: task.id, label: task.name }))}
 	submit={(value) => markTaskBlockedBy(task.id, value)}
 >
 	{#snippet label()}
@@ -139,7 +140,7 @@
 
 <MultiSelectDialog
 	bind:this={blockingToDialog}
-	options={otherTasks.map((task) => ({ value: task.id, label: task.name }))}
+	options={otherIncompleteTasks.map((task) => ({ value: task.id, label: task.name }))}
 	submit={(value) => markTaskBlockingTo(task.id, value)}
 >
 	{#snippet label()}

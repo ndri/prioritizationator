@@ -112,7 +112,7 @@ export async function getProjectTasks(projectId: number) {
 }
 
 export async function getOtherTasksInProject(projectId: number, taskId: number) {
-	const tasks = await db.tasks.where({ projectId: projectId }).toArray();
+	const tasks = await getProjectTasks(projectId);
 	return tasks.filter((task) => task.id !== taskId);
 }
 
