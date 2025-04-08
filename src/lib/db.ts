@@ -101,13 +101,7 @@ export async function editProjectName(id: number, name: string) {
 
 export async function getProjectTasks(projectId: number) {
 	const tasks = await db.tasks.where({ projectId }).toArray();
-	const tasksWithBlockings = await Promise.all(
-		tasks.map(async (task) => {
-			const blockedBy = await getTaskIdsBlockingToTask(task.id);
-			const blockingTo = await getTaskIdsBlockedByTask(task.id);
-			return { ...task, blockedBy, blockingTo };
-		})
-	);
+	const tasksWithBlockings = await addBlockingsToTasks(tasks);
 	return tasksWithBlockings;
 }
 
@@ -158,10 +152,15 @@ export async function markTaskComplete(id: number, complete: boolean) {
 export async function getTaskPair(projectId: number, dimension: 'value' | 'ease') {
 	const ratingField = (dimension + 'Rating') as 'valueRating' | 'easeRating';
 
-	const tasks = await db.tasks
+	const tasksWithoutBlockings = await db.tasks
 		.where({ projectId })
 		.filter((task) => task.complete === false)
 		.sortBy(ratingField);
+
+	const tasksWithBlockings = await addBlockingsToTasks(tasksWithoutBlockings);
+	const tasks = tasksWithBlockings.filter((task) => task.blockedBy.length === 0);
+
+	if (tasks.length < 2) return;
 
 	const differences = range(0, tasks.length - 2).map((index) => ({
 		task1: tasks[index],
@@ -278,4 +277,14 @@ export async function markTaskBlockingTo(taskId: number, blockingToIds: number[]
 
 	await Promise.all(newBlockings.map((blockedById) => createBlocking(blockedById, taskId)));
 	await Promise.all(blockingsToDelete.map((blockedById) => deleteBlocking(blockedById, taskId)));
+}
+
+export async function addBlockingsToTasks(tasks: Task[]) {
+	return await Promise.all(
+		tasks.map(async (task) => {
+			const blockedBy = await getTaskIdsBlockingToTask(task.id);
+			const blockingTo = await getTaskIdsBlockedByTask(task.id);
+			return { ...task, blockedBy, blockingTo };
+		})
+	);
 }

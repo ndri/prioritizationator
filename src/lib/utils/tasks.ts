@@ -2,7 +2,7 @@ import type { Task, TaskWithBlockings } from '../db';
 import { sum } from './array';
 
 export const minRatings = 3 as const;
-export const minTasksForRating = 5 as const;
+export const minTasksForRating = 2 as const;
 
 export function sortTasksByRating(tasks: TaskWithBlockings[]) {
 	return tasks.toSorted((a, b) => {
@@ -98,26 +98,31 @@ export function taskColorClasses(task: Task) {
 	return 'bg-slate-700 hover:bg-slate-600 dark:bg-slate-800 dark:hover:bg-slate-700';
 }
 
-export function ratingsRequired(tasks: Task[]) {
-	return tasks.length * minRatings;
+export function ratingsRequired(tasks: TaskWithBlockings[]) {
+	const unblockedTasks = filterUnblockedTasks(tasks);
+	return unblockedTasks.length * minRatings;
 }
 
-export function valueRatingsProgress(tasks: Task[]) {
-	const completedRatings = tasks.filter(taskValueIsRated).length * minRatings;
+export function valueRatingsProgress(tasks: TaskWithBlockings[]) {
+	const unblockedTasks = filterUnblockedTasks(tasks);
+	const completedRatings = unblockedTasks.filter(taskValueIsRated).length * minRatings;
 	const inProgressRatings = sum(
-		tasks.filter((task) => !taskValueIsRated(task)).map((task) => task.valueRatings)
+		unblockedTasks.filter((task) => !taskValueIsRated(task)).map((task) => task.valueRatings)
 	);
 	return completedRatings + inProgressRatings;
 }
 
-export function easeRatingsProgress(tasks: Task[]) {
-	const completedRatings = tasks.filter(taskEaseIsRated).length * minRatings;
+export function easeRatingsProgress(tasks: TaskWithBlockings[]) {
+	const unblockedTasks = filterUnblockedTasks(tasks);
+	const completedRatings = unblockedTasks.filter(taskEaseIsRated).length * minRatings;
 	const inProgressRatings = sum(
-		tasks.filter((task) => !taskEaseIsRated(task)).map((task) => task.easeRatings)
+		unblockedTasks.filter((task) => !taskEaseIsRated(task)).map((task) => task.easeRatings)
 	);
 	return completedRatings + inProgressRatings;
 }
 
 export function tasksReadyForRating(tasks: TaskWithBlockings[]) {
-	return filterIncompleteTasks(tasks).length >= minTasksForRating;
+	const incompleteTasks = filterIncompleteTasks(tasks);
+	const unblockedIncompleteTasks = filterUnblockedTasks(incompleteTasks);
+	return unblockedIncompleteTasks.length >= minTasksForRating;
 }

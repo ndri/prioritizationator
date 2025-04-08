@@ -93,7 +93,7 @@
 				</div>
 			{:else}
 				<p class="text-slate-500 dark:text-slate-400" transition:slide>
-					You need at least {minTasksForRating} incomplete tasks to rate them.
+					You need at least {minTasksForRating} unrated tasks to rate them.
 				</p>
 			{/if}
 		</div>
