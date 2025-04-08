@@ -29,7 +29,9 @@
 	];
 </script>
 
-<header class="sticky top-0 z-10 flex w-full max-w-3xl justify-between bg-slate-900 p-6 lg:hidden">
+<header
+	class="sticky top-0 z-10 flex w-full max-w-3xl justify-between bg-slate-100 p-6 lg:hidden dark:bg-slate-900"
+>
 	<h1 class="text-xl font-semibold">Prioritizationator</h1>
 	<Menu
 		items={menuItems.map((menuItem) => ({
