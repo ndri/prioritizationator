@@ -1,11 +1,28 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { TEMPLATES, type Template } from '$lib/data/templates';
-	import { createProject, createTask } from '$lib/db';
+	import { createBlocking, createProject, createTask } from '$lib/db';
 
 	const createProjectFromTemplate = async (template: Template) => {
 		const projectId = await createProject({ name: template.name });
-		await Promise.all(template.tasks.map((task) => createTask({ name: task, projectId })));
+		const taskIds = await Promise.all(
+			template.tasks.map((task) => createTask({ name: task.name, projectId }))
+		);
+		const templateTaskIdToTaskIdMap = new Map<number, number>();
+		template.tasks.forEach((templateTask, index) => {
+			templateTaskIdToTaskIdMap.set(templateTask.id, taskIds[index]);
+		});
+		await Promise.all(
+			template.tasks.map((templateTask) => {
+				const taskId = templateTaskIdToTaskIdMap.get(templateTask.id) as number;
+				return Promise.all(
+					templateTask.blockedBy.map((blockedBy) => {
+						const blockedById = templateTaskIdToTaskIdMap.get(blockedBy) as number;
+						return createBlocking(taskId, blockedById);
+					})
+				);
+			})
+		);
 		goto(`/projects/${projectId}/tasks`);
 	};
 </script>
