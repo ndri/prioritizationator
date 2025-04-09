@@ -50,26 +50,24 @@
 </script>
 
 <li class="flex items-center gap-3 py-3 pl-5 pr-3" transition:slide>
-	{#if showBadges}
-		{#if taskIdsBlockingToTask.length && !task.complete}
-			<BlockedByIndicator
-				tasksCount={taskIdsBlockingToTask.length}
-				onclick={() => {
-					if (blockingToDialog) {
-						blockingToDialog.setValues(taskIdsBlockingToTask);
-						blockingToDialog.open();
-					}
-				}}
-			/>
-		{:else}
-			<Checkbox
-				id="taskCheckbox{task.id}"
-				label={task.name}
-				bind:checked={complete}
-				size="lg"
-				onchange={() => markTaskComplete(task.id, complete)}
-			/>
-		{/if}
+	{#if taskIdsBlockingToTask.length && !task.complete}
+		<BlockedByIndicator
+			tasksCount={taskIdsBlockingToTask.length}
+			onclick={() => {
+				if (blockingToDialog) {
+					blockingToDialog.setValues(taskIdsBlockingToTask);
+					blockingToDialog.open();
+				}
+			}}
+		/>
+	{:else if showBadges}
+		<Checkbox
+			id="taskCheckbox{task.id}"
+			label={task.name}
+			bind:checked={complete}
+			size="lg"
+			onchange={() => markTaskComplete(task.id, complete)}
+		/>
 	{/if}
 	<!-- <div class="text-slate-500 dark:text-slate-500">{task.id}</div> -->
 	<div class="grow">{task.name}</div>
