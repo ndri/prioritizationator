@@ -116,7 +116,9 @@ export async function getTask(id: number) {
 }
 
 export async function getTasks(ids: number[]) {
-	return db.tasks.bulkGet(ids);
+	return db.tasks.bulkGet(ids).then((tasks) => tasks.filter((task) => Boolean(task))) as Promise<
+		Task[]
+	>;
 }
 
 export async function createTask({ name, projectId }: { name: string; projectId: number }) {
@@ -243,22 +245,40 @@ export async function deleteBlocking(taskId: number, blockedById: number) {
 	return db.taskBlockings.delete([taskId, blockedById]);
 }
 
-export async function getTasksBlockingToTask(taskId: number) {
+export async function getTaskBlockingsBlockingToTask(taskId: number) {
 	return db.taskBlockings.where({ taskId }).toArray();
+}
+
+export async function getTasksBlockingToTask(taskId: number) {
+	const taskBlockings = await getTaskBlockingsBlockingToTask(taskId);
+	const tasksIds = taskBlockings.map((task) => task.blockedById);
+	const tasks = await getTasks(tasksIds);
+	const incompleteTasks = tasks.filter((task) => task.complete === false);
+
+	return incompleteTasks;
 }
 
 export async function getTaskIdsBlockingToTask(taskId: number) {
 	const tasks = await getTasksBlockingToTask(taskId);
-	return tasks.map((task) => task.blockedById);
+	return tasks.map((task) => task.id);
+}
+
+export async function getTaskBlockingsBlockedByTask(blockedById: number) {
+	return db.taskBlockings.where({ blockedById }).toArray();
 }
 
 export async function getTasksBlockedByTask(blockedById: number) {
-	return db.taskBlockings.where({ blockedById }).toArray();
+	const taskBlockings = await getTaskBlockingsBlockedByTask(blockedById);
+	const tasksIds = taskBlockings.map((task) => task.taskId);
+	const tasks = await getTasks(tasksIds);
+	const incompleteTasks = tasks.filter((task) => task.complete === false);
+
+	return incompleteTasks;
 }
 
 export async function getTaskIdsBlockedByTask(blockedById: number) {
 	const tasks = await getTasksBlockedByTask(blockedById);
-	return tasks.map((task) => task.taskId);
+	return tasks.map((task) => task.id);
 }
 
 export async function markTaskBlockedBy(taskId: number, blockedByIds: number[]) {
