@@ -5,8 +5,7 @@
 	import { getProject } from '$lib/db';
 	import type { PageProps } from './$types';
 	import Button from '$lib/components/ui/Button.svelte';
-
-	const MIN_TASKS = 5;
+	import { minTasksForRating } from '$lib/utils/tasks';
 
 	let { data }: PageProps = $props();
 
@@ -27,11 +26,12 @@
 
 		<NewTaskForm {projectId} autofocus />
 
-		{#if project.tasks.length >= MIN_TASKS}
+		{#if project.tasks.length >= minTasksForRating}
 			<Button href="/projects/{projectId}" size="xl">Continue</Button>
 		{:else}
+			{@const needToAdd = minTasksForRating - project.tasks.length}
 			<p class="text-slate-500 dark:text-slate-400">
-				Add {MIN_TASKS - project.tasks.length} more tasks to get started!
+				Add {needToAdd} more task{needToAdd === 1 ? '' : 's'} to get started!
 			</p>
 		{/if}
 	{/if}

@@ -6,6 +6,7 @@
 	import type { PageProps } from './$types';
 	import {
 		easeRatingsProgress,
+		filterDoableTasks,
 		filterIncompleteTasks,
 		minTasksForRating,
 		ratingsRequired,
@@ -98,9 +99,10 @@
 			{/if}
 		</div>
 
-		{#if filterIncompleteTasks(project.tasks).length}
+		{@const doableTasks = filterDoableTasks(project.tasks)}
+		{#if doableTasks}
 			<div transition:slide>
-				<PrioritizationMatrix tasks={filterIncompleteTasks(project.tasks)} />
+				<PrioritizationMatrix tasks={doableTasks} />
 			</div>
 		{/if}
 	{/if}

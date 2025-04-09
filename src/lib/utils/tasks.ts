@@ -88,6 +88,10 @@ export function filterUnblockedTasks(tasks: TaskWithBlockings[]) {
 	return tasks.filter((task) => task.blockedBy.length === 0);
 }
 
+export function filterDoableTasks(tasks: TaskWithBlockings[]) {
+	return filterIncompleteTasks(filterUnblockedTasks(tasks));
+}
+
 export function taskColorClasses(task: Task) {
 	if (taskIsLowHangingFruit(task))
 		return 'bg-indigo-500/80 hover:bg-indigo-600/80 dark:bg-indigo-700/80 dark:hover:bg-indigo-600/80';
