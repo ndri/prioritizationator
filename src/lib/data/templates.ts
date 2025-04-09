@@ -1536,5 +1536,3 @@ export const TEMPLATES: Template[] = [
 		]
 	}
 ];
-
-// These can be added to your existing TEMPLATES array
