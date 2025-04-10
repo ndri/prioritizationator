@@ -299,12 +299,35 @@ export async function markTaskBlockingTo(taskId: number, blockingToIds: number[]
 	await Promise.all(blockingsToDelete.map((blockedById) => deleteBlocking(blockedById, taskId)));
 }
 
-async function addBlockingsToTasks(tasks: Task[]) {
-	return await Promise.all(
-		tasks.map(async (task) => {
-			const blockedBy = await getTaskIdsBlockingToTask(task.id);
-			const blockingTo = await getTaskIdsBlockedByTask(task.id);
-			return { ...task, blockedBy, blockingTo };
-		})
-	);
+async function addBlockingsToTasks(tasks: Task[]): Promise<TaskWithBlockings[]> {
+	if (tasks.length === 0) return [];
+
+	const taskIds = tasks.map((task) => task.id);
+	const completedTaskIds = tasks.filter((task) => task.complete).map((task) => task.id);
+
+	const allBlockingsTo = await db.taskBlockings.where('taskId').anyOf(taskIds).toArray();
+	const allBlockingsFrom = await db.taskBlockings.where('blockedById').anyOf(taskIds).toArray();
+
+	const blockingsToMap: Record<number, number[]> = {};
+	const blockingsFromMap: Record<number, number[]> = {};
+
+	taskIds.forEach((id) => {
+		blockingsToMap[id] = [];
+		blockingsFromMap[id] = [];
+	});
+
+	allBlockingsTo.forEach((blocking) => {
+		if (completedTaskIds.includes(blocking.blockedById)) return;
+		blockingsToMap[blocking.taskId].push(blocking.blockedById);
+	});
+
+	allBlockingsFrom.forEach((blocking) => {
+		blockingsFromMap[blocking.blockedById].push(blocking.taskId);
+	});
+
+	return tasks.map((task) => ({
+		...task,
+		blockedBy: blockingsToMap[task.id] ?? [],
+		blockingTo: blockingsFromMap[task.id] ?? []
+	}));
 }
