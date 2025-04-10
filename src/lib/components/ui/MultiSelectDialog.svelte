@@ -15,7 +15,19 @@
 	let dialog = $state<Dialog>();
 	let values = $state<T[]>([]);
 
+	let customOptions = $state(options);
+	$effect(() => {
+		customOptions = options;
+	});
+
 	export function open() {
+		customOptions.sort((a, b) => {
+			const aIndex = values.indexOf(a.value);
+			const bIndex = values.indexOf(b.value);
+			if (aIndex !== -1 && bIndex === -1) return -1;
+			if (aIndex === -1 && bIndex !== -1) return 1;
+			return 0;
+		});
 		dialog?.open();
 	}
 	export function close() {
@@ -45,7 +57,7 @@
 			id="blockedByDialogInput"
 			name="blockedBy"
 			label="Blocked by"
-			{options}
+			options={customOptions}
 			bind:values
 			hiddenLabel
 		/>
