@@ -111,11 +111,11 @@ export async function getOtherTasksInProject(projectId: number, taskId: number) 
 }
 
 /* Tasks */
-export async function getTask(id: number) {
+async function getTask(id: number) {
 	return db.tasks.where({ id }).first();
 }
 
-export async function getTasks(ids: number[]) {
+async function getTasks(ids: number[]) {
 	return db.tasks.bulkGet(ids).then((tasks) => tasks.filter((task) => Boolean(task))) as Promise<
 		Task[]
 	>;
@@ -241,15 +241,15 @@ export async function createBlocking(taskId: number, blockedById: number) {
 	return db.taskBlockings.put({ taskId, blockedById, createdAt: new Date() });
 }
 
-export async function deleteBlocking(taskId: number, blockedById: number) {
+async function deleteBlocking(taskId: number, blockedById: number) {
 	return db.taskBlockings.delete([taskId, blockedById]);
 }
 
-export async function getTaskBlockingsBlockingToTask(taskId: number) {
+async function getTaskBlockingsBlockingToTask(taskId: number) {
 	return db.taskBlockings.where({ taskId }).toArray();
 }
 
-export async function getTasksBlockingToTask(taskId: number) {
+async function getTasksBlockingToTask(taskId: number) {
 	const taskBlockings = await getTaskBlockingsBlockingToTask(taskId);
 	const tasksIds = taskBlockings.map((task) => task.blockedById);
 	const tasks = await getTasks(tasksIds);
@@ -263,11 +263,11 @@ export async function getTaskIdsBlockingToTask(taskId: number) {
 	return tasks.map((task) => task.id);
 }
 
-export async function getTaskBlockingsBlockedByTask(blockedById: number) {
+async function getTaskBlockingsBlockedByTask(blockedById: number) {
 	return db.taskBlockings.where({ blockedById }).toArray();
 }
 
-export async function getTasksBlockedByTask(blockedById: number) {
+async function getTasksBlockedByTask(blockedById: number) {
 	const taskBlockings = await getTaskBlockingsBlockedByTask(blockedById);
 	const tasksIds = taskBlockings.map((task) => task.taskId);
 	const tasks = await getTasks(tasksIds);
@@ -299,7 +299,7 @@ export async function markTaskBlockingTo(taskId: number, blockingToIds: number[]
 	await Promise.all(blockingsToDelete.map((blockedById) => deleteBlocking(blockedById, taskId)));
 }
 
-export async function addBlockingsToTasks(tasks: Task[]) {
+async function addBlockingsToTasks(tasks: Task[]) {
 	return await Promise.all(
 		tasks.map(async (task) => {
 			const blockedBy = await getTaskIdsBlockingToTask(task.id);
