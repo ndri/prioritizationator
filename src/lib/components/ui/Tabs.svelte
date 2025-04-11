@@ -11,6 +11,12 @@
 	}
 
 	let { values, selected = $bindable() }: Props = $props();
+
+	$effect(() => {
+		if (!values.some((v) => v.id === selected)) {
+			selected = values[0]?.id;
+		}
+	});
 </script>
 
 <div class="flex gap-2">

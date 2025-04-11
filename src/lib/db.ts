@@ -88,9 +88,7 @@ export async function createProject({ name }: { name: string }) {
 
 export async function deleteProject(id: number) {
 	const tasks = await db.tasks.where({ projectId: id }).toArray();
-	for (const task of tasks) {
-		await db.tasks.delete(task.id);
-	}
+	tasks.forEach((task) => deleteTask(task.id));
 	return db.projects.delete(id);
 }
 
@@ -135,6 +133,10 @@ export async function createTask({ name, projectId }: { name: string; projectId:
 }
 
 export async function deleteTask(id: number) {
+	const blockings1 = await db.taskBlockings.where('taskId').equals(id).toArray();
+	const blockings2 = await db.taskBlockings.where('blockedById').equals(id).toArray();
+	const blockings = [...blockings1, ...blockings2];
+	blockings.forEach((blocking) => deleteBlocking(blocking.taskId, blocking.blockedById));
 	return db.tasks.delete(id);
 }
 
