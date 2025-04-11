@@ -9,6 +9,7 @@
 		filterCompletedTasks,
 		filterDoableTasks,
 		filterIncompleteTasks,
+		filterUnblockedTasks,
 		minTasksForRating,
 		ratingsRequired,
 		sortTasksByTotalRating,
@@ -110,30 +111,35 @@
 		{@const incompleteTasks = filterIncompleteTasks(project.tasks)}
 		{@const sortedIncompleteTasks = sortTasksByTotalRating(incompleteTasks)}
 		{@const blockedTasks = filterBlockedTasks(sortedIncompleteTasks)}
+		{@const unblockedTasks = filterUnblockedTasks(sortedIncompleteTasks)}
 
 		{@const completedTasks = filterCompletedTasks(project.tasks)}
 
 		{@const doableTasks = filterDoableTasks(project.tasks)}
 
 		{@const tabValues = [
-			{ id: 'ready', label: 'Ready' },
-			...(doableTasks.length > 1 ? [{ id: 'matrix', label: 'Matrix' }] : []),
-			...(blockedTasks.length ? [{ id: 'blocked', label: 'Blocked' }] : []),
-			...(completedTasks.length ? [{ id: 'completed', label: 'Completed' }] : [])
+			{ id: 'ready', label: 'Ready', tag: String(unblockedTasks.length || '') },
+			...(blockedTasks.length
+				? [{ id: 'blocked', label: 'Blocked', tag: String(blockedTasks.length) }]
+				: []),
+			...(completedTasks.length
+				? [{ id: 'completed', label: 'Completed', tag: String(completedTasks.length) }]
+				: []),
+			...(doableTasks.length > 1 ? [{ id: 'matrix', label: 'Matrix' }] : [])
 		]}
 		<div class="flex flex-col gap-4">
 			{#if tabValues.length > 1}
 				<Tabs values={tabValues} bind:selected={tab} />
 			{/if}
 			{#if tab === 'ready'}
-				<ReadyTasks {sortedIncompleteTasks} />
+				<ReadyTasks {unblockedTasks} />
 				<NewTaskForm {projectId} />
-			{:else if tab === 'matrix'}
-				<PrioritizationMatrix tasks={doableTasks} />
 			{:else if tab === 'blocked'}
 				<BlockedTasks {blockedTasks} />
 			{:else if tab === 'completed'}
 				<CompletedTasks {completedTasks} />
+			{:else if tab === 'matrix'}
+				<PrioritizationMatrix tasks={doableTasks} />
 			{/if}
 		</div>
 

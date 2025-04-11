@@ -5,19 +5,17 @@
 		filterQuickWins,
 		filterRatedTasks,
 		filterTraps,
-		filterUnblockedTasks,
 		filterUnratedTasks
 	} from '$lib/utils/tasks';
 	import { type TaskWithBlockings } from '../db';
 	import TaskList from './TaskList.svelte';
 
 	interface Props {
-		sortedIncompleteTasks?: TaskWithBlockings[];
+		unblockedTasks?: TaskWithBlockings[];
 	}
 
-	const { sortedIncompleteTasks = [] }: Props = $props();
+	const { unblockedTasks = [] }: Props = $props();
 
-	const unblockedTasks = $derived(filterUnblockedTasks(sortedIncompleteTasks));
 	const unratedTasks = $derived(filterUnratedTasks(unblockedTasks));
 	const ratedTasks = $derived(filterRatedTasks(unblockedTasks));
 
