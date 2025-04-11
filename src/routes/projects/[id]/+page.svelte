@@ -11,7 +11,7 @@
 		filterIncompleteTasks,
 		minTasksForRating,
 		ratingsRequired,
-		sortTasksByRating,
+		sortTasksByTotalRating,
 		tasksReadyForRating,
 		valueRatingsProgress
 	} from '$lib/utils/tasks';
@@ -108,7 +108,7 @@
 		</div>
 
 		{@const incompleteTasks = filterIncompleteTasks(project.tasks)}
-		{@const sortedIncompleteTasks = sortTasksByRating(incompleteTasks)}
+		{@const sortedIncompleteTasks = sortTasksByTotalRating(incompleteTasks)}
 		{@const blockedTasks = filterBlockedTasks(sortedIncompleteTasks)}
 
 		{@const completedTasks = filterCompletedTasks(project.tasks)}

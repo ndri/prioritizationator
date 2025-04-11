@@ -1,4 +1,3 @@
-import { argMin, range } from '$lib/utils/array';
 import { calculateDraw, calculateWin } from './utils/ratings';
 import Dexie, { type EntityTable, type Table } from 'dexie';
 
@@ -151,32 +150,6 @@ export async function markTaskComplete(id: number, complete: boolean) {
 }
 
 /* Matchups */
-export async function getTaskPair(projectId: number, dimension: 'value' | 'ease') {
-	const ratingField = (dimension + 'Rating') as 'valueRating' | 'easeRating';
-
-	const tasksWithoutBlockings = await db.tasks
-		.where({ projectId })
-		.filter((task) => task.complete === false)
-		.sortBy(ratingField);
-
-	const tasksWithBlockings = await addBlockingsToTasks(tasksWithoutBlockings);
-	const tasks = tasksWithBlockings.filter((task) => task.blockedBy.length === 0);
-
-	if (tasks.length < 2) return;
-
-	const differences = range(0, tasks.length - 2).map((index) => ({
-		task1: tasks[index],
-		task2: tasks[index + 1],
-		ratingDifference: tasks[index + 1][ratingField] - tasks[index][ratingField]
-	}));
-
-	const smallestDifference = argMin(differences, 'ratingDifference');
-	if (!smallestDifference) return;
-
-	const { task1, task2 } = smallestDifference;
-	return [task1, task2];
-}
-
 async function recordMatchup(
 	taskId1: number,
 	taskId2: number,

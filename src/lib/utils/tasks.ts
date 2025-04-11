@@ -1,13 +1,24 @@
-import type { Task, TaskWithBlockings } from '../db';
-import { sum } from './array';
+import { getProjectTasks, type Task, type TaskWithBlockings } from '../db';
+import { argMin, range, sum } from './array';
 
 export const minRatings = 3 as const;
 export const minTasksForRating = 2 as const;
 
-export function sortTasksByRating(tasks: TaskWithBlockings[]) {
+export function sortTasksByTotalRating(tasks: TaskWithBlockings[]) {
 	return tasks.toSorted((a, b) => {
 		const aRating = (a.valueRating ?? 1) * (a.easeRating ?? 1);
 		const bRating = (b.valueRating ?? 1) * (b.easeRating ?? 1);
+		return bRating - aRating;
+	});
+}
+
+export function sortTasksByRating(
+	tasks: TaskWithBlockings[],
+	ratingField: 'valueRating' | 'easeRating'
+) {
+	return tasks.toSorted((a, b) => {
+		const aRating = a[ratingField] ?? 1;
+		const bRating = b[ratingField] ?? 1;
 		return bRating - aRating;
 	});
 }
@@ -129,4 +140,27 @@ export function tasksReadyForRating(tasks: TaskWithBlockings[]) {
 	const incompleteTasks = filterIncompleteTasks(tasks);
 	const unblockedIncompleteTasks = filterUnblockedTasks(incompleteTasks);
 	return unblockedIncompleteTasks.length >= minTasksForRating;
+}
+
+export async function getTaskPair(projectId: number, dimension: 'value' | 'ease') {
+	const ratingField = (dimension + 'Rating') as 'valueRating' | 'easeRating';
+
+	const allTasks = await getProjectTasks(projectId);
+	const incompleteTasks = filterIncompleteTasks(allTasks);
+	const unblockedTasks = filterUnblockedTasks(incompleteTasks);
+	const tasks = sortTasksByRating(unblockedTasks, ratingField);
+
+	if (tasks.length < 2) return;
+
+	const differences = range(0, tasks.length - 2).map((index) => ({
+		task1: tasks[index],
+		task2: tasks[index + 1],
+		ratingDifference: tasks[index][ratingField] - tasks[index + 1][ratingField]
+	}));
+
+	const smallestDifference = argMin(differences, 'ratingDifference');
+	if (!smallestDifference) return;
+
+	const { task1, task2 } = smallestDifference;
+	return [task1, task2];
 }

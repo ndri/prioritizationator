@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/Button.svelte';
-	import { getTaskPair, type Task } from '$lib/db';
+	import { type Task } from '$lib/db';
+	import { getTaskPair } from '$lib/utils/tasks';
 	import PairingCard from './PairingCard.svelte';
 
 	interface Props {
