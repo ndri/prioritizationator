@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { stateQuery } from '$lib/stateQuery.svelte';
 	import NewTaskForm from '$lib/components/NewTaskForm.svelte';
-	import OrganizedTaskLists from '$lib/components/OrganizedTaskLists.svelte';
 	import { deleteProject, editProjectName, getProject, resetRatings } from '$lib/db';
 	import type { PageProps } from './$types';
 	import {
