@@ -142,11 +142,16 @@ export function tasksReadyForRating(tasks: TaskWithBlockings[]) {
 	return unblockedIncompleteTasks.length >= minTasksForRating;
 }
 
-export async function getTaskPair(projectId: number, dimension: 'value' | 'ease') {
+export async function getTaskPair(
+	projectId: number,
+	dimension: 'value' | 'ease',
+	avoidTasks: number[] = []
+) {
 	const ratingField = (dimension + 'Rating') as 'valueRating' | 'easeRating';
 
 	const allTasks = await getProjectTasks(projectId);
-	const incompleteTasks = filterIncompleteTasks(allTasks);
+	const filteredTasks = allTasks.filter((task) => !avoidTasks.includes(task.id));
+	const incompleteTasks = filterIncompleteTasks(filteredTasks);
 	const unblockedTasks = filterUnblockedTasks(incompleteTasks);
 	const tasks = sortTasksByRating(unblockedTasks, ratingField);
 

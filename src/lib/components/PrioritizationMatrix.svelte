@@ -30,14 +30,14 @@
 		<!-- Vertical halves separator with labels -->
 		<div class="absolute left-1/2 top-0 h-full w-px bg-slate-300 dark:bg-slate-700"></div>
 		<div class="absolute left-0 top-1/2 -translate-y-1/2 text-sm text-slate-500">
-			more
-			<br />
-			effort
-		</div>
-		<div class="absolute right-0 top-1/2 -translate-y-1/2 text-right text-sm text-slate-500">
 			less
 			<br />
-			effort
+			easier
+		</div>
+		<div class="absolute right-0 top-1/2 -translate-y-1/2 text-right text-sm text-slate-500">
+			more
+			<br />
+			easier
 		</div>
 
 		<!-- Horizontal halves separator with labels -->

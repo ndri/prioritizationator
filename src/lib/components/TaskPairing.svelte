@@ -16,8 +16,8 @@
 	let task1 = $state<Task>();
 	let task2 = $state<Task>();
 
-	const resetTasks = async () => {
-		const taskPair = await getTaskPair(projectId, dimension);
+	const resetTasks = async (avoidTasks: number[] = []) => {
+		const taskPair = await getTaskPair(projectId, dimension, avoidTasks);
 		if (!taskPair) return;
 		task1 = taskPair[0];
 		task2 = taskPair[1];
@@ -25,11 +25,12 @@
 	resetTasks();
 
 	const recordResult = (winnerId: number, loserId: number) => {
-		recordWin(winnerId, loserId).then(resetTasks);
+		recordWin(winnerId, loserId).then(() => resetTasks());
 	};
 
 	const recordDrawResult = (taskId1: number, taskId2: number) => {
-		recordDraw(taskId1, taskId2).then(resetTasks);
+		// Avoid one task so the algorithm doesn't pick the same two tasks again
+		recordDraw(taskId1, taskId2).then(() => resetTasks([taskId1]));
 	};
 </script>
 
@@ -47,6 +48,6 @@
 		size="xl"
 		onclick={() => task1 && task2 && recordDrawResult(task1.id, task2.id)}
 	>
-		Skip (both are equal)
+		Both are about equal
 	</Button>
 </div>
