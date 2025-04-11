@@ -54,9 +54,9 @@
 		<BlockedByIndicator
 			tasksCount={taskIdsBlockingToTask.length}
 			onclick={() => {
-				if (blockingToDialog) {
-					blockingToDialog.setValues(taskIdsBlockingToTask);
-					blockingToDialog.open();
+				if (blockedByDialog) {
+					blockedByDialog.setValues(taskIdsBlockingToTask);
+					blockedByDialog.open();
 				}
 			}}
 		/>
