@@ -163,7 +163,21 @@ export async function getTaskPair(
 		ratingDifference: tasks[index][ratingField] - tasks[index + 1][ratingField]
 	}));
 
-	const smallestDifference = argMin(differences, 'ratingDifference');
+	const isRated = dimension === 'value' ? taskValueIsRated : taskEaseIsRated;
+	const differencesWithUnrated = differences.filter(
+		(difference) => !isRated(difference.task1) || !isRated(difference.task2)
+	);
+
+	// Get the pair with the smallest rating difference
+	let smallestDifference;
+	if (differencesWithUnrated.length > 0) {
+		// Make sure to always include an unrated task
+		smallestDifference = argMin(differencesWithUnrated, 'ratingDifference');
+	} else {
+		// If all tasks are rated, get the pair with the overall smallest rating difference
+		smallestDifference = argMin(differences, 'ratingDifference');
+	}
+
 	if (!smallestDifference) return;
 
 	const { task1, task2 } = smallestDifference;
