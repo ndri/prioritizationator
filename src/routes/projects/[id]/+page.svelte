@@ -6,10 +6,13 @@
 	import type { PageProps } from './$types';
 	import {
 		easeRatingsProgress,
+		filterBlockedTasks,
+		filterCompletedTasks,
 		filterDoableTasks,
 		filterIncompleteTasks,
 		minTasksForRating,
 		ratingsRequired,
+		sortTasksByRating,
 		tasksReadyForRating,
 		valueRatingsProgress
 	} from '$lib/utils/tasks';
@@ -26,6 +29,10 @@
 	import EditDialog from '$lib/components/ui/EditDialog.svelte';
 	import ArrowPathIcon from '$lib/components/heroicons/mini/ArrowPathIcon.svelte';
 	import { slide } from 'svelte/transition';
+	import Tabs from '$lib/components/ui/Tabs.svelte';
+	import ReadyTasks from '$lib/components/ReadyTasks.svelte';
+	import BlockedTasks from '$lib/components/BlockedTasks.svelte';
+	import CompletedTasks from '$lib/components/CompletedTasks.svelte';
 
 	let { data }: PageProps = $props();
 
@@ -36,6 +43,8 @@
 	let deleteDialog = $state<SimpleDialog>();
 	let editDialog = $state<EditDialog>();
 	let resetDialog = $state<SimpleDialog>();
+
+	let tab = $state<'ready' | 'matrix' | 'blocked' | 'completed'>('ready');
 </script>
 
 <BackLink href="/" text="Back to projects" />
@@ -99,65 +108,83 @@
 			{/if}
 		</div>
 
+		{@const incompleteTasks = filterIncompleteTasks(project.tasks)}
+		{@const sortedIncompleteTasks = sortTasksByRating(incompleteTasks)}
+		{@const blockedTasks = filterBlockedTasks(sortedIncompleteTasks)}
+
+		{@const completedTasks = filterCompletedTasks(project.tasks)}
+
 		{@const doableTasks = filterDoableTasks(project.tasks)}
-		{#if doableTasks}
-			<div transition:slide>
+
+		{@const tabValues = [
+			{ id: 'ready', label: 'Ready' },
+			...(doableTasks.length > 1 ? [{ id: 'matrix', label: 'Matrix' }] : []),
+			...(blockedTasks.length ? [{ id: 'blocked', label: 'Blocked' }] : []),
+			...(completedTasks.length ? [{ id: 'completed', label: 'Completed' }] : [])
+		]}
+		<div class="flex flex-col gap-4">
+			{#if tabValues.length > 1}
+				<Tabs values={tabValues} bind:selected={tab} />
+			{/if}
+			{#if tab === 'ready'}
+				<ReadyTasks {sortedIncompleteTasks} />
+				<NewTaskForm {projectId} />
+			{:else if tab === 'matrix'}
 				<PrioritizationMatrix tasks={doableTasks} />
-			</div>
-		{/if}
+			{:else if tab === 'blocked'}
+				<BlockedTasks {blockedTasks} />
+			{:else if tab === 'completed'}
+				<CompletedTasks {completedTasks} />
+			{/if}
+		</div>
+
+		<SimpleDialog
+			bind:this={deleteDialog}
+			title="Delete project"
+			description="Are you sure you want to delete this project? This action cannot be undone."
+			buttons={[
+				{
+					label: 'Delete',
+					variant: 'primary',
+					onclick: () => {
+						deleteProject(projectId);
+						goto('/');
+						deleteDialog?.close();
+					}
+				},
+				{
+					label: 'Cancel',
+					variant: 'secondary',
+					onclick: () => deleteDialog?.close()
+				}
+			]}
+		/>
+
+		<EditDialog
+			bind:this={editDialog}
+			label="Project name"
+			submit={(value) => editProjectName(projectId, value)}
+		/>
+
+		<SimpleDialog
+			bind:this={resetDialog}
+			title="Reset ratings"
+			description="Are you sure you want to reset ratings for all tasks? This action cannot be undone."
+			buttons={[
+				{
+					label: 'Reset',
+					variant: 'primary',
+					onclick: () => {
+						resetRatings(projectId);
+						resetDialog?.close();
+					}
+				},
+				{
+					label: 'Cancel',
+					variant: 'secondary',
+					onclick: () => resetDialog?.close()
+				}
+			]}
+		/>
 	{/if}
-
-	<div class="flex flex-col">
-		<OrganizedTaskLists tasks={project.tasks} />
-		<NewTaskForm {projectId} />
-	</div>
-
-	<SimpleDialog
-		bind:this={deleteDialog}
-		title="Delete project"
-		description="Are you sure you want to delete this project? This action cannot be undone."
-		buttons={[
-			{
-				label: 'Delete',
-				variant: 'primary',
-				onclick: () => {
-					deleteProject(projectId);
-					goto('/');
-					deleteDialog?.close();
-				}
-			},
-			{
-				label: 'Cancel',
-				variant: 'secondary',
-				onclick: () => deleteDialog?.close()
-			}
-		]}
-	/>
-
-	<EditDialog
-		bind:this={editDialog}
-		label="Project name"
-		submit={(value) => editProjectName(projectId, value)}
-	/>
-
-	<SimpleDialog
-		bind:this={resetDialog}
-		title="Reset ratings"
-		description="Are you sure you want to reset ratings for all tasks? This action cannot be undone."
-		buttons={[
-			{
-				label: 'Reset',
-				variant: 'primary',
-				onclick: () => {
-					resetRatings(projectId);
-					resetDialog?.close();
-				}
-			},
-			{
-				label: 'Cancel',
-				variant: 'secondary',
-				onclick: () => resetDialog?.close()
-			}
-		]}
-	/>
 {/if}

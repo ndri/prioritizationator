@@ -76,7 +76,7 @@ export function filterIncompleteTasks(tasks: TaskWithBlockings[]) {
 	return tasks.filter((task) => !task.complete);
 }
 
-export function filterCompletedTasks(tasks: Task[]) {
+export function filterCompletedTasks(tasks: TaskWithBlockings[]) {
 	return tasks.filter((task) => task.complete);
 }
 

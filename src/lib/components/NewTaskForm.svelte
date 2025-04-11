@@ -27,7 +27,7 @@
 			<TextInput
 				id="taskNameInput"
 				label="Task name"
-				placeholder="Enter a task"
+				placeholder="New task..."
 				size="xl"
 				bind:value={taskName}
 				hiddenLabel
