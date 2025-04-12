@@ -36,8 +36,11 @@
 
 	let { data }: PageProps = $props();
 
-	const projectId = Number(data.id);
-	const projectQuery = stateQuery(() => getProject(projectId));
+	const projectId = $derived(Number(data.id));
+	const projectQuery = stateQuery(
+		() => getProject(projectId),
+		() => [projectId]
+	);
 	const project = $derived(projectQuery.current);
 
 	let deleteDialog = $state<SimpleDialog>();

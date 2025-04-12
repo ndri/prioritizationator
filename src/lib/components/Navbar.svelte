@@ -7,6 +7,8 @@
 	import Menu from './Menu.svelte';
 	import EllipsisVerticalIcon from './heroicons/mini/EllipsisVerticalIcon.svelte';
 	import Button from './ui/Button.svelte';
+	import { stateQuery } from '$lib/stateQuery.svelte';
+	import { getRecentProjects } from '$lib/db';
 
 	const currentPath = $derived(page.url.pathname);
 
@@ -27,6 +29,9 @@
 			Icon: QuestionMarkCircleIcon
 		}
 	];
+
+	const recentProjectsQuery = stateQuery(() => getRecentProjects(5));
+	const recentProjects = $derived(recentProjectsQuery.current);
 </script>
 
 <header
@@ -54,4 +59,16 @@
 			<SidebarItem {...menuItem} active={currentPath === menuItem.href} />
 		{/each}
 	</nav>
+	{#if recentProjects}
+		<nav class="flex flex-col gap-2">
+			<div class="mb-1 text-sm font-medium text-slate-400">Recent projects</div>
+			{#each recentProjects as project (project.id)}
+				<SidebarItem
+					href={`/projects/${project.id}`}
+					text={project.name}
+					active={currentPath.startsWith(`/projects/${project.id}`)}
+				/>
+			{/each}
+		</nav>
+	{/if}
 </aside>

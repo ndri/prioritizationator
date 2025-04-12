@@ -107,6 +107,10 @@ export async function getOtherTasksInProject(projectId: number, taskId: number) 
 	return tasks.filter((task) => task.id !== taskId);
 }
 
+export async function getRecentProjects(limit: number) {
+	return db.projects.orderBy('modifiedAt').reverse().limit(limit).toArray();
+}
+
 /* Tasks */
 async function getTask(id: number) {
 	return db.tasks.where({ id }).first();
