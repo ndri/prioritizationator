@@ -7,10 +7,10 @@
 		title: string;
 		ratingsProgress: number;
 		ratingsRequired: number;
-		rankingPath: string;
+		ratingPath: string;
 	}
 
-	const { title, ratingsProgress, ratingsRequired, rankingPath }: Props = $props();
+	const { title, ratingsProgress, ratingsRequired, ratingPath }: Props = $props();
 </script>
 
 <div
@@ -35,5 +35,5 @@
 			<ProgressBar progress={ratingsProgress} total={ratingsRequired} size="sm" />
 		</div>
 	{/if}
-	<Button href={rankingPath} variant="secondary">Rate</Button>
+	<Button href={ratingPath} variant="secondary">Rate</Button>
 </div>

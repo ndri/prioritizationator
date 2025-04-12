@@ -17,7 +17,7 @@
 		valueRatingsProgress
 	} from '$lib/utils/tasks';
 	import PrioritizationMatrix from '$lib/components/PrioritizationMatrix.svelte';
-	import RankingCard from '$lib/components/RankingCard.svelte';
+	import RatingCard from '$lib/components/RatingCard.svelte';
 	import BackLink from '$lib/components/BackLink.svelte';
 	import Menu from '$lib/components/Menu.svelte';
 	import TrashIcon from '$lib/components/heroicons/mini/TrashIcon.svelte';
@@ -88,17 +88,17 @@
 			{#if tasksReadyForRating(project.tasks)}
 				{@const incompleteTasks = filterIncompleteTasks(project.tasks)}
 				<div class="grid grid-cols-2 gap-4" transition:slide>
-					<RankingCard
+					<RatingCard
 						title="Value"
 						ratingsProgress={valueRatingsProgress(incompleteTasks)}
 						ratingsRequired={ratingsRequired(incompleteTasks)}
-						rankingPath="/projects/{projectId}/value"
+						ratingPath="/projects/{projectId}/value"
 					/>
-					<RankingCard
+					<RatingCard
 						title="Ease"
 						ratingsProgress={easeRatingsProgress(incompleteTasks)}
 						ratingsRequired={ratingsRequired(incompleteTasks)}
-						rankingPath="/projects/{projectId}/ease"
+						ratingPath="/projects/{projectId}/ease"
 					/>
 				</div>
 			{:else}
