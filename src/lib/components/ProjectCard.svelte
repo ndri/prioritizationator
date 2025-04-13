@@ -38,26 +38,25 @@
 		<Button variant="secondary" size="xs" onclick={() => deleteDialog?.open()} Icon={TrashIcon}>
 			Delete
 		</Button>
+		<SimpleDialog
+			bind:this={deleteDialog}
+			title="Delete project"
+			description="Are you sure you want to delete this project? This action cannot be undone."
+			buttons={[
+				{
+					label: 'Delete',
+					variant: 'primary',
+					onclick: () => {
+						deleteProject(project.id);
+						deleteDialog?.close();
+					}
+				},
+				{
+					label: 'Cancel',
+					variant: 'secondary',
+					onclick: () => deleteDialog?.close()
+				}
+			]}
+		/>
 	</div>
 </article>
-
-<SimpleDialog
-	bind:this={deleteDialog}
-	title="Delete project"
-	description="Are you sure you want to delete this project? This action cannot be undone."
-	buttons={[
-		{
-			label: 'Delete',
-			variant: 'primary',
-			onclick: () => {
-				deleteProject(project.id);
-				deleteDialog?.close();
-			}
-		},
-		{
-			label: 'Cancel',
-			variant: 'secondary',
-			onclick: () => deleteDialog?.close()
-		}
-	]}
-/>

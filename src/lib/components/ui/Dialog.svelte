@@ -33,7 +33,7 @@
 </script>
 
 {#if isOpen}
-	<div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+	<div class="relative z-30" role="dialog" aria-modal="true">
 		<Transition
 			{show}
 			appear
@@ -47,7 +47,7 @@
 				aria-hidden="true"
 			></div>
 		</Transition>
-		<div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+		<div class="fixed inset-0 z-30 w-screen overflow-y-auto">
 			<button
 				class="flex min-h-full w-full cursor-auto items-end justify-center p-4 text-center sm:items-center sm:p-0"
 				aria-label="Close dialog"

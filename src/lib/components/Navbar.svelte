@@ -1,39 +1,11 @@
 <script lang="ts">
-	import SidebarItem from './SidebarItem.svelte';
-	import { page } from '$app/state';
-	import CircleStackIcon from './heroicons/mini/CircleStackIcon.svelte';
-	import HomeIcon from './heroicons/mini/HomeIcon.svelte';
-	import QuestionMarkCircleIcon from './heroicons/mini/QuestionMarkCircleIcon.svelte';
-	import { stateQuery } from '$lib/stateQuery.svelte';
-	import { getRecentProjects } from '$lib/db';
-	import DocumentTextIcon from './heroicons/mini/DocumentTextIcon.svelte';
 	import XMarkIcon from './heroicons/outline/XMarkIcon.svelte';
 	import Bars3Icon from './heroicons/outline/Bars3Icon.svelte';
-
-	const currentPath = $derived(page.url.pathname);
-
-	const menuItems = [
-		{
-			text: 'Projects',
-			href: '/',
-			Icon: HomeIcon
-		},
-		{
-			text: 'Data',
-			href: '/data',
-			Icon: CircleStackIcon
-		},
-		{
-			text: 'Help',
-			href: '/help',
-			Icon: QuestionMarkCircleIcon
-		}
-	];
-
-	const recentProjectsQuery = stateQuery(() => getRecentProjects(5));
-	const recentProjects = $derived(recentProjectsQuery.current);
+	import SidebarContents from './SidebarContents.svelte';
+	import { fly } from 'svelte/transition';
 
 	let sidebarOpen = $state(false);
+	let sidebarElement = $state<HTMLElement | null>(null);
 </script>
 
 <header
@@ -54,48 +26,24 @@
 				<Bars3Icon />
 			{/if}
 		</button>
-		<div class="grow text-xl font-medium">Prioritizationator</div>
+		<h1 class="grow text-xl font-medium">Prioritizationator</h1>
 	</div>
 </header>
 
-<aside
-	class={[
-		'z-10 flex h-screen min-w-64 flex-col gap-2',
-		'fixed left-0 top-0',
-		'lg:static lg:left-auto lg:top-auto',
-		'p-2',
-		'lg:p-0 lg:pl-4 lg:pt-4',
-		'bg-slate-50 lg:bg-auto dark:bg-slate-900 dark:lg:bg-auto',
-		'transition-transform duration-300 ease-in-out',
-		sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-	]}
->
-	<div class="flex px-2 py-4">
-		<h1 class="text-xl font-medium">Prioritizationator</h1>
-	</div>
-	<nav class="flex flex-col gap-1.5 p-2">
-		{#each menuItems as menuItem}
-			<SidebarItem
-				{...menuItem}
-				active={currentPath === menuItem.href}
-				onclick={() => (sidebarOpen = false)}
-			/>
-		{/each}
-	</nav>
-	{#if recentProjects}
-		<div class="p-2 pl-4 text-sm font-medium text-slate-500 dark:text-slate-400">
-			Recent projects
-		</div>
-		<nav class=" flex flex-col gap-1.5 overflow-y-auto p-2 pt-0 [&>*]:shrink-0">
-			{#each recentProjects as project (project.id)}
-				<SidebarItem
-					href={`/projects/${project.id}`}
-					text={project.name}
-					Icon={DocumentTextIcon}
-					active={currentPath.startsWith(`/projects/${project.id}`)}
-					onclick={() => (sidebarOpen = false)}
-				/>
-			{/each}
-		</nav>
-	{/if}
+<aside class={['h-screen pl-4 pt-4', 'hidden lg:flex']}>
+	<SidebarContents onclick={() => (sidebarOpen = false)} />
 </aside>
+
+{#if sidebarOpen}
+	<aside
+		class={[
+			'fixed left-0 z-10 h-screen px-4 pt-[68px]',
+			'bg-slate-50 dark:bg-slate-900',
+			'lg:hidden'
+		]}
+		transition:fly={{ x: -(sidebarElement?.clientWidth ?? 0), opacity: 1 }}
+		bind:this={sidebarElement}
+	>
+		<SidebarContents onclick={() => (sidebarOpen = false)} hideTitle />
+	</aside>
+{/if}
