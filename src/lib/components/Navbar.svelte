@@ -9,6 +9,7 @@
 	import Button from './ui/Button.svelte';
 	import { stateQuery } from '$lib/stateQuery.svelte';
 	import { getRecentProjects } from '$lib/db';
+	import DocumentTextIcon from './heroicons/mini/DocumentTextIcon.svelte';
 
 	const currentPath = $derived(page.url.pathname);
 
@@ -66,6 +67,7 @@
 				<SidebarItem
 					href={`/projects/${project.id}`}
 					text={project.name}
+					Icon={DocumentTextIcon}
 					active={currentPath.startsWith(`/projects/${project.id}`)}
 				/>
 			{/each}
