@@ -54,7 +54,7 @@
 
 {#if project}
 	<div class="flex justify-between">
-		<h1 class="text-2xl font-medium">{project.name}</h1>
+		<h2 class="text-2xl font-medium">{project.name}</h2>
 		<Menu
 			items={[
 				{

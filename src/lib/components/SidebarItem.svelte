@@ -6,21 +6,23 @@
 		text: string;
 		Icon?: Heroicon;
 		active: boolean;
+		onclick?: () => void;
 	}
 
-	const { href, text, Icon, active }: Props = $props();
+	const { href, text, Icon, active, onclick }: Props = $props();
 </script>
 
 <a
 	{href}
 	class={[
-		'group flex max-w-48 items-center gap-3 truncate rounded-lg px-2.5 py-1.5 text-sm',
+		'group flex items-center gap-3 truncate rounded-lg px-2.5 py-1.5 text-sm',
 		active ? 'font-semibold' : 'font-medium',
 		active ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600',
 		'hover:bg-indigo-50 hover:text-indigo-600',
 		active ? 'dark:bg-slate-800 dark:text-indigo-400' : 'dark:text-slate-400',
 		'dark:hover:bg-slate-800 dark:hover:text-indigo-400'
 	]}
+	{onclick}
 >
 	{#if Icon}
 		<Icon

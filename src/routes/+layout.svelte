@@ -24,7 +24,7 @@
 				'lg:rounded-lg lg:border lg:p-16'
 			]}
 		>
-			<div class="flex w-full max-w-4xl flex-col gap-8">{@render children()}</div>
+			<div class="flex w-full max-w-3xl flex-col gap-8">{@render children()}</div>
 		</div>
 	</main>
 </div>
