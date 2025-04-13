@@ -61,7 +61,7 @@
 	</nav>
 	{#if recentProjects}
 		<nav class="flex flex-col gap-2">
-			<div class="mb-1 text-sm font-medium text-slate-400">Recent projects</div>
+			<div class="mb-1 text-sm font-medium text-slate-600 dark:text-slate-400">Recent projects</div>
 			{#each recentProjects as project (project.id)}
 				<SidebarItem
 					href={`/projects/${project.id}`}
