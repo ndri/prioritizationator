@@ -61,11 +61,11 @@ export const db = new PrioritizationatorDB();
 
 /* Projects */
 export async function getProjects() {
-	return db.projects.toArray();
+	return db.projects.orderBy('modifiedAt').toArray();
 }
 
 export async function getProjectsWithTasks(): Promise<ProjectWithTasks[]> {
-	const projects = await db.projects.toArray();
+	const projects = await getProjects();
 	const allTasks = await db.tasks.toArray();
 	return projects.map((project) => ({
 		...project,
@@ -111,6 +111,10 @@ export async function getRecentProjects(limit: number) {
 	return db.projects.orderBy('modifiedAt').reverse().limit(limit).toArray();
 }
 
+async function updateProjectModifiedAt(projectId: number) {
+	return db.projects.update(projectId, { modifiedAt: new Date() });
+}
+
 /* Tasks */
 async function getTask(id: number) {
 	return db.tasks.where({ id }).first();
@@ -123,6 +127,7 @@ async function getTasks(ids: number[]) {
 }
 
 export async function createTask({ name, projectId }: { name: string; projectId: number }) {
+	await updateProjectModifiedAt(projectId);
 	return db.tasks.add({
 		name,
 		projectId,
@@ -137,6 +142,9 @@ export async function createTask({ name, projectId }: { name: string; projectId:
 }
 
 export async function deleteTask(id: number) {
+	// Necessary to check whether task exists and to update the project modifiedAt date
+	await updateTaskModifiedAt(id);
+
 	const blockings1 = await db.taskBlockings.where('taskId').equals(id).toArray();
 	const blockings2 = await db.taskBlockings.where('blockedById').equals(id).toArray();
 	const blockings = [...blockings1, ...blockings2];
@@ -145,14 +153,26 @@ export async function deleteTask(id: number) {
 }
 
 export async function editTaskName(id: number, name: string) {
-	return db.tasks.update(id, { name, modifiedAt: new Date() });
+	await updateTaskModifiedAt(id);
+	return db.tasks.update(id, { name });
 }
 
 export async function markTaskComplete(id: number, complete: boolean) {
+	await updateTaskModifiedAt(id);
+
 	if (complete) {
 		return db.tasks.update(id, { complete, completedAt: new Date() });
 	}
 	return db.tasks.update(id, { complete });
+}
+
+async function updateTaskModifiedAt(id: number) {
+	const task = await getTask(id);
+
+	if (!task) throw `Task ${id} not found.`;
+
+	await updateProjectModifiedAt(task.projectId);
+	return db.tasks.update(id, { modifiedAt: new Date() });
 }
 
 /* Matchups */
@@ -170,6 +190,9 @@ async function recordMatchup(
 
 	if (task1.projectId !== task2.projectId)
 		throw `Tasks ${taskId1} and ${taskId2} are not in the same project.`;
+
+	await updateTaskModifiedAt(taskId1);
+	await updateTaskModifiedAt(taskId1);
 
 	const { newRating1, newRating2 } =
 		result === 'win'
@@ -204,6 +227,8 @@ export async function recordEaseMatchupDraw(taskId1: number, taskId2: number) {
 }
 
 export async function resetRatings(projectId: number) {
+	await updateProjectModifiedAt(projectId);
+
 	const tasks = await db.tasks.where({ projectId }).toArray();
 	tasks.forEach(async (task) => {
 		await db.tasks.update(task.id, {
@@ -261,6 +286,11 @@ export async function getTaskIdsBlockedByTask(blockedById: number) {
 }
 
 export async function markTaskBlockedBy(taskId: number, blockedByIds: number[]) {
+	const task = await getTask(taskId);
+	if (!task) throw `Task ${taskId} not found.`;
+
+	await updateTaskModifiedAt(taskId);
+
 	const currentBlockings = await getTaskIdsBlockingToTask(taskId);
 	const newBlockings = blockedByIds.filter((id) => !currentBlockings.includes(id));
 	const blockingsToDelete = currentBlockings.filter((id) => !blockedByIds.includes(id));
@@ -270,6 +300,11 @@ export async function markTaskBlockedBy(taskId: number, blockedByIds: number[]) 
 }
 
 export async function markTaskBlockingTo(taskId: number, blockingToIds: number[]) {
+	const task = await getTask(taskId);
+	if (!task) throw `Task ${taskId} not found.`;
+
+	await updateTaskModifiedAt(taskId);
+
 	const currentBlockings = await getTaskIdsBlockedByTask(taskId);
 	const newBlockings = blockingToIds.filter((id) => !currentBlockings.includes(id));
 	const blockingsToDelete = currentBlockings.filter((id) => !blockingToIds.includes(id));
