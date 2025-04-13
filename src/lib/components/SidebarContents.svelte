@@ -39,7 +39,7 @@
 	const recentProjects = $derived(recentProjectsQuery.current);
 </script>
 
-<div class="flex min-w-64 flex-col gap-2">
+<div class="flex h-full min-w-64 flex-col gap-2">
 	{#if !hideTitle}
 		<div class="flex px-4 pt-4">
 			<h1 class="text-xl font-medium">Prioritizationator</h1>

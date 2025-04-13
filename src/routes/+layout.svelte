@@ -18,7 +18,7 @@
 	<main class={['flex h-screen w-full flex-col overflow-y-scroll p-0', 'lg:p-4']}>
 		<div
 			class={[
-				'flex justify-center p-4 pt-20',
+				'flex justify-center p-4 pt-24',
 				'border-slate-100 bg-white',
 				'dark:border-slate-800 dark:bg-slate-950',
 				'lg:rounded-lg lg:border lg:p-16'

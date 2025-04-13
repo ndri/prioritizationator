@@ -33,7 +33,7 @@
 </script>
 
 {#if isOpen}
-	<div class="relative z-30" role="dialog" aria-modal="true">
+	<div class="relative z-40" role="dialog" aria-modal="true">
 		<Transition
 			{show}
 			appear
@@ -43,11 +43,11 @@
 			leave="ease-in duration-200"
 		>
 			<div
-				class="fixed inset-0 bg-slate-500/75 transition-opacity dark:bg-slate-800/85"
+				class="fixed inset-0 bg-slate-500/75 transition-opacity dark:bg-slate-950/85"
 				aria-hidden="true"
 			></div>
 		</Transition>
-		<div class="fixed inset-0 z-30 w-screen overflow-y-auto">
+		<div class="fixed inset-0 z-40 w-screen overflow-y-auto">
 			<button
 				class="flex min-h-full w-full cursor-auto items-end justify-center p-4 text-center sm:items-center sm:p-0"
 				aria-label="Close dialog"
@@ -66,11 +66,11 @@
 					<div
 						class="relative w-full transform overflow-hidden rounded-lg text-left shadow-xl transition-all sm:my-8 sm:max-w-md"
 					>
-						<div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4 dark:bg-slate-950">
+						<div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4 dark:bg-slate-900">
 							{@render body()}
 						</div>
 						<div
-							class="flex flex-col gap-2 bg-slate-50 px-4 py-3 sm:flex-row-reverse sm:px-6 dark:bg-slate-900"
+							class="flex flex-col gap-2 bg-slate-50 px-4 py-3 sm:flex-row-reverse sm:px-6 dark:bg-slate-800"
 						>
 							{@render footer()}
 						</div>
