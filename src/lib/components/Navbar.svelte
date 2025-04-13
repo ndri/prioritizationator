@@ -36,9 +36,9 @@
 </script>
 
 <header
-	class="sticky top-0 z-10 flex w-full max-w-3xl justify-between bg-slate-100 p-6 lg:hidden dark:bg-slate-900"
+	class="fixed top-0 z-10 flex w-full justify-between bg-slate-50 p-4 lg:hidden dark:bg-slate-900"
 >
-	<h1 class="text-xl font-semibold">Prioritizationator</h1>
+	<h1 class="text-xl font-medium">Prioritizationator</h1>
 	<Menu
 		items={menuItems.map((menuItem) => ({
 			label: menuItem.text,
@@ -53,16 +53,18 @@
 	</Menu>
 </header>
 
-<aside class="sticky top-0 hidden min-w-56 flex-col gap-6 px-4 py-8 lg:flex">
-	<h1 class="text-xl font-semibold">Prioritizationator</h1>
-	<nav class="flex flex-col gap-2">
+<aside class="hidden h-screen min-w-64 flex-col gap-2 pl-4 pt-4 lg:flex">
+	<h1 class="p-2 text-xl font-medium">Prioritizationator</h1>
+	<nav class="flex flex-col gap-1.5 p-2">
 		{#each menuItems as menuItem}
 			<SidebarItem {...menuItem} active={currentPath === menuItem.href} />
 		{/each}
 	</nav>
 	{#if recentProjects}
-		<nav class="flex flex-col gap-2">
-			<div class="mb-1 text-sm font-medium text-slate-600 dark:text-slate-400">Recent projects</div>
+		<div class="p-2 pl-4 text-sm font-medium text-slate-500 dark:text-slate-400">
+			Recent projects
+		</div>
+		<nav class=" flex flex-col gap-1.5 overflow-y-auto p-2 pt-0 [&>*]:shrink-0">
 			{#each recentProjects as project (project.id)}
 				<SidebarItem
 					href={`/projects/${project.id}`}

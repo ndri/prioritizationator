@@ -2,7 +2,7 @@ import { getProjectTasks, type Task, type TaskWithBlockings } from '../db';
 import { argMin, range, sum } from './array';
 
 export const minRatings = 3 as const;
-export const minTasksForRating = 2 as const;
+export const minTasksForRating = 3 as const;
 
 export function sortTasksByTotalRating(tasks: TaskWithBlockings[]) {
 	return tasks.toSorted((a, b) => {

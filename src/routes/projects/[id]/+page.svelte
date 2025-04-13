@@ -50,11 +50,11 @@
 	let tab = $state<'ready' | 'matrix' | 'blocked' | 'completed'>('ready');
 </script>
 
-<BackLink href="/" text="Back to projects" />
+<!-- <BackLink href="/" text="Back to projects" /> -->
 
 {#if project}
 	<div class="flex justify-between">
-		<h1 class="text-3xl font-bold">{project.name}</h1>
+		<h1 class="text-2xl font-medium">{project.name}</h1>
 		<Menu
 			items={[
 				{

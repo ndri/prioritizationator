@@ -14,10 +14,10 @@
 	<button
 		class={[
 			'group flex flex-nowrap items-center gap-1.5 rounded-full py-1 pl-1.5 pr-2',
-			'border border-slate-200 bg-slate-50 text-slate-700',
-			'hover:bg-slate-100',
+			'border border-slate-200 bg-white text-slate-500',
+			'hover:bg-slate-100 hover:text-slate-600',
 			'dark:border-none dark:bg-slate-800 dark:text-slate-300',
-			'dark:hover:bg-slate-700'
+			'dark:hover:bg-slate-700 dark:hover:text-slate-200'
 		]}
 		{onclick}
 	>

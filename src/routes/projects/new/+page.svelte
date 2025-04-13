@@ -4,6 +4,6 @@
 	import ProjectTemplates from '$lib/components/ProjectTemplates.svelte';
 </script>
 
-<BackLink href="/" text="Back to projects" />
+<!-- <BackLink href="/" text="Back to projects" /> -->
 <NewProjectForm />
 <ProjectTemplates />

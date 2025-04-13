@@ -28,12 +28,12 @@
 				id="taskNameInput"
 				label="Task name"
 				placeholder="New task..."
-				size="xl"
+				size="lg"
 				bind:value={taskName}
 				hiddenLabel
 				{autofocus}
 			/>
 		</div>
-		<Button type="submit" variant="primary" size="xl">Add task</Button>
+		<Button type="submit" variant="primary" size="lg">Add task</Button>
 	</form>
 </section>

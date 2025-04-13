@@ -16,7 +16,7 @@
 
 <article
 	class={[
-		'flex flex-col items-start justify-between gap-4 rounded-lg p-5 shadow-sm',
+		'flex flex-col items-start justify-between gap-4 rounded-lg p-5',
 		'bg-slate-50',
 		'dark:bg-slate-900'
 	]}
