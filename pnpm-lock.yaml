@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      svelte-transition:
+        specifier: ^0.0.17
+        version: 0.0.17(svelte@5.19.3)
     devDependencies:
       '@eslint/compat':
         specifier: ^1.2.5
@@ -1360,6 +1364,11 @@ packages:
       svelte:
         optional: true
 
+  svelte-transition@0.0.17:
+    resolution: {integrity: sha512-df3kJdJogRNDGiEwJSb7Pdk8/7ZTcQapHhtQ5VicaT/oUP/BNH5qR5Q3sKvptBvOD0uJSzjjMVC5oLwdgjUdRw==}
+    peerDependencies:
+      svelte: ^3.59.1 || ^4.0.0 || ^5.0.0
+
   svelte@5.19.3:
     resolution: {integrity: sha512-rb/bkYG9jq67OCWikMvaPnfOobyGn0JizVDwHpdeBtLiNXPMcoA9GTFC3BhptP7xGNquUU8J5GiS7PlGlfDAFA==}
     engines: {node: '>=18'}
@@ -2629,6 +2638,10 @@ snapshots:
       postcss: 8.5.1
       postcss-scss: 4.0.9(postcss@8.5.1)
     optionalDependencies:
+      svelte: 5.19.3
+
+  svelte-transition@0.0.17(svelte@5.19.3):
+    dependencies:
       svelte: 5.19.3
 
   svelte@5.19.3:

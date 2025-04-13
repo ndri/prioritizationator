@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Transition from 'svelte-transition';
 
 	interface Props {
 		body: Snippet;
@@ -9,6 +10,7 @@
 	let { body, footer }: Props = $props();
 
 	let isOpen = $state(false);
+	let show = $state(false);
 
 	$effect(() => {
 		if (isOpen) {
@@ -20,18 +22,31 @@
 
 	export function open() {
 		isOpen = true;
+		show = true;
 	}
 	export function close() {
-		isOpen = false;
+		show = false;
+		setTimeout(() => {
+			isOpen = false;
+		}, 200);
 	}
 </script>
 
 {#if isOpen}
 	<div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-		<div
-			class="fixed inset-0 bg-slate-500/75 transition-opacity dark:bg-slate-800/85"
-			aria-hidden="true"
-		></div>
+		<Transition
+			{show}
+			appear
+			enter="ease-out duration-300"
+			enterFrom="opacity-0"
+			enterTo="opacity-100"
+			leave="ease-in duration-200"
+		>
+			<div
+				class="fixed inset-0 bg-slate-500/75 transition-opacity dark:bg-slate-800/85"
+				aria-hidden="true"
+			></div>
+		</Transition>
 		<div class="fixed inset-0 z-10 w-screen overflow-y-auto">
 			<button
 				class="flex min-h-full w-full cursor-auto items-end justify-center p-4 text-center sm:items-center sm:p-0"
@@ -40,18 +55,27 @@
 					if (e.target === e.currentTarget) close();
 				}}
 			>
-				<div
-					class="relative w-full max-w-sm transform overflow-hidden rounded-lg text-left shadow-xl transition-all sm:my-8 sm:max-w-md"
+				<Transition
+					{show}
+					appear
+					enter="ease-out duration-300"
+					enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+					enterTo="opacity-100 translate-y-0 sm:scale-100"
+					leave="ease-in duration-200"
 				>
-					<div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4 dark:bg-slate-950">
-						{@render body()}
-					</div>
 					<div
-						class="flex flex-col gap-2 bg-slate-50 px-4 py-3 sm:flex-row-reverse sm:px-6 dark:bg-slate-900"
+						class="relative w-full transform overflow-hidden rounded-lg text-left shadow-xl transition-all sm:my-8 sm:max-w-md"
 					>
-						{@render footer()}
+						<div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4 dark:bg-slate-950">
+							{@render body()}
+						</div>
+						<div
+							class="flex flex-col gap-2 bg-slate-50 px-4 py-3 sm:flex-row-reverse sm:px-6 dark:bg-slate-900"
+						>
+							{@render footer()}
+						</div>
 					</div>
-				</div>
+				</Transition>
 			</button>
 		</div>
 	</div>
