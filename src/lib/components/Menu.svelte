@@ -2,6 +2,7 @@
 	import type { Snippet } from 'svelte';
 	import type { ClassValue, HTMLButtonAttributes } from 'svelte/elements';
 	import type { Heroicon } from './heroicons/Heroicon';
+	import Transition from 'svelte-transition';
 
 	interface Props {
 		class: ClassValue;
@@ -13,18 +14,23 @@
 	const { class: className, items, button, label = 'Menu' }: Props = $props();
 
 	let isOpen = $state(false);
+	let show = $state(false);
 	let menuRef = $state<HTMLDivElement>();
 	let dropdownRef = $state<HTMLDivElement>();
 	let closeOnEscapeHandler = $state<(event: KeyboardEvent) => void>();
 
 	const closeMenu = () => {
 		removeCloseOnEscape();
-		isOpen = false;
+		show = false;
+		setTimeout(() => {
+			isOpen = false;
+		}, 200);
 	};
 
 	const openMenu = () => {
 		closeOnEscape();
 		isOpen = true;
+		show = true;
 	};
 
 	const toggleMenu = () => {
@@ -58,33 +64,42 @@
 <div class={['relative', className]} bind:this={dropdownRef} onfocusout={handleCloseOnFocusOut}>
 	{@render button({ onclick: toggleMenu, 'aria-expanded': isOpen, 'aria-haspopup': true })}
 	{#if isOpen}
-		<div
-			class="absolute right-0 top-full z-10 mt-2 flex min-w-40 origin-top-right flex-col rounded-md bg-white shadow-lg shadow-slate-500/25 ring-1 ring-slate-300 dark:bg-slate-950 dark:shadow-slate-900/50 dark:ring-slate-800"
-			role="menu"
-			aria-orientation="vertical"
-			aria-label={label}
-			bind:this={menuRef}
+		<Transition
+			{show}
+			appear
+			enter="transition-all ease-out duration-75"
+			enterFrom="transform opacity-0 scale-95"
+			enterTo="transform opacity-100 scale-100"
+			leave="transition-all ease-in duration-200"
 		>
-			{#each items as { label, Icon, onSelect, href }}
-				{#if href}
-					<a class={itemClasses} role="menuitem" {href}>
-						<Icon class={iconClasses} />
-						<span>{label}</span>
-					</a>
-				{:else if onSelect}
-					<button
-						class={itemClasses}
-						role="menuitem"
-						onclick={() => {
-							onSelect();
-							closeMenu();
-						}}
-					>
-						<Icon class={iconClasses} />
-						<span>{label}</span>
-					</button>
-				{/if}
-			{/each}
-		</div>
+			<div
+				class="absolute right-0 top-full z-10 mt-2 flex min-w-40 origin-top-right flex-col rounded-md bg-white shadow-lg shadow-slate-500/25 ring-1 ring-slate-300 dark:bg-slate-950 dark:shadow-slate-900/50 dark:ring-slate-800"
+				role="menu"
+				aria-orientation="vertical"
+				aria-label={label}
+				bind:this={menuRef}
+			>
+				{#each items as { label, Icon, onSelect, href }}
+					{#if href}
+						<a class={itemClasses} role="menuitem" {href}>
+							<Icon class={iconClasses} />
+							<span>{label}</span>
+						</a>
+					{:else if onSelect}
+						<button
+							class={itemClasses}
+							role="menuitem"
+							onclick={() => {
+								onSelect();
+								closeMenu();
+							}}
+						>
+							<Icon class={iconClasses} />
+							<span>{label}</span>
+						</button>
+					{/if}
+				{/each}
+			</div>
+		</Transition>
 	{/if}
 </div>

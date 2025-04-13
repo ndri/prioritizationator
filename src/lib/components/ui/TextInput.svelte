@@ -74,7 +74,8 @@
 		'text-slate-600 dark:text-slate-400'
 	];
 
-	if (autofocus) onMount(() => ref?.focus());
+	// Timeout so autofocus works with transitioned elements
+	if (autofocus) onMount(() => setTimeout(() => ref?.focus()));
 </script>
 
 <div class="flex flex-col gap-2">
