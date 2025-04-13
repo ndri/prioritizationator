@@ -49,7 +49,7 @@
 	const otherIncompleteTasks = $derived(filterIncompleteTasks(otherTasks));
 </script>
 
-<li class="flex min-h-[60px] items-center gap-3 py-3 pl-5 pr-3" transition:slide>
+<li class="flex min-h-[60px] items-center gap-4 py-2 pl-5 pr-4" transition:slide>
 	{#if taskIdsBlockingToTask.length && !task.complete}
 		<BlockedByIndicator
 			tasksCount={taskIdsBlockingToTask.length}
@@ -65,12 +65,12 @@
 			id="taskCheckbox{task.id}"
 			label={task.name}
 			bind:checked={complete}
-			size="lg"
+			size="md"
 			onchange={() => markTaskComplete(task.id, complete)}
 		/>
 	{/if}
-	<!-- <div class="text-slate-500 dark:text-slate-500">{task.id}</div> -->
-	<div class="grow">{task.name}</div>
+	<!-- <div class="text-slate-500 dark:text-slate-500 text-sm">{task.id}</div> -->
+	<div class="grow text-sm">{task.name}</div>
 	{#if showBadges && !task.complete}
 		<RatingBadge label="Value" rating={task.valueRating ?? -1} rated={taskValueIsRated(task)} />
 		<RatingBadge label="Ease" rating={task.easeRating ?? -1} rated={taskEaseIsRated(task)} />

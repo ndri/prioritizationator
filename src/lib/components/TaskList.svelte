@@ -15,8 +15,8 @@
 
 {#if tasks.length}
 	<section class="flex flex-col gap-4 pb-6" transition:slide>
-		{#if title}<h2 class="text-xl font-medium">{title}</h2>{/if}
-		{#if description}<p class="text-slate-500 dark:text-slate-400">{description}</p>{/if}
+		{#if title}<h2 class="font-medium">{title}</h2>{/if}
+		{#if description}<p class="text-sm text-slate-500 dark:text-slate-400">{description}</p>{/if}
 		<ol
 			class={[
 				'flex flex-col divide-y divide-solid rounded-xl',

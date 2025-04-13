@@ -30,7 +30,7 @@
 	const sizeClasses = {
 		xs: 'h-3 w-3 rounded-sm',
 		sm: 'h-4 w-4 rounded',
-		md: 'h-5 w-5 rounded',
+		md: 'h-5 w-5 rounded-md',
 		lg: 'h-6 w-6 rounded-md',
 		xl: 'h-7 w-7 rounded-lg'
 	} as const;

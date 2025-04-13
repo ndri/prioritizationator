@@ -16,7 +16,7 @@
 		'text-slate-500 hover:text-slate-600 aria-[selected=true]:text-slate-700',
 		'aria-[selected=true]:bg-slate-100',
 		'dark:text-slate-400 dark:hover:text-slate-300 aria-[selected=true]:dark:text-slate-200',
-		'aria-[selected=true]:dark:bg-slate-800'
+		'aria-[selected=true]:dark:bg-slate-900'
 	]}
 	aria-selected={active}
 	{onclick}

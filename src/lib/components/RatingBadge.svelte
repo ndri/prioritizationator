@@ -14,7 +14,7 @@
 	</span>
 	<span
 		class={[
-			'text-sm font-medium ',
+			'text-sm font-medium',
 			rated ? 'text-slate-700 dark:text-slate-300' : 'text-slate-400 dark:text-slate-500'
 		]}
 	>
