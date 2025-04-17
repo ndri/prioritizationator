@@ -13,23 +13,23 @@
 	role="tab"
 	class={[
 		'group flex min-h-9 items-center gap-1.5 rounded-lg px-3 text-sm font-medium',
-		'text-slate-500 hover:text-slate-600 aria-[selected=true]:text-slate-700',
-		'aria-[selected=true]:bg-slate-100',
-		'dark:text-slate-400 dark:hover:text-slate-300 aria-[selected=true]:dark:text-slate-200',
-		'aria-[selected=true]:dark:bg-slate-900'
+		'text-slate-500 hover:text-slate-600 aria-selected:text-slate-700',
+		'aria-selected:bg-slate-100',
+		'dark:text-slate-400 dark:hover:text-slate-300 dark:aria-selected:text-slate-200',
+		'dark:aria-selected:bg-slate-900'
 	]}
 	aria-selected={active}
 	{onclick}
 >
-	<span class="group-aria-[selected=true]:font-semibold">{label}</span>
+	<span class="group-aria-selected:font-semibold">{label}</span>
 	{#if tag}
 		<div
 			class={[
 				'rounded-full px-1.5 text-xs',
-				'text-slate-500 group-aria-[selected=true]:text-slate-600',
-				'bg-slate-100 group-aria-[selected=true]:bg-slate-200',
-				'dark:text-slate-300 group-aria-[selected=true]:dark:text-slate-200',
-				'dark:bg-slate-800 group-aria-[selected=true]:dark:bg-slate-700'
+				'text-slate-500 group-aria-selected:text-slate-600',
+				'bg-slate-100 group-aria-selected:bg-slate-200',
+				'dark:text-slate-300 dark:group-aria-selected:text-slate-200',
+				'dark:bg-slate-800 dark:group-aria-selected:bg-slate-700'
 			]}
 		>
 			{tag}

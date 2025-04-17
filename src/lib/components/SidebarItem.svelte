@@ -27,7 +27,7 @@
 	{#if Icon}
 		<Icon
 			class={[
-				'flex-shrink-0',
+				'shrink-0',
 				active ? 'text-indigo-600' : 'text-slate-400',
 				'group-hover:text-indigo-600',
 				active ? 'dark:text-indigo-400' : 'dark:text-slate-600',

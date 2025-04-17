@@ -38,20 +38,20 @@
 	}: Props = $props();
 
 	const sizeClasses = {
-		xs: ['text-xs gap-1.5', variant !== 'text' && 'rounded px-2 py-1.5'],
-		sm: ['text-sm gap-1.5', variant !== 'text' && 'rounded px-2 py-1'],
+		xs: ['text-xs gap-1.5', variant !== 'text' && 'rounded-sm px-2 py-1.5'],
+		sm: ['text-sm gap-1.5', variant !== 'text' && 'rounded-sm px-2 py-1'],
 		md: ['text-sm gap-1.5', variant !== 'text' && 'rounded-md px-3 py-1.5'],
 		lg: ['text-sm gap-1.5', variant !== 'text' && 'rounded-md px-3.5 py-2'],
 		xl: ['text-base gap-2', variant !== 'text' && 'rounded-md px-3.5 py-2.5']
 	} as const;
 
 	const variantClasses = {
-		primary: ['bg-indigo-600 hover:bg-indigo-500', 'text-white', 'shadow-sm'],
+		primary: ['bg-indigo-600 hover:bg-indigo-500', 'text-white', 'shadow-xs'],
 		secondary: [
 			'bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700',
 			'text-slate-900 dark:text-white',
 			'ring-1 ring-inset ring-slate-300 dark:ring-0',
-			'shadow-sm'
+			'shadow-xs'
 		],
 		text: ['hover:opacity-70']
 	} as const;
