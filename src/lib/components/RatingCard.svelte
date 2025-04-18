@@ -13,7 +13,7 @@
 	const { title, ratingsProgress, ratingsRequired, ratingPath }: Props = $props();
 </script>
 
-<div class="flex flex-col justify-between gap-4 rounded-lg bg-slate-50 p-5 dark:bg-slate-900">
+<div class="bg-main-50 dark:bg-main-900 flex flex-col justify-between gap-4 rounded-lg p-5">
 	{#if ratingsProgress === ratingsRequired}
 		<div class="flex flex-col-reverse gap-2.5 @lg:flex-row">
 			<div class="text-lg font-medium">{title}</div>
@@ -21,13 +21,13 @@
 				<CheckCircleIcon /> Rated!
 			</div>
 		</div>
-		<div class="grow text-sm text-slate-400 dark:text-slate-500">
+		<div class="text-main-400 dark:text-main-500 grow text-sm">
 			Keep rating to improve accuracy.
 		</div>
 	{:else}
 		<div class="text-lg font-medium">{title}</div>
 		<div class="flex flex-col gap-2">
-			<span class="text-sm text-slate-400 dark:text-slate-500">
+			<span class="text-main-400 dark:text-main-500 text-sm">
 				{ratingsProgress}/{ratingsRequired} rated
 			</span>
 			<ProgressBar progress={ratingsProgress} total={ratingsRequired} size="sm" />

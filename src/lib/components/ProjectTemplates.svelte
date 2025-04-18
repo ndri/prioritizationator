@@ -29,16 +29,14 @@
 
 <section class="flex flex-col gap-4">
 	<h2 class="text-xl font-medium">...or choose a template</h2>
-	<p class="text-slate-500 dark:text-slate-400">
-		Get started quickly with some pre-selected tasks.
-	</p>
+	<p class="text-main-500 dark:text-main-400">Get started quickly with some pre-selected tasks.</p>
 	<div class="grid grid-cols-1 gap-3 @lg:grid-cols-2">
 		{#each TEMPLATES as template}
 			<button
 				class={[
 					'flex cursor-pointer flex-col items-start justify-between gap-2 rounded-lg border p-5 text-sm',
-					'border-slate-200 hover:bg-slate-50',
-					'dark:border-slate-800 dark:hover:bg-slate-900'
+					'hover:bg-main-50 border-main-200',
+					'dark:hover:bg-main-900 dark:border-main-800'
 				]}
 				onclick={() => createProjectFromTemplate(template)}
 			>

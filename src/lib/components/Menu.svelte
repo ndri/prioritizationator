@@ -56,9 +56,9 @@
 	};
 
 	const itemClasses =
-		'group/menuitem cursor-pointer dark:hover:text-slate flex gap-2.5 whitespace-nowrap rounded-md px-3 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-100 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-600 dark:text-slate-300 dark:hover:bg-slate-900';
+		'group/menuitem cursor-pointer dark:hover:text-main-300 flex gap-2.5 whitespace-nowrap rounded-md px-3 py-2.5 text-left text-sm text-main-700 hover:bg-main-100 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-accent-600 dark:text-main-300 dark:hover:bg-main-900';
 	const iconClasses =
-		'text-slate-400 group-hover/menuitem:text-slate-500 dark:text-slate-500 dark:group-hover/menuitem:text-slate-400';
+		'text-main-400 group-hover/menuitem:text-main-500 dark:text-main-500 dark:group-hover/menuitem:text-main-400';
 </script>
 
 <div class={['relative', className]} bind:this={dropdownRef} onfocusout={handleCloseOnFocusOut}>
@@ -73,7 +73,7 @@
 			leave="transition-all ease-in duration-200"
 		>
 			<div
-				class="absolute top-full right-0 z-10 mt-2 flex min-w-40 origin-top-right flex-col rounded-md bg-white ring-1 ring-slate-300 dark:bg-slate-950 dark:ring-slate-800"
+				class="dark:bg-main-950 ring-main-300 dark:ring-main-800 absolute top-full right-0 z-10 mt-2 flex min-w-40 origin-top-right flex-col rounded-md bg-white ring-1"
 				role="menu"
 				aria-orientation="vertical"
 				aria-label={label}

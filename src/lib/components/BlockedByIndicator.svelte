@@ -14,17 +14,17 @@
 	<button
 		class={[
 			'group flex cursor-pointer flex-nowrap items-center gap-1.5 rounded-full py-1 pr-2 pl-1.5',
-			'border border-slate-200 bg-white text-slate-500',
-			'hover:bg-slate-100 hover:text-slate-600',
-			'dark:border-none dark:bg-slate-800 dark:text-slate-300',
-			'dark:hover:bg-slate-700 dark:hover:text-slate-200'
+			'text-main-500 border-main-200 border bg-white',
+			'hover:text-main-600 hover:bg-main-100',
+			'dark:text-main-300 dark:bg-main-800 dark:border-none',
+			'dark:hover:text-main-200 dark:hover:bg-main-700'
 		]}
 		{onclick}
 	>
 		<NoSymbolIcon
 			class={[
-				'text-slate-400 group-hover:text-slate-500',
-				'dark:text-slate-500 dark:group-hover:text-slate-400'
+				'text-main-400 group-hover:text-main-500',
+				'dark:text-main-500 dark:group-hover:text-main-400'
 			]}
 		/>
 		<span class="text-sm">{tasksCount}</span>

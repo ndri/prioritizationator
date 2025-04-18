@@ -13,10 +13,10 @@
 	role="tab"
 	class={[
 		'group flex min-h-9 cursor-pointer items-center gap-1.5 rounded-lg px-3 text-sm font-medium',
-		'text-slate-500 hover:text-slate-600 aria-selected:text-slate-700',
-		'aria-selected:bg-slate-100',
-		'dark:text-slate-400 dark:hover:text-slate-300 dark:aria-selected:text-slate-200',
-		'dark:aria-selected:bg-slate-900'
+		'text-main-500 hover:text-main-600 aria-selected:text-main-700',
+		'aria-selected:bg-main-100',
+		'dark:text-main-400 dark:hover:text-main-300 dark:aria-selected:text-main-200',
+		'dark:aria-selected:bg-main-900'
 	]}
 	aria-selected={active}
 	{onclick}
@@ -26,10 +26,10 @@
 		<div
 			class={[
 				'rounded-full px-1.5 text-xs',
-				'text-slate-500 group-aria-selected:text-slate-600',
-				'bg-slate-100 group-aria-selected:bg-slate-200',
-				'dark:text-slate-300 dark:group-aria-selected:text-slate-200',
-				'dark:bg-slate-800 dark:group-aria-selected:bg-slate-700'
+				'text-main-500 group-aria-selected:text-main-600',
+				'bg-main-100 group-aria-selected:bg-main-200',
+				'dark:text-main-300 dark:group-aria-selected:text-main-200',
+				'dark:bg-main-800 dark:group-aria-selected:bg-main-700'
 			]}
 		>
 			{tag}

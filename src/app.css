@@ -5,6 +5,30 @@
 @theme {
 	--font-*: initial;
 	--font-sans: Inter Variable, Helvetica, Arial, sans-serif;
+
+	--color-main-50: var(--color-slate-50);
+	--color-main-100: var(--color-slate-100);
+	--color-main-200: var(--color-slate-200);
+	--color-main-300: var(--color-slate-300);
+	--color-main-400: var(--color-slate-400);
+	--color-main-500: var(--color-slate-500);
+	--color-main-600: var(--color-slate-600);
+	--color-main-700: var(--color-slate-700);
+	--color-main-800: var(--color-slate-800);
+	--color-main-900: var(--color-slate-900);
+	--color-main-950: var(--color-slate-950);
+
+	--color-accent-50: var(--color-indigo-50);
+	--color-accent-100: var(--color-indigo-100);
+	--color-accent-200: var(--color-indigo-200);
+	--color-accent-300: var(--color-indigo-300);
+	--color-accent-400: var(--color-indigo-400);
+	--color-accent-500: var(--color-indigo-500);
+	--color-accent-600: var(--color-indigo-600);
+	--color-accent-700: var(--color-indigo-700);
+	--color-accent-800: var(--color-indigo-800);
+	--color-accent-900: var(--color-indigo-900);
+	--color-accent-950: var(--color-indigo-950);
 }
 
 /*
@@ -21,6 +45,6 @@
 	::before,
 	::backdrop,
 	::file-selector-button {
-		border-color: var(--color-gray-200, currentcolor);
+		border-color: var(--color-slate-200, currentcolor);
 	}
 }

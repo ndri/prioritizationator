@@ -28,48 +28,44 @@
 <section class="relative w-full p-4 @xl:p-16">
 	<div class="relative" style="height:{chartWidth}px" bind:this={chartRef}>
 		<!-- Vertical halves separator with labels -->
-		<div class="absolute top-0 left-1/2 h-full w-px bg-slate-300 dark:bg-slate-700"></div>
-		<div class="absolute top-1/2 left-0 -translate-y-1/2 text-sm text-slate-500">
+		<div class="bg-main-300 dark:bg-main-700 absolute top-0 left-1/2 h-full w-px"></div>
+		<div class="text-main-500 absolute top-1/2 left-0 -translate-y-1/2 text-sm">
 			less
 			<br />
 			easier
 		</div>
-		<div class="absolute top-1/2 right-0 -translate-y-1/2 text-right text-sm text-slate-500">
+		<div class="text-main-500 absolute top-1/2 right-0 -translate-y-1/2 text-right text-sm">
 			more
 			<br />
 			easier
 		</div>
 
 		<!-- Horizontal halves separator with labels -->
-		<div class="absolute top-1/2 left-0 h-px w-full bg-slate-300 dark:bg-slate-700"></div>
-		<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-sm text-slate-500">
-			more valuable
-		</div>
-		<div class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-sm text-slate-500">
+		<div class="bg-main-300 dark:bg-main-700 absolute top-1/2 left-0 h-px w-full"></div>
+		<div class="text-main-500 absolute -top-6 left-1/2 -translate-x-1/2 text-sm">more valuable</div>
+		<div class="text-main-500 absolute -bottom-6 left-1/2 -translate-x-1/2 text-sm">
 			less valuable
 		</div>
 
 		<!-- Top right quadrant -->
 		<div
-			class="absolute top-0 right-0 flex h-1/2 w-1/2 items-start justify-end p-4 text-right font-medium text-slate-500"
+			class="text-main-500 absolute top-0 right-0 flex h-1/2 w-1/2 items-start justify-end p-4 text-right font-medium"
 		>
 			Low Hanging Fruits
 		</div>
 		<!-- Bottom right quadrant -->
 		<div
-			class="absolute right-0 bottom-0 flex h-1/2 w-1/2 items-end justify-end p-4 text-right text-slate-500"
+			class="text-main-500 absolute right-0 bottom-0 flex h-1/2 w-1/2 items-end justify-end p-4 text-right"
 		>
 			Quick Wins
 		</div>
 		<!-- Top left quadrant -->
-		<div
-			class="absolute top-0 left-0 flex h-1/2 w-1/2 items-start justify-start p-4 text-slate-500"
-		>
+		<div class="text-main-500 absolute top-0 left-0 flex h-1/2 w-1/2 items-start justify-start p-4">
 			Leaps
 		</div>
 		<!-- Bottom left quadrant -->
 		<div
-			class="absolute bottom-0 left-0 flex h-1/2 w-1/2 items-end justify-start p-4 text-slate-500"
+			class="text-main-500 absolute bottom-0 left-0 flex h-1/2 w-1/2 items-end justify-start p-4"
 		>
 			Traps
 		</div>

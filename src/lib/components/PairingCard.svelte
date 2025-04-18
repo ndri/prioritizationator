@@ -13,13 +13,13 @@
 	class={[
 		'flex cursor-pointer items-center justify-center',
 		'rounded-xl p-8 text-2xl font-semibold ring-1 ring-inset',
-		'bg-white text-slate-900 ring-slate-300',
-		'hover:bg-slate-100',
-		'dark:bg-slate-800 dark:text-white dark:ring-0',
-		'dark:hover:bg-slate-700',
+		'text-main-900 ring-main-300 bg-white',
+		'hover:bg-main-100',
+		'dark:bg-main-800 dark:text-white dark:ring-0',
+		'dark:hover:bg-main-700',
 		'focus-visible:outline-2 focus-visible:outline-offset-2',
-		'focus-visible:outline-indigo-600',
-		'dark:focus-visible:outline-indigo-500'
+		'focus-visible:outline-accent-600',
+		'dark:focus-visible:outline-accent-500'
 	]}
 	{onclick}
 >

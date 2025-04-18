@@ -9,15 +9,15 @@
 </script>
 
 <header
-	class="fixed top-0 z-30 flex w-full justify-center bg-slate-50 p-4 lg:hidden dark:bg-slate-900"
+	class="bg-main-50 dark:bg-main-900 fixed top-0 z-30 flex w-full justify-center p-4 lg:hidden"
 >
 	<div class="flex w-full max-w-3xl items-center gap-3">
 		<button
 			onclick={() => (sidebarOpen = !sidebarOpen)}
 			class={[
 				'cursor-pointer rounded-md p-1',
-				'text-slate-400 hover:bg-slate-200 hover:text-slate-500',
-				'dark:text-slate-500 dark:hover:bg-slate-800 dark:hover:text-slate-400'
+				'text-main-400 hover:text-main-500 hover:bg-main-200',
+				'dark:text-main-500 dark:hover:text-main-400 dark:hover:bg-main-800'
 			]}
 			aria-label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
 		>
@@ -37,7 +37,7 @@
 
 {#if sidebarOpen}
 	<button
-		class="fixed inset-0 z-10 cursor-default bg-slate-500/75 transition-opacity lg:hidden dark:bg-slate-950/85"
+		class="bg-main-500/75 dark:bg-main-950/85 fixed inset-0 z-10 cursor-default transition-opacity lg:hidden"
 		aria-hidden="true"
 		aria-label="Close sidebar"
 		onclick={() => (sidebarOpen = false)}
@@ -46,7 +46,7 @@
 	<aside
 		class={[
 			'fixed left-0 z-20 h-screen px-4 pt-[68px]',
-			'bg-slate-50 dark:bg-slate-900',
+			'bg-main-50 dark:bg-main-900',
 			'lg:hidden'
 		]}
 		transition:fly={{ x: -(sidebarElement?.clientWidth ?? 0), opacity: 1, duration: 150 }}

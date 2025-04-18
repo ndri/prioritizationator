@@ -105,7 +105,7 @@
 					/>
 				</div>
 			{:else}
-				<p class="text-slate-500 dark:text-slate-400" transition:slide>
+				<p class="text-main-500 dark:text-main-400" transition:slide>
 					You need at least {minTasksForRating} unrated tasks to rate them.
 				</p>
 			{/if}

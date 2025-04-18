@@ -2,10 +2,10 @@
 	href="/projects/new"
 	class={[
 		'flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-5',
-		'border-slate-300 text-slate-500',
-		'hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-600',
-		'dark:border-slate-700 dark:text-slate-400',
-		'dark:hover:border-indigo-400 dark:hover:bg-slate-900 dark:hover:text-indigo-400'
+		'text-main-500 border-main-300',
+		'hover:border-accent-400 hover:bg-accent-50 hover:text-accent-600',
+		'dark:text-main-400 dark:border-main-700',
+		'dark:hover:border-accent-400 dark:hover:text-accent-400 dark:hover:bg-main-900'
 	]}
 >
 	<svg

@@ -27,7 +27,7 @@
 			{title}
 		</h3>
 		<div class="mt-2">
-			<p class="text-sm text-slate-500 dark:text-slate-400">
+			<p class="text-main-500 dark:text-main-400 text-sm">
 				{description}
 			</p>
 		</div>

@@ -16,10 +16,10 @@
 </script>
 
 <div
-	class={['relative w-full overflow-hidden rounded-lg bg-slate-200 dark:bg-slate-800', sizeClasses]}
+	class={['bg-main-200 dark:bg-main-800 relative w-full overflow-hidden rounded-lg', sizeClasses]}
 >
 	<div
-		class="absolute left-0 top-0 h-full bg-indigo-500 dark:bg-indigo-600"
+		class="bg-accent-500 dark:bg-accent-600 absolute top-0 left-0 h-full"
 		style="width: {percentage}%;"
 	></div>
 </div>

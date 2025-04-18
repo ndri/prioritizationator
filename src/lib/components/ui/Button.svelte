@@ -46,11 +46,11 @@
 	} as const;
 
 	const variantClasses = {
-		primary: ['bg-indigo-600 hover:bg-indigo-500', 'text-white'],
+		primary: ['bg-accent-600 hover:bg-accent-500', 'text-white'],
 		secondary: [
-			'bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700',
-			'text-slate-900 dark:text-white',
-			'ring-1 ring-inset ring-slate-300 dark:ring-0'
+			'bg-white dark:bg-main-800 hover:bg-main-100 dark:hover:bg-main-700',
+			'text-main-900 dark:text-white',
+			'ring-1 ring-inset ring-main-300 dark:ring-0'
 		],
 		text: ['hover:opacity-70']
 	} as const;
@@ -60,15 +60,15 @@
 		variantClasses[variant],
 		'font-semibold inline-flex items-center justify-center whitespace-nowrap cursor-pointer',
 		'focus-visible:outline-2 focus-visible:outline-offset-2',
-		'focus-visible:outline-indigo-600 dark:focus-visible:outline-indigo-500',
+		'focus-visible:outline-accent-600 dark:focus-visible:outline-accent-500',
 		'disabled:opacity-50 disabled:cursor-not-allowed',
 		className
 	];
 
 	const iconClasses = {
 		primary: 'text-white',
-		secondary: 'text-slate-400 dark:text-slate-500',
-		text: 'text-slate-400 dark:text-slate-500'
+		secondary: 'text-main-400 dark:text-main-500',
+		text: 'text-main-400 dark:text-main-500'
 	};
 </script>
 

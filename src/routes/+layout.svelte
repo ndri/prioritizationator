@@ -10,8 +10,8 @@
 		'relative flex min-h-full flex-col items-center justify-start p-0',
 		'md:justify-center',
 		'lg:flex-row lg:items-start',
-		'bg-white text-slate-900 lg:bg-slate-50 ',
-		'dark:bg-slate-900 dark:text-slate-100'
+		'text-main-900 lg:bg-main-50 bg-white ',
+		'dark:text-main-100 dark:bg-main-900'
 	]}
 >
 	<Navbar />
@@ -20,8 +20,8 @@
 			class={[
 				'@container',
 				'flex justify-center p-4 pt-24',
-				'border-slate-200 bg-white',
-				'dark:border-slate-800 dark:bg-slate-950',
+				'border-main-200 bg-white',
+				'dark:bg-main-950 dark:border-main-800',
 				'lg:rounded-lg lg:border lg:p-16'
 			]}
 		>

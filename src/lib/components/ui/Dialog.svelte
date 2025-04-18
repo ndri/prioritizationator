@@ -43,7 +43,7 @@
 			leave="ease-in duration-200"
 		>
 			<div
-				class="fixed inset-0 bg-slate-500/75 transition-opacity dark:bg-slate-950/85"
+				class="bg-main-500/75 dark:bg-main-950/85 fixed inset-0 transition-opacity"
 				aria-hidden="true"
 			></div>
 		</Transition>
@@ -66,11 +66,11 @@
 					<div
 						class="relative w-full transform overflow-hidden rounded-lg text-left transition-all sm:my-8 sm:max-w-md"
 					>
-						<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 dark:bg-slate-900">
+						<div class="dark:bg-main-900 bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
 							{@render body()}
 						</div>
 						<div
-							class="flex flex-col gap-2 bg-slate-50 px-4 py-3 sm:flex-row-reverse sm:px-6 dark:bg-slate-800"
+							class="bg-main-50 dark:bg-main-800 flex flex-col gap-2 px-4 py-3 sm:flex-row-reverse sm:px-6"
 						>
 							{@render footer()}
 						</div>

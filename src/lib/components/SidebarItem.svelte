@@ -17,10 +17,10 @@
 	class={[
 		'group flex items-center gap-3 truncate rounded-lg px-2.5 py-1.5 text-sm',
 		active ? 'font-semibold' : 'font-medium',
-		active ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600',
-		'hover:bg-indigo-50 hover:text-indigo-600',
-		active ? 'dark:bg-slate-800 dark:text-indigo-400' : 'dark:text-slate-400',
-		'dark:hover:bg-slate-800 dark:hover:text-indigo-400'
+		active ? 'bg-accent-50 text-accent-600' : 'text-main-600',
+		'hover:bg-accent-50 hover:text-accent-600',
+		active ? 'dark:text-accent-400 dark:bg-main-800' : 'dark:text-main-400',
+		'dark:hover:text-accent-400 dark:hover:bg-main-800'
 	]}
 	{onclick}
 >
@@ -28,10 +28,10 @@
 		<Icon
 			class={[
 				'shrink-0',
-				active ? 'text-indigo-600' : 'text-slate-400',
-				'group-hover:text-indigo-600',
-				active ? 'dark:text-indigo-400' : 'dark:text-slate-600',
-				'dark:group-hover:text-indigo-400'
+				active ? 'text-accent-600' : 'text-main-400',
+				'group-hover:text-accent-600',
+				active ? 'dark:text-accent-400' : 'dark:text-main-600',
+				'dark:group-hover:text-accent-400'
 			]}
 		/>
 	{/if}

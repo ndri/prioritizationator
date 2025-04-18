@@ -49,7 +49,7 @@
 	const otherIncompleteTasks = $derived(filterIncompleteTasks(otherTasks));
 </script>
 
-<li class="flex min-h-[60px] items-center gap-4 py-2 pl-5 pr-4" transition:slide>
+<li class="flex min-h-[60px] items-center gap-4 py-2 pr-4 pl-5" transition:slide>
 	{#if taskIdsBlockingToTask.length && !task.complete}
 		<BlockedByIndicator
 			tasksCount={taskIdsBlockingToTask.length}
@@ -69,7 +69,7 @@
 			onchange={() => markTaskComplete(task.id, complete)}
 		/>
 	{/if}
-	<!-- <div class="text-slate-500 dark:text-slate-500 text-sm">{task.id}</div> -->
+	<!-- <div class="text-main-500 dark:text-main-500 text-sm">{task.id}</div> -->
 	<div class="grow text-sm">{task.name}</div>
 	{#if showBadges && !task.complete}
 		<RatingBadge label="Value" rating={task.valueRating ?? -1} rated={taskValueIsRated(task)} />
@@ -130,7 +130,7 @@
 >
 	{#snippet label()}
 		<p>
-			Task <span class="font-medium text-indigo-600 dark:text-indigo-500">{task.name}</span>
+			Task <span class="text-accent-600 dark:text-accent-500 font-medium">{task.name}</span>
 			is blocked by these tasks:
 		</p>
 	{/snippet}
@@ -143,7 +143,7 @@
 >
 	{#snippet label()}
 		<p>
-			Task <span class="font-medium text-indigo-600 dark:text-indigo-500">{task.name}</span>
+			Task <span class="text-accent-600 dark:text-accent-500 font-medium">{task.name}</span>
 			is blocking these tasks:
 		</p>
 	{/snippet}

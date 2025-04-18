@@ -16,7 +16,7 @@
 
 {#if project}
 	<h1 class="text-2xl font-medium">
-		Tasks for <span class="text-indigo-600 dark:text-indigo-500">{project.name}</span>
+		Tasks for <span class="text-accent-600 dark:text-accent-500">{project.name}</span>
 	</h1>
 
 	{#if project.tasks}
@@ -30,7 +30,7 @@
 			<Button href="/projects/{projectId}" size="xl">Continue</Button>
 		{:else}
 			{@const needToAdd = minTasksForRating - project.tasks.length}
-			<p class="text-slate-500 dark:text-slate-400">
+			<p class="text-main-500 dark:text-main-400">
 				Add {needToAdd} more task{needToAdd === 1 ? '' : 's'} to get started!
 			</p>
 		{/if}

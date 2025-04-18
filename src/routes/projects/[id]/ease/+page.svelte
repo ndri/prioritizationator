@@ -29,7 +29,7 @@
 		{@const incompleteTasks = filterIncompleteTasks(project.tasks)}
 
 		<h2 class="text-center text-2xl font-medium">
-			Which of these requires <span class="text-indigo-600 dark:text-indigo-500">less effort</span>
+			Which of these requires <span class="text-accent-600 dark:text-accent-500">less effort</span>
 			to complete?
 		</h2>
 
@@ -45,7 +45,7 @@
 			total={ratingsRequired(incompleteTasks)}
 		/>
 	{:else}
-		<p class="text-slate-500 dark:text-slate-400">
+		<p class="text-main-500 dark:text-main-400">
 			You need at least {minTasksForRating} incomplete tasks to rate them.
 		</p>
 	{/if}

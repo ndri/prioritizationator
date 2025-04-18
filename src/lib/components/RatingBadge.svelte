@@ -9,13 +9,13 @@
 </script>
 
 <div class="flex flex-col items-center px-1">
-	<span class="whitespace-nowrap text-xs font-medium text-slate-500 dark:text-slate-400">
+	<span class="text-main-500 dark:text-main-400 text-xs font-medium whitespace-nowrap">
 		{label}
 	</span>
 	<span
 		class={[
 			'text-sm font-medium',
-			rated ? 'text-slate-700 dark:text-slate-300' : 'text-slate-400 dark:text-slate-500'
+			rated ? 'text-main-700 dark:text-main-300' : 'text-main-400 dark:text-main-500'
 		]}
 	>
 		{Math.round(rating)}{rated ? '' : '?'}

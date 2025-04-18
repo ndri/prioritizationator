@@ -105,12 +105,12 @@ export function filterDoableTasks(tasks: TaskWithBlockings[]) {
 
 export function taskColorClasses(task: Task) {
 	if (taskIsLowHangingFruit(task))
-		return 'bg-indigo-500/80 hover:bg-indigo-600/80 dark:bg-indigo-700/80 dark:hover:bg-indigo-600/80';
+		return 'bg-accent-500/80 hover:bg-accent-600/80 dark:bg-accent-700/80 dark:hover:bg-accent-600/80';
 	if (taskIsQuickWin(task) || taskIsLeap(task))
-		return 'bg-indigo-500/50 hover:bg-indigo-600/50 dark:bg-indigo-700/60 dark:hover:bg-indigo-600/60';
+		return 'bg-accent-500/50 hover:bg-accent-600/50 dark:bg-accent-700/60 dark:hover:bg-accent-600/60';
 	if (taskIsTrap(task))
-		return 'bg-indigo-500/30 hover:bg-indigo-600/30 dark:bg-indigo-700/40 dark:hover:bg-indigo-600/40';
-	return 'bg-slate-700 hover:bg-slate-600 dark:bg-slate-800 dark:hover:bg-slate-700';
+		return 'bg-accent-500/30 hover:bg-accent-600/30 dark:bg-accent-700/40 dark:hover:bg-accent-600/40';
+	return 'bg-main-700 hover:bg-main-600 dark:bg-main-800 dark:hover:bg-main-700';
 }
 
 export function ratingsRequired(tasks: TaskWithBlockings[]) {

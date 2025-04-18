@@ -17,8 +17,8 @@
 <article
 	class={[
 		'flex flex-col items-start justify-between rounded-lg p-5',
-		'bg-slate-50',
-		'dark:bg-slate-900'
+		'bg-main-50',
+		'dark:bg-main-900'
 	]}
 >
 	<div class="mb-4 flex flex-col gap-1">
@@ -27,7 +27,7 @@
 				{project.name}
 			</a>
 		</h3>
-		<span class="text-xs text-slate-500 dark:text-slate-300">
+		<span class="text-main-500 dark:text-main-300 text-xs">
 			{project.tasks?.length} tasks
 		</span>
 	</div>

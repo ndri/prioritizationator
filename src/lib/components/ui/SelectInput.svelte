@@ -37,11 +37,11 @@
 		'block w-full rounded-md',
 		sizeClasses[size],
 		'bg-white dark:bg-white/5',
-		'text-slate-900 dark:text-white',
-		'placeholder:text-slate-400 dark:placeholder:text-slate-500',
+		'text-main-900 dark:text-white',
+		'placeholder:text-main-400 dark:placeholder:text-main-500',
 		'outline outline-1 -outline-offset-1',
-		'outline-slate-300 dark:outline-slate-700',
-		'focus:-outline-offset-1 focus:outline-indigo-600 dark:focus:outline-indigo-500',
+		'outline-main-300 dark:outline-main-700',
+		'focus:-outline-offset-1 focus:outline-accent-600 dark:focus:outline-accent-500',
 		'disabled:opacity-50 disabled:cursor-not-allowed',
 		className
 	];

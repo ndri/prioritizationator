@@ -13,7 +13,7 @@
 </script>
 
 <fieldset class="flex flex-col gap-2">
-	<div class={[hiddenLabel ? 'sr-only' : 'text-sm font-medium text-slate-900 dark:text-white']}>
+	<div class={[hiddenLabel ? 'sr-only' : 'text-main-900 text-sm font-medium dark:text-white']}>
 		<!-- Styling legends is broken, so wrap with div -->
 		<legend>{label}</legend>
 	</div>
@@ -21,8 +21,8 @@
 		class={[
 			'flex max-h-[294px] flex-col overflow-y-auto rounded-md',
 			'divide-y divide-solid',
-			'divide-slate-200 bg-slate-50',
-			'dark:divide-slate-950 dark:bg-slate-900'
+			'bg-main-50 divide-main-200',
+			'dark:bg-main-900 dark:divide-main-950'
 		]}
 	>
 		{#each options as option}
@@ -40,7 +40,7 @@
 						}
 					}}
 				/>
-				<span class="text-sm text-slate-900 dark:text-white">{option.label}</span>
+				<span class="text-main-900 text-sm dark:text-white">{option.label}</span>
 			</label>
 		{/each}
 	</div>
