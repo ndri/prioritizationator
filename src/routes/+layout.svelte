@@ -19,7 +19,7 @@
 		<div
 			class={[
 				'flex justify-center p-4 pt-24',
-				'border-slate-100 bg-white',
+				'border-slate-200 bg-white',
 				'dark:border-slate-800 dark:bg-slate-950',
 				'lg:rounded-lg lg:border lg:p-16'
 			]}

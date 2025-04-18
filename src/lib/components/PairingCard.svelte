@@ -12,12 +12,12 @@
 <button
 	class={[
 		'flex items-center justify-center',
-		'rounded-xl p-8 text-2xl font-semibold shadow-xs ring-1 ring-inset',
+		'rounded-xl p-8 text-2xl font-semibold ring-1 ring-inset',
 		'bg-white text-slate-900 ring-slate-300',
 		'hover:bg-slate-100',
 		'dark:bg-slate-800 dark:text-white dark:ring-0',
 		'dark:hover:bg-slate-700',
-		'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
+		'focus-visible:outline focus-visible:outline-offset-2',
 		'focus-visible:outline-indigo-600',
 		'dark:focus-visible:outline-indigo-500'
 	]}

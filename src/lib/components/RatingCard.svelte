@@ -13,9 +13,7 @@
 	const { title, ratingsProgress, ratingsRequired, ratingPath }: Props = $props();
 </script>
 
-<div
-	class="flex flex-col justify-between gap-4 rounded-lg bg-slate-50 p-5 shadow-xs dark:bg-slate-900"
->
+<div class="flex flex-col justify-between gap-4 rounded-lg bg-slate-50 p-5 dark:bg-slate-900">
 	{#if ratingsProgress === ratingsRequired}
 		<div class="flex flex-col gap-2.5 sm:flex-row">
 			<div class="text-lg font-medium">{title}</div>

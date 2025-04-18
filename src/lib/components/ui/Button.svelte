@@ -46,12 +46,11 @@
 	} as const;
 
 	const variantClasses = {
-		primary: ['bg-indigo-600 hover:bg-indigo-500', 'text-white', 'shadow-xs'],
+		primary: ['bg-indigo-600 hover:bg-indigo-500', 'text-white'],
 		secondary: [
 			'bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700',
 			'text-slate-900 dark:text-white',
-			'ring-1 ring-inset ring-slate-300 dark:ring-0',
-			'shadow-xs'
+			'ring-1 ring-inset ring-slate-300 dark:ring-0'
 		],
 		text: ['hover:opacity-70']
 	} as const;

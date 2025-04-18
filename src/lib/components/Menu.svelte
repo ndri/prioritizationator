@@ -73,7 +73,7 @@
 			leave="transition-all ease-in duration-200"
 		>
 			<div
-				class="absolute right-0 top-full z-10 mt-2 flex min-w-40 origin-top-right flex-col rounded-md bg-white shadow-lg shadow-slate-500/25 ring-1 ring-slate-300 dark:bg-slate-950 dark:shadow-slate-900/50 dark:ring-slate-800"
+				class="absolute top-full right-0 z-10 mt-2 flex min-w-40 origin-top-right flex-col rounded-md bg-white ring-1 ring-slate-300 dark:bg-slate-950 dark:ring-slate-800"
 				role="menu"
 				aria-orientation="vertical"
 				aria-label={label}

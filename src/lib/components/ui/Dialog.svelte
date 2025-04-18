@@ -64,9 +64,9 @@
 					leave="ease-in duration-200"
 				>
 					<div
-						class="relative w-full transform overflow-hidden rounded-lg text-left shadow-xl transition-all sm:my-8 sm:max-w-md"
+						class="relative w-full transform overflow-hidden rounded-lg text-left transition-all sm:my-8 sm:max-w-md"
 					>
-						<div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4 dark:bg-slate-900">
+						<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 dark:bg-slate-900">
 							{@render body()}
 						</div>
 						<div
