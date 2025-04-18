@@ -18,6 +18,7 @@
 	<main class={['flex h-screen w-full flex-col overflow-y-scroll p-0', 'lg:p-4']}>
 		<div
 			class={[
+				'@container',
 				'flex justify-center p-4 pt-24',
 				'border-slate-200 bg-white',
 				'dark:border-slate-800 dark:bg-slate-950',

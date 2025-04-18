@@ -32,7 +32,7 @@
 	<p class="text-slate-500 dark:text-slate-400">
 		Get started quickly with some pre-selected tasks.
 	</p>
-	<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+	<div class="grid grid-cols-1 gap-3 @lg:grid-cols-2">
 		{#each TEMPLATES as template}
 			<button
 				class={[

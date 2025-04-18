@@ -25,23 +25,23 @@
 	});
 </script>
 
-<section class="relative w-full p-4 md:p-16">
+<section class="relative w-full p-4 @xl:p-16">
 	<div class="relative" style="height:{chartWidth}px" bind:this={chartRef}>
 		<!-- Vertical halves separator with labels -->
-		<div class="absolute left-1/2 top-0 h-full w-px bg-slate-300 dark:bg-slate-700"></div>
-		<div class="absolute left-0 top-1/2 -translate-y-1/2 text-sm text-slate-500">
+		<div class="absolute top-0 left-1/2 h-full w-px bg-slate-300 dark:bg-slate-700"></div>
+		<div class="absolute top-1/2 left-0 -translate-y-1/2 text-sm text-slate-500">
 			less
 			<br />
 			easier
 		</div>
-		<div class="absolute right-0 top-1/2 -translate-y-1/2 text-right text-sm text-slate-500">
+		<div class="absolute top-1/2 right-0 -translate-y-1/2 text-right text-sm text-slate-500">
 			more
 			<br />
 			easier
 		</div>
 
 		<!-- Horizontal halves separator with labels -->
-		<div class="absolute left-0 top-1/2 h-px w-full bg-slate-300 dark:bg-slate-700"></div>
+		<div class="absolute top-1/2 left-0 h-px w-full bg-slate-300 dark:bg-slate-700"></div>
 		<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-sm text-slate-500">
 			more valuable
 		</div>
@@ -51,19 +51,19 @@
 
 		<!-- Top right quadrant -->
 		<div
-			class="absolute right-0 top-0 flex h-1/2 w-1/2 items-start justify-end p-4 text-right font-medium text-slate-500"
+			class="absolute top-0 right-0 flex h-1/2 w-1/2 items-start justify-end p-4 text-right font-medium text-slate-500"
 		>
 			Low Hanging Fruits
 		</div>
 		<!-- Bottom right quadrant -->
 		<div
-			class="absolute bottom-0 right-0 flex h-1/2 w-1/2 items-end justify-end p-4 text-right text-slate-500"
+			class="absolute right-0 bottom-0 flex h-1/2 w-1/2 items-end justify-end p-4 text-right text-slate-500"
 		>
 			Quick Wins
 		</div>
 		<!-- Top left quadrant -->
 		<div
-			class="absolute left-0 top-0 flex h-1/2 w-1/2 items-start justify-start p-4 text-slate-500"
+			class="absolute top-0 left-0 flex h-1/2 w-1/2 items-start justify-start p-4 text-slate-500"
 		>
 			Leaps
 		</div>
