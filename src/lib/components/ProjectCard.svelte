@@ -23,7 +23,13 @@
 >
 	<div class="mb-4 flex flex-col gap-1">
 		<h3>
-			<a href="/projects/{project.id}" class="font-medium hover:opacity-70">
+			<a
+				href="/projects/{project.id}"
+				class={[
+					'hover:text-main-500 dark:hover:text-main-300 font-medium',
+					'focus-outline rounded-xs'
+				]}
+			>
 				{project.name}
 			</a>
 		</h3>

@@ -51,8 +51,9 @@
 		'checked:hover:bg-accent-500',
 		'dark:bg-main-800 dark:border-none',
 		'dark:hover:bg-main-700',
-		'focus-visible:outline-2 focus-visible:outline-offset-2',
-		'focus:outline-accent-600 focus:border-none focus:ring-0! focus:[box-shadow:none]!',
+		'focus:outline-accent-600 focus:[box-shadow:none]!',
+		'focus-outline',
+		'disabled:cursor-not-allowed disabled:opacity-50',
 		sizeClasses[size],
 		className
 	]}

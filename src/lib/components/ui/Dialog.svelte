@@ -47,13 +47,14 @@
 				aria-hidden="true"
 			></div>
 		</Transition>
-		<div class="fixed inset-0 z-40 w-screen overflow-y-auto">
+		<div class="fixed inset-0 z-40 w-screen overflow-y-auto" tabindex="-1">
 			<button
 				class="flex min-h-full w-full cursor-auto items-end justify-center p-4 text-center sm:items-center sm:p-0"
 				aria-label="Close dialog"
 				onclick={(e) => {
 					if (e.target === e.currentTarget) close();
 				}}
+				tabindex="-1"
 			>
 				<Transition
 					{show}

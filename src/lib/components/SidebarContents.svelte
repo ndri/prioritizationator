@@ -51,8 +51,10 @@
 		{/each}
 	</nav>
 	{#if recentProjects}
-		<div class="text-main-500 dark:text-main-400 p-2 pl-4 text-sm font-medium">Recent projects</div>
-		<nav class="flex flex-col gap-1.5 overflow-y-auto p-2 pt-0 *:shrink-0">
+		<div class="text-main-500 dark:text-main-400 p-2 pb-1 pl-4 text-sm font-medium">
+			Recent projects
+		</div>
+		<nav class="flex flex-col gap-1.5 overflow-y-auto p-2 pt-1 *:shrink-0" tabindex="-1">
 			{#each recentProjects as project (project.id)}
 				<SidebarItem
 					href={`/projects/${project.id}`}

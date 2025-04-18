@@ -5,7 +5,8 @@
 		'text-main-500 border-main-300',
 		'hover:border-accent-400 hover:bg-accent-50 hover:text-accent-600',
 		'dark:text-main-400 dark:border-main-700',
-		'dark:hover:border-accent-400 dark:hover:text-accent-400 dark:hover:bg-main-900'
+		'dark:hover:border-accent-400 dark:hover:text-accent-400 dark:hover:bg-main-900',
+		'focus-outline'
 	]}
 >
 	<svg

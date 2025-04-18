@@ -16,7 +16,8 @@
 		'text-main-500 hover:text-main-600 aria-selected:text-main-700',
 		'aria-selected:bg-main-100',
 		'dark:text-main-400 dark:hover:text-main-300 dark:aria-selected:text-main-200',
-		'dark:aria-selected:bg-main-900'
+		'dark:aria-selected:bg-main-900',
+		'focus-outline'
 	]}
 	aria-selected={active}
 	{onclick}

@@ -20,7 +20,8 @@
 		active ? 'bg-accent-50 text-accent-600' : 'text-main-600',
 		'hover:bg-accent-50 hover:text-accent-600',
 		active ? 'dark:text-accent-400 dark:bg-main-800' : 'dark:text-main-400',
-		'dark:hover:text-accent-400 dark:hover:bg-main-800'
+		'dark:hover:text-accent-400 dark:hover:bg-main-800',
+		'focus-outline'
 	]}
 	{onclick}
 >

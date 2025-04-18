@@ -116,7 +116,7 @@
 		class="flex items-center p-1"
 	>
 		{#snippet button(props)}
-			<Button size="xl" variant="text" Icon={EllipsisVerticalIcon} {...props} />
+			<Button size="xl" variant="text" Icon={EllipsisVerticalIcon} {...props} class="p-1.5" />
 		{/snippet}
 	</Menu>
 </li>

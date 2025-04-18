@@ -48,3 +48,16 @@
 		border-color: var(--color-slate-200, currentcolor);
 	}
 }
+
+/* Utilities */
+@utility focus-outline {
+	&:focus-visible {
+		outline: 2px solid var(--color-accent-600);
+		outline-offset: 2px;
+	}
+	@variant dark {
+		&:focus-visible {
+			outline-color: var(--color-accent-500);
+		}
+	}
+}

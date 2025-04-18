@@ -15,7 +15,7 @@
 	]}
 >
 	<Navbar />
-	<main class={['flex h-screen w-full flex-col overflow-y-scroll p-0', 'lg:p-4']}>
+	<main class={['flex h-screen w-full flex-col overflow-y-auto p-0', 'lg:p-4']} tabindex="-1">
 		<div
 			class={[
 				'@container',

@@ -38,11 +38,11 @@
 	}: Props = $props();
 
 	const sizeClasses = {
-		xs: ['text-xs gap-1.5', variant !== 'text' && 'rounded-sm px-2 py-1.5'],
-		sm: ['text-sm gap-1.5', variant !== 'text' && 'rounded-sm px-2 py-1'],
-		md: ['text-sm gap-1.5', variant !== 'text' && 'rounded-md px-3 py-1.5'],
-		lg: ['text-sm gap-1.5', variant !== 'text' && 'rounded-md px-3.5 py-2'],
-		xl: ['text-base gap-2', variant !== 'text' && 'rounded-md px-3.5 py-2.5']
+		xs: ['text-xs gap-1.5 rounded-sm', variant !== 'text' && 'px-2 py-1.5'],
+		sm: ['text-sm gap-1.5 rounded-sm', variant !== 'text' && 'px-2 py-1'],
+		md: ['text-sm gap-1.5 rounded-md', variant !== 'text' && 'px-3 py-1.5'],
+		lg: ['text-sm gap-1.5 rounded-md', variant !== 'text' && 'px-3.5 py-2'],
+		xl: ['text-base gap-2 rounded-md', variant !== 'text' && 'px-3.5 py-2.5']
 	} as const;
 
 	const variantClasses = {
@@ -52,15 +52,15 @@
 			'text-main-900 dark:text-white',
 			'ring-1 ring-inset ring-main-300 dark:ring-0'
 		],
-		text: ['hover:opacity-70']
+		text: ['hover:bg-main-200', 'dark:hover:bg-main-800']
 	} as const;
 
 	const buttonClasses = [
+		'group/button',
 		sizeClasses[size],
 		variantClasses[variant],
 		'font-semibold inline-flex items-center justify-center whitespace-nowrap cursor-pointer',
-		'focus-visible:outline-2 focus-visible:outline-offset-2',
-		'focus-visible:outline-accent-600 dark:focus-visible:outline-accent-500',
+		'focus-outline',
 		'disabled:opacity-50 disabled:cursor-not-allowed',
 		className
 	];
@@ -68,7 +68,10 @@
 	const iconClasses = {
 		primary: 'text-white',
 		secondary: 'text-main-400 dark:text-main-500',
-		text: 'text-main-400 dark:text-main-500'
+		text: [
+			'text-main-400 group-hover/button:text-main-500',
+			'dark:text-main-500 dark:group-hover/button:text-main-400'
+		]
 	};
 </script>
 

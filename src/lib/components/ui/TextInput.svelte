@@ -56,7 +56,8 @@
 		'placeholder:text-main-400 dark:placeholder:text-main-500',
 		'outline outline-1 -outline-offset-1',
 		'outline-main-300 dark:outline-main-700',
-		'focus:-outline-offset-1 focus:outline-accent-600 dark:focus:outline-accent-500',
+		'focus:-outline-offset-2 focus:outline-2 focus:[box-shadow:none]!',
+		'focus:outline-accent-600 dark:focus:outline-accent-500',
 		'disabled:opacity-50 disabled:cursor-not-allowed',
 		'border-none',
 		className

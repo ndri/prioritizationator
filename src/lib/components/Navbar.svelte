@@ -3,6 +3,7 @@
 	import Bars3Icon from './heroicons/outline/Bars3Icon.svelte';
 	import SidebarContents from './SidebarContents.svelte';
 	import { fade, fly } from 'svelte/transition';
+	import Button from './ui/Button.svelte';
 
 	let sidebarOpen = $state(false);
 	let sidebarElement = $state<HTMLElement | null>(null);
@@ -12,21 +13,14 @@
 	class="bg-main-50 dark:bg-main-900 fixed top-0 z-30 flex w-full justify-center p-4 lg:hidden"
 >
 	<div class="flex w-full max-w-3xl items-center gap-3">
-		<button
+		<Button
+			size="xl"
+			variant="text"
+			Icon={sidebarOpen ? XMarkIcon : Bars3Icon}
 			onclick={() => (sidebarOpen = !sidebarOpen)}
-			class={[
-				'cursor-pointer rounded-md p-1',
-				'text-main-400 hover:text-main-500 hover:bg-main-200',
-				'dark:text-main-500 dark:hover:text-main-400 dark:hover:bg-main-800'
-			]}
+			class="p-1"
 			aria-label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
-		>
-			{#if sidebarOpen}
-				<XMarkIcon />
-			{:else}
-				<Bars3Icon />
-			{/if}
-		</button>
+		/>
 		<h1 class="grow text-xl font-medium">Prioritizationator</h1>
 	</div>
 </header>
@@ -42,6 +36,7 @@
 		aria-label="Close sidebar"
 		onclick={() => (sidebarOpen = false)}
 		transition:fade={{ duration: 150 }}
+		tabindex="-1"
 	></button>
 	<aside
 		class={[

@@ -24,6 +24,7 @@
 			'bg-main-50 divide-main-200',
 			'dark:bg-main-900 dark:divide-main-950'
 		]}
+		tabindex="-1"
 	>
 		{#each options as option}
 			<label class="flex cursor-pointer items-center gap-2 p-3">
