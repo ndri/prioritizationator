@@ -45,13 +45,14 @@
 	bind:checked
 	class={[
 		'cursor-pointer border',
-		'border-slate-300 bg-white text-indigo-600',
-		'hover:bg-slate-100 hover:text-indigo-500',
+		'border-slate-300 bg-white',
+		'hover:bg-slate-100',
+		'checked:border-none checked:bg-indigo-600',
+		'checked:hover:bg-indigo-500',
 		'dark:border-none dark:bg-slate-800',
 		'dark:hover:bg-slate-700',
-		'disabled:border-slate-300 disabled:bg-slate-100 disabled:checked:bg-slate-100',
-		'focus-visible:outline focus-visible:outline-offset-2',
-		'focus:border-none focus:ring-0! focus:[box-shadow:none] focus:outline-indigo-600',
+		'focus-visible:outline-2 focus-visible:outline-offset-2',
+		'focus:border-none focus:ring-0! focus:[box-shadow:none]! focus:outline-indigo-600',
 		sizeClasses[size],
 		className
 	]}

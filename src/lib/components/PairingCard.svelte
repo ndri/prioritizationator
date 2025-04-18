@@ -17,7 +17,7 @@
 		'hover:bg-slate-100',
 		'dark:bg-slate-800 dark:text-white dark:ring-0',
 		'dark:hover:bg-slate-700',
-		'focus-visible:outline focus-visible:outline-offset-2',
+		'focus-visible:outline-2 focus-visible:outline-offset-2',
 		'focus-visible:outline-indigo-600',
 		'dark:focus-visible:outline-indigo-500'
 	]}
