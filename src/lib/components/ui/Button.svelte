@@ -58,7 +58,7 @@
 	const buttonClasses = [
 		sizeClasses[size],
 		variantClasses[variant],
-		'font-semibold inline-flex items-center justify-center whitespace-nowrap',
+		'font-semibold inline-flex items-center justify-center whitespace-nowrap cursor-pointer',
 		'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
 		'focus-visible:outline-indigo-600 dark:focus-visible:outline-indigo-500',
 		'disabled:opacity-50 disabled:cursor-not-allowed',

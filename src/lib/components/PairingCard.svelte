@@ -11,7 +11,7 @@
 
 <button
 	class={[
-		'flex items-center justify-center',
+		'flex cursor-pointer items-center justify-center',
 		'rounded-xl p-8 text-2xl font-semibold ring-1 ring-inset',
 		'bg-white text-slate-900 ring-slate-300',
 		'hover:bg-slate-100',

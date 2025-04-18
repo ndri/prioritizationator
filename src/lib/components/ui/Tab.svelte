@@ -12,7 +12,7 @@
 <button
 	role="tab"
 	class={[
-		'group flex min-h-9 items-center gap-1.5 rounded-lg px-3 text-sm font-medium',
+		'group flex min-h-9 cursor-pointer items-center gap-1.5 rounded-lg px-3 text-sm font-medium',
 		'text-slate-500 hover:text-slate-600 aria-selected:text-slate-700',
 		'aria-selected:bg-slate-100',
 		'dark:text-slate-400 dark:hover:text-slate-300 dark:aria-selected:text-slate-200',

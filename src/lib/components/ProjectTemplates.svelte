@@ -36,7 +36,7 @@
 		{#each TEMPLATES as template}
 			<button
 				class={[
-					'flex flex-col items-start justify-between gap-2 rounded-lg border p-5 text-sm',
+					'flex cursor-pointer flex-col items-start justify-between gap-2 rounded-lg border p-5 text-sm',
 					'border-slate-200 hover:bg-slate-50',
 					'dark:border-slate-800 dark:hover:bg-slate-900'
 				]}

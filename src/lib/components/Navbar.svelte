@@ -15,7 +15,7 @@
 		<button
 			onclick={() => (sidebarOpen = !sidebarOpen)}
 			class={[
-				'rounded-md p-1',
+				'cursor-pointer rounded-md p-1',
 				'text-slate-400 hover:bg-slate-200 hover:text-slate-500',
 				'dark:text-slate-500 dark:hover:bg-slate-800 dark:hover:text-slate-400'
 			]}
@@ -31,7 +31,7 @@
 	</div>
 </header>
 
-<aside class={['h-screen pl-4 pt-4', 'hidden lg:flex']}>
+<aside class={['h-screen pt-4 pl-4', 'hidden lg:flex']}>
 	<SidebarContents onclick={() => (sidebarOpen = false)} />
 </aside>
 
