@@ -4,6 +4,7 @@
 	import Link from '$lib/components/Link.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import Dialog from '$lib/components/ui/Dialog.svelte';
 	import {
 		formatBytes,
 		persist,
@@ -42,7 +43,7 @@
 					{#if result === 'persisted'}
 						<CheckCircleIcon class="size-12 shrink-0 text-green-600" />
 						<p>
-							Your data is persisted and it shouldn't be deleted by the browser unless you delete it
+							Your data is persisted and it won't be deleted by the browser unless you delete it
 							manually.
 						</p>
 					{:else if result === 'prompt' || result === 'never'}
@@ -57,14 +58,14 @@
 								</Link> when your device needs to make space.
 							</p>
 							{#if result === 'prompt'}
-								<p>Consider enabling persistent storage to prevent this from happening.</p>
 								<Button
 									variant="primary"
 									onclick={async () => {
-										try {
-											await persist();
-										} catch (error) {
-											console.error('Error requesting storage persistence:', error);
+										const success = await persist();
+										if (!success) {
+											alert(
+												'Your browser did not allow enabling persistent storage. Try to use the app some more and then try again.'
+											);
 										}
 									}}
 								>
