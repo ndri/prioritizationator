@@ -9,8 +9,8 @@
 	let reversedProjects = $derived(projects.toReversed());
 </script>
 
-<section>
-	<h2 class="mb-4 text-2xl font-medium">Projects</h2>
+<section class="flex flex-col gap-4">
+	<h2 class="text-2xl font-medium">Projects</h2>
 	<div class="grid grid-cols-1 gap-3 @lg:grid-cols-2">
 		<NewProjectCard />
 		{#each reversedProjects as project}
