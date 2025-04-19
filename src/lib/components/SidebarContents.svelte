@@ -41,7 +41,8 @@
 
 <div class="flex h-full min-w-64 flex-col gap-2">
 	{#if !hideTitle}
-		<div class="flex px-4 pt-4">
+		<div class="flex items-center gap-3 px-4 pt-4">
+			<img src="/logo.svg" alt="Prioritizationator logo" class="h-5 w-5" />
 			<h1 class="text-xl font-medium">Prioritizationator</h1>
 		</div>
 	{/if}

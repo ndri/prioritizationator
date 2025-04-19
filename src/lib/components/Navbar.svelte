@@ -21,7 +21,10 @@
 			class="p-1"
 			aria-label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
 		/>
-		<h1 class="grow text-xl font-medium">Prioritizationator</h1>
+		<div class="flex grow items-center justify-center gap-2">
+			<img src="/logo.svg" alt="Prioritizationator logo" class="m-1 h-6 w-6" />
+			<h1 class="text-xl font-medium">Prioritizationator</h1>
+		</div>
 	</div>
 </header>
 
