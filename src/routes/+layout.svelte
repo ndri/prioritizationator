@@ -3,6 +3,8 @@
 	import '../app.css';
 	import Navbar from '$lib/components/Navbar.svelte';
 	let { children } = $props();
+
+	export const ssr = false;
 </script>
 
 <div
