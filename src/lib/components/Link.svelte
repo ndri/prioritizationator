@@ -2,7 +2,7 @@
 	import type { Snippet } from 'svelte';
 	import type { ClassValue } from 'svelte/elements';
 	import SmIcon from './heroicons/micro/ArrowTopRightOnSquareIcon.svelte';
-	import BaseIcon from './heroicons/mini/ArrowTopRightOnSquareIcon.svelte';
+	import MdIcon from './heroicons/mini/ArrowTopRightOnSquareIcon.svelte';
 	import LgIcon from './heroicons/outline/ArrowTopRightOnSquareIcon.svelte';
 
 	interface Props {
@@ -10,10 +10,10 @@
 		href: string;
 		class?: ClassValue;
 		newTab?: boolean;
-		iconSize?: 'sm' | 'base' | 'lg';
+		iconSize?: 'sm' | 'md' | 'lg';
 	}
 
-	const { children, href, class: className, newTab = false, iconSize = 'base' }: Props = $props();
+	const { children, href, class: className, newTab = false, iconSize = 'md' }: Props = $props();
 </script>
 
 <a
@@ -23,7 +23,7 @@
 		'text-accent-600 hover:text-accent-700',
 		'dark:text-accent-400 dark:hover:text-accent-300',
 		iconSize === 'sm' && 'gap-0.5',
-		iconSize === 'base' && 'gap-1',
+		iconSize === 'md' && 'gap-1',
 		iconSize === 'lg' && 'gap-1',
 		className
 	]}
@@ -32,8 +32,8 @@
 >
 	{@render children()}
 	{#if newTab}
-		{#if iconSize === 'base'}
-			<BaseIcon />
+		{#if iconSize === 'md'}
+			<MdIcon />
 		{:else if iconSize === 'lg'}
 			<LgIcon />
 		{:else if iconSize === 'sm'}

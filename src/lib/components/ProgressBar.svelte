@@ -2,7 +2,7 @@
 	interface Props {
 		progress: number;
 		total: number;
-		size?: 'sm' | 'md';
+		size?: 'sm' | 'md' | 'lg';
 	}
 
 	const { progress, total, size = 'md' }: Props = $props();
@@ -11,7 +11,8 @@
 
 	const sizeClasses = {
 		sm: 'h-2',
-		md: 'h-3'
+		md: 'h-3',
+		lg: 'h-4'
 	}[size];
 </script>
 
