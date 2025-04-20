@@ -6,12 +6,14 @@
 	import type { Snippet } from 'svelte';
 	import type { ClassValue, MouseEventHandler } from 'svelte/elements';
 	import type { Heroicon } from '../heroicons/Heroicon';
+	import Spinner from './Spinner.svelte';
 
 	interface Props {
 		variant?: 'primary' | 'secondary' | 'text';
 		size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 		type?: 'button' | 'submit' | 'reset' | null;
 		disabled?: boolean | null;
+		loading?: boolean;
 		href?: string;
 		label?: string;
 		onclick?: MouseEventHandler<HTMLButtonElement> | null;
@@ -27,6 +29,7 @@
 		size = 'md',
 		type = 'button',
 		disabled = false,
+		loading = false,
 		href,
 		label,
 		onclick,
@@ -61,7 +64,7 @@
 		variantClasses[variant],
 		'font-semibold inline-flex items-center justify-center whitespace-nowrap cursor-pointer',
 		'focus-outline',
-		'disabled:opacity-50 disabled:cursor-not-allowed',
+		'disabled:opacity-70 disabled:cursor-not-allowed',
 		className
 	];
 
@@ -76,7 +79,9 @@
 </script>
 
 {#snippet contents()}
-	{#if Icon}
+	{#if loading}
+		<Spinner {size} />
+	{:else if Icon}
 		<Icon class={iconClasses[variant]} />
 	{/if}
 	{#if label}
@@ -90,7 +95,14 @@
 		{@render contents()}
 	</a>
 {:else}
-	<button {type} class={buttonClasses} {disabled} {onclick} bind:this={ref} {...props}>
+	<button
+		{type}
+		class={buttonClasses}
+		disabled={disabled || loading}
+		{onclick}
+		bind:this={ref}
+		{...props}
+	>
 		{@render contents()}
 	</button>
 {/if}

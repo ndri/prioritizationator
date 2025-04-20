@@ -358,3 +358,12 @@ export async function countAllData() {
 	const blockings = await db.taskBlockings.count();
 	return { projects, tasks, blockings };
 }
+
+/* Export and import */
+export async function exportDatabase() {
+	const projects = await db.projects.toArray();
+	const tasks = await db.tasks.toArray();
+	const taskBlockings = await db.taskBlockings.toArray();
+
+	return { projects, tasks, taskBlockings };
+}

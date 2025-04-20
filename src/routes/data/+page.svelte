@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import DataList from '$lib/components/DataList.svelte';
+	import ArrowUpTray from '$lib/components/heroicons/mini/ArrowUpTray.svelte';
 	import TrashIcon from '$lib/components/heroicons/mini/TrashIcon.svelte';
 	import CheckCircleIcon from '$lib/components/heroicons/outline/CheckCircleIcon.svelte';
 	import ExclamationTriangleIcon from '$lib/components/heroicons/outline/ExclamationTriangleIcon.svelte';
@@ -8,8 +9,9 @@
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import SimpleDialog from '$lib/components/ui/SimpleDialog.svelte';
-	import { countAllData, deleteAllProjects } from '$lib/db';
+	import { countAllData, deleteAllProjects, exportDatabase } from '$lib/db';
 	import { stateQuery } from '$lib/stateQuery.svelte';
+	import { downloadJSON } from '$lib/utils/browser';
 	import { formatNumber } from '$lib/utils/numbers';
 	import {
 		formatBytes,
@@ -23,6 +25,18 @@
 
 	let deleteDialog = $state<SimpleDialog>();
 	let persistenceInfoDialog = $state<SimpleDialog>();
+
+	let exportLoading = $state(false);
+
+	function exportData() {
+		exportLoading = true;
+		exportDatabase().then((database) => {
+			const timestamp = new Date().toISOString().replace(/:/g, '-');
+			const filename = `prioritizationator_data_${timestamp}.json`;
+			downloadJSON(database, filename);
+			setTimeout(() => (exportLoading = false), 200);
+		});
+	}
 </script>
 
 <div class="flex flex-col gap-8">
@@ -134,6 +148,16 @@
 		</div>
 	</section>
 	<section class="flex flex-col items-start gap-4">
+		<h3 class="text-xl font-medium">Export</h3>
+		<p>
+			You can export all of your Prioritizationator data to a JSON file. This is useful if you want
+			to back up your data or transfer it to another device.
+		</p>
+		<Button size="lg" Icon={ArrowUpTray} loading={exportLoading} onclick={exportData}>
+			Export JSON
+		</Button>
+	</section>
+	<section class="flex flex-col items-start gap-4">
 		<h3 class="text-xl font-medium">Deletion</h3>
 		<p>
 			You can delete all your data if you no longer plan to use Prioritizationator. This is
@@ -162,7 +186,6 @@
 	buttons={[
 		{
 			label: 'Delete',
-			variant: 'primary',
 			onclick: () => {
 				deleteAllProjects();
 				deleteDialog?.close();
@@ -184,7 +207,6 @@
 	buttons={[
 		{
 			label: 'Alrighty',
-			variant: 'primary',
 			onclick: () => persistenceInfoDialog?.close()
 		}
 	]}
