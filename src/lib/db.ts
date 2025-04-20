@@ -345,3 +345,11 @@ async function addBlockingsToTasks(tasks: Task[]): Promise<TaskWithBlockings[]> 
 		blockingTo: blockingsFromMap[task.id] ?? []
 	}));
 }
+
+/* Counts */
+export async function countAllData() {
+	const projects = await db.projects.count();
+	const tasks = await db.tasks.count();
+	const blockings = await db.taskBlockings.count();
+	return { projects, tasks, blockings };
+}

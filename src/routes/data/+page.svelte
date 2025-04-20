@@ -1,20 +1,47 @@
 <script lang="ts">
+	import DataList from '$lib/components/DataList.svelte';
 	import CheckCircleIcon from '$lib/components/heroicons/outline/CheckCircleIcon.svelte';
 	import ExclamationTriangleIcon from '$lib/components/heroicons/outline/ExclamationTriangleIcon.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import { countAllData } from '$lib/db';
+	import { stateQuery } from '$lib/stateQuery.svelte';
+	import { formatNumber } from '$lib/utils/numbers';
 	import {
 		formatBytes,
 		persist,
 		showEstimatedQuota,
 		tryPersistWithoutPromtingUser
 	} from '$lib/utils/storage';
+
+	const countsQuery = stateQuery(countAllData);
+	const counts = $derived(countsQuery.current);
 </script>
 
 <section class="flex flex-col gap-8">
 	<h2 class="text-2xl font-medium">Data</h2>
 	<div>Prioritizationator stores all data offline in your browser.</div>
+	{#if counts}
+		<h3 class="text-xl font-medium">Summary</h3>
+		<DataList
+			data={[
+				{
+					key: 'Number of projects',
+					value: formatNumber(counts.projects)
+				},
+				{
+					key: 'Number of tasks',
+					value: formatNumber(counts.tasks)
+				},
+				{
+					key: 'Number of tasks blocking other tasks',
+					value: formatNumber(counts.blockings)
+				}
+			]}
+		/>
+	{/if}
+
 	<h3 class="text-xl font-medium">Storage</h3>
 	{#await showEstimatedQuota()}
 		<p>Loading...</p>
@@ -22,15 +49,15 @@
 		{#if estimatedQuota && estimatedQuota.quota && estimatedQuota.usage}
 			{@const usagePercentage = Math.round((estimatedQuota.usage / estimatedQuota.quota) * 100)}
 			<div class="flex flex-col gap-2">
-				<div class="text-main-500 dark:text-main-400">
-					<span class="text-main-700 dark:text-main-300 font-medium">
+				<div>
+					<span class="font-medium">
 						{formatBytes(estimatedQuota.usage)} ({usagePercentage}%)
 					</span>
-					<span>used of your browser's</span>
-					<span class="text-main-700 dark:text-main-300 font-medium">
+					<span class="text-main-500 dark:text-main-400">used of your browser's</span>
+					<span class="font-medium">
 						{formatBytes(estimatedQuota.quota)}
 					</span>
-					<span>quota.</span>
+					<span class="text-main-500 dark:text-main-400">quota.</span>
 				</div>
 				<ProgressBar progress={estimatedQuota.usage} total={estimatedQuota.quota} size="lg" />
 			</div>
@@ -38,7 +65,7 @@
 				<h3 class="text-xl font-medium">Persistence</h3>
 				<div
 					class={[
-						'flex items-center gap-6 rounded-lg border p-6',
+						'flex max-w-lg items-center gap-6 rounded-lg border p-6',
 						'border-main-200 dark:border-main-800 bg-main-50 dark:bg-main-900 '
 					]}
 				>
@@ -60,7 +87,7 @@
 										newTab
 									>
 										might be deleted
-									</Link> when your device needs to make space.
+									</Link> when your device needs to make space for something else.
 								</p>
 								{#if result === 'prompt'}
 									<Button
@@ -85,16 +112,18 @@
 				</div>
 			</div>
 		{:else}
-			<p>Unable to estimate storage.</p>
-			<p>
-				Your browser might not support the <Link
-					href="https://developer.mozilla.org/en-US/docs/Web/API/StorageManager"
-					newTab
-				>
-					StorageManager API
-				</Link>.
-			</p>
-			<p>Consider upgrading your web browser.</p>
+			<div class="flex flex-col gap-3">
+				<p>Unable to estimate storage.</p>
+				<p>
+					Your browser might not support the <Link
+						href="https://developer.mozilla.org/en-US/docs/Web/API/StorageManager"
+						newTab
+					>
+						StorageManager API
+					</Link>.
+				</p>
+				<p>Consider upgrading your web browser.</p>
+			</div>
 		{/if}
 	{/await}
 </section>
