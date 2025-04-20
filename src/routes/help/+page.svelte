@@ -5,7 +5,7 @@
 
 <section class="flex flex-col gap-4">
 	<h2 class="text-2xl font-medium">Help</h2>
-	<div class="divide-main-200 dark:divide-main-700 -mx-3 flex flex-col divide-y">
+	<div class="divide-main-200 dark:divide-main-700 flex flex-col divide-y">
 		<Disclosure question="How does Prioritizationator work?">
 			<p>
 				Prioritizationator helps you prioritize tasks by analyzing their value and effort. Here's

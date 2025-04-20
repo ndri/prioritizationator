@@ -17,7 +17,7 @@
 <div class="flex flex-col py-2">
 	<button
 		class={[
-			'flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-left',
+			'-mx-3 flex cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-left',
 			'hover:bg-main-100 dark:hover:bg-main-900'
 		]}
 		onclick={() => (show = !show)}
@@ -30,7 +30,7 @@
 		{/if}
 	</button>
 	{#if show}
-		<div class="text-main-500 dark:text-main-400 flex flex-col gap-3 p-4" transition:slide>
+		<div class="text-main-500 dark:text-main-400 -mx-3 flex flex-col gap-3 p-3" transition:slide>
 			{@render children()}
 		</div>
 	{/if}
