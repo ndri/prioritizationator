@@ -25,7 +25,9 @@
 	const anyProjects = $derived(counts?.projects && counts.projects > 0 ? true : false);
 
 	let deleteDialog = $state<SimpleDialog>();
-	let persistenceInfoDialog = $state<SimpleDialog>();
+	let alertDialog = $state<SimpleDialog>();
+	let alertDialogTitle = $state<string>('');
+	let alertDialogDescription = $state<string>('');
 
 	let exportLoading = $state(false);
 
@@ -39,23 +41,65 @@
 		});
 	}
 
-	function importData() {
-		uploadTextFile('.json').then((data) => {
-			let jsonData;
+	let importLoading = $state(false);
 
-			try {
-				jsonData = JSON.parse(data);
-			} catch (error) {
-				console.error('Error parsing JSON:', error);
-				return;
-			}
+	async function importData() {
+		let data;
 
-			try {
-				importDatabase(jsonData);
-			} catch (error) {
-				console.error('Error importing data:', error);
-			}
-		});
+		try {
+			data = await uploadTextFile('.json');
+		} catch (error) {
+			alertDialogTitle = 'Import failed';
+			alertDialogDescription =
+				'There was something wrong with the file you uploaded. Please check the file and try again.';
+			alertDialog?.open();
+			return;
+		}
+
+		importLoading = true;
+		let jsonData;
+
+		try {
+			jsonData = JSON.parse(data);
+		} catch (error) {
+			alertDialogTitle = 'Invalid JSON';
+			alertDialogDescription =
+				'The file you selected is not a valid JSON file. Please check the file and try again.';
+			alertDialog?.open();
+			importLoading = false;
+			return;
+		}
+
+		try {
+			await importDatabase(jsonData);
+			const newCounts = await countAllData();
+			alertDialogTitle = 'Import successful!';
+			alertDialogDescription = `You have successfully imported ${formatNumber(
+				newCounts.projects
+			)} projects and ${formatNumber(newCounts.tasks)} tasks.`;
+			alertDialog?.open();
+		} catch (error) {
+			alertDialogTitle = 'Import failed';
+			alertDialogDescription =
+				"Looks like this file isn't a proper Prioritization export. Please check the file and try again.";
+			alertDialog?.open();
+		}
+
+		importLoading = false;
+	}
+
+	let deleteLoading = $state(false);
+
+	async function deleteData() {
+		deleteLoading = true;
+		await deleteAllData();
+		deleteDialog?.close();
+		setTimeout(() => {
+			alertDialogTitle = 'Data deleted';
+			alertDialogDescription = 'All your data has been deleted. Enjoy the clean slate!';
+			alertDialog?.open();
+			deleteLoading = false;
+		}, 200);
 	}
 </script>
 
@@ -108,7 +152,7 @@
 					</div>
 					<ProgressBar progress={estimatedQuota.usage} total={estimatedQuota.quota} size="lg" />
 					<p class="text-main-500 dark:text-main-400 text-sm">
-						This is just an estimate and can be wildly wrong at times.
+						This is just an estimate by the browser and can be wildly wrong at times.
 					</p>
 				</div>
 			{:else}
@@ -158,7 +202,12 @@
 								variant="primary"
 								onclick={async () => {
 									const success = await persist();
-									if (!success) persistenceInfoDialog?.open();
+									if (!success) {
+										alertDialogTitle = 'Enabling persistent storage failed';
+										alertDialogDescription =
+											'Your browser did not allow enabling persistent storage. Try to use the app some more and then try again. Alternatively, upgrade your web browser or try another one.';
+										alertDialog?.open();
+									}
 								}}
 							>
 								Enable persistent storage
@@ -190,7 +239,9 @@
 				import.
 			</p>
 		{:else}
-			<Button size="lg" Icon={ArrowDownTray} onclick={importData}>Import JSON</Button>
+			<Button size="lg" Icon={ArrowDownTray} loading={importLoading} onclick={importData}>
+				Import JSON
+			</Button>
 		{/if}
 	</section>
 	<section class="flex flex-col items-start gap-4">
@@ -203,6 +254,7 @@
 		<Button
 			Icon={TrashIcon}
 			size="lg"
+			loading={deleteLoading}
 			onclick={async () => {
 				if (deleteDialog) {
 					deleteDialog.open();
@@ -220,13 +272,7 @@
 	title="Delete all data"
 	description="Are you sure you want to delete all your data? This action cannot be undone."
 	buttons={[
-		{
-			label: 'Delete',
-			onclick: () => {
-				deleteAllData();
-				deleteDialog?.close();
-			}
-		},
+		{ label: 'Delete', onclick: deleteData },
 		{
 			label: 'Cancel',
 			variant: 'secondary',
@@ -236,13 +282,13 @@
 />
 
 <SimpleDialog
-	bind:this={persistenceInfoDialog}
-	title="Enabling persistent storage failed"
-	description="Your browser did not allow enabling persistent storage. Try to use the app some more and then try again. Alternatively, upgrade your web browser or try another one."
+	bind:this={alertDialog}
+	title={alertDialogTitle}
+	description={alertDialogDescription}
 	buttons={[
 		{
 			label: 'Alrighty',
-			onclick: () => persistenceInfoDialog?.close()
+			onclick: () => alertDialog?.close()
 		}
 	]}
 />
