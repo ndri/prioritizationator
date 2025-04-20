@@ -80,13 +80,7 @@
 				<li>it's accessible only on the device where you created it;</li>
 				<li>no servers store your information.</li>
 			</ul>
-			<p>
-				In the future, you will be able to export your data to a file and import it on another
-				device.
-			</p>
-			<p>
-				In the more distant future, you will be able to log in and sync your data across devices.
-			</p>
+			<p>In the future, you will be able to log in and sync your data across devices.</p>
 		</Disclosure>
 
 		<Disclosure question="What is Prioritizationator built with?">
