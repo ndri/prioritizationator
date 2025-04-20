@@ -115,11 +115,6 @@ async function updateProjectModifiedAt(projectId: number) {
 	return db.projects.update(projectId, { modifiedAt: new Date() });
 }
 
-export async function deleteAllProjects() {
-	const projects = await db.projects.toArray();
-	projects.forEach((project) => deleteProject(project.id));
-}
-
 /* Tasks */
 async function getTask(id: number) {
 	return db.tasks.where({ id }).first();
@@ -371,4 +366,26 @@ export async function exportDatabase() {
 	const taskBlockings = await db.taskBlockings.toArray();
 
 	return { projects, tasks, taskBlockings };
+}
+
+export async function importDatabase(data: {
+	projects: Project[];
+	tasks: Task[];
+	taskBlockings: TaskBlocking[];
+}) {
+	await db.transaction('rw', db.projects, db.tasks, db.taskBlockings, async () => {
+		await db.projects.clear();
+		await db.tasks.clear();
+		await db.taskBlockings.clear();
+
+		await db.projects.bulkPut(data.projects);
+		await db.tasks.bulkPut(data.tasks);
+		await db.taskBlockings.bulkPut(data.taskBlockings);
+	});
+}
+
+export async function deleteAllData() {
+	await db.projects.clear();
+	await db.tasks.clear();
+	await db.taskBlockings.clear();
 }

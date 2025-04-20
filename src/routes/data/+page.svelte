@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import DataList from '$lib/components/DataList.svelte';
+	import ArrowDownTray from '$lib/components/heroicons/mini/ArrowDownTray.svelte';
 	import ArrowUpTray from '$lib/components/heroicons/mini/ArrowUpTray.svelte';
 	import TrashIcon from '$lib/components/heroicons/mini/TrashIcon.svelte';
 	import CheckCircleIcon from '$lib/components/heroicons/outline/CheckCircleIcon.svelte';
@@ -9,9 +9,9 @@
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import SimpleDialog from '$lib/components/ui/SimpleDialog.svelte';
-	import { countAllData, deleteAllProjects, exportDatabase } from '$lib/db';
+	import { countAllData, deleteAllData, exportDatabase, importDatabase } from '$lib/db';
 	import { stateQuery } from '$lib/stateQuery.svelte';
-	import { downloadJSON } from '$lib/utils/browser';
+	import { downloadJSON, uploadTextFile } from '$lib/utils/browser';
 	import { formatNumber } from '$lib/utils/numbers';
 	import {
 		formatBytes,
@@ -22,6 +22,7 @@
 
 	const countsQuery = stateQuery(countAllData);
 	const counts = $derived(countsQuery.current);
+	const anyProjects = $derived(counts?.projects && counts.projects > 0 ? true : false);
 
 	let deleteDialog = $state<SimpleDialog>();
 	let persistenceInfoDialog = $state<SimpleDialog>();
@@ -35,6 +36,25 @@
 			const filename = `prioritizationator_data_${timestamp}.json`;
 			downloadJSON(database, filename);
 			setTimeout(() => (exportLoading = false), 200);
+		});
+	}
+
+	function importData() {
+		uploadTextFile('.json').then((data) => {
+			let jsonData;
+
+			try {
+				jsonData = JSON.parse(data);
+			} catch (error) {
+				console.error('Error parsing JSON:', error);
+				return;
+			}
+
+			try {
+				importDatabase(jsonData);
+			} catch (error) {
+				console.error('Error importing data:', error);
+			}
 		});
 	}
 </script>
@@ -162,6 +182,18 @@
 		</Button>
 	</section>
 	<section class="flex flex-col items-start gap-4">
+		<h3 class="text-xl font-medium">Import</h3>
+		<p>You can import a JSON file that you exported from Prioritizationator.</p>
+		{#if anyProjects}
+			<p class="text-main-500 dark:text-main-400 text-sm">
+				Data can only be imported if there is no existing data. Delete all data to be able to
+				import.
+			</p>
+		{:else}
+			<Button size="lg" Icon={ArrowDownTray} onclick={importData}>Import JSON</Button>
+		{/if}
+	</section>
+	<section class="flex flex-col items-start gap-4">
 		<h3 class="text-xl font-medium">Deletion</h3>
 		<p>
 			You can delete all your data if you no longer plan to use Prioritizationator. This is
@@ -191,9 +223,8 @@
 		{
 			label: 'Delete',
 			onclick: () => {
-				deleteAllProjects();
+				deleteAllData();
 				deleteDialog?.close();
-				goto('/');
 			}
 		},
 		{
