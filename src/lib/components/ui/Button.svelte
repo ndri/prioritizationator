@@ -41,7 +41,7 @@
 		xs: ['text-xs gap-1.5 rounded-sm', variant !== 'text' && 'px-2 py-1.5'],
 		sm: ['text-sm gap-1.5 rounded-sm', variant !== 'text' && 'px-2 py-1'],
 		md: ['text-sm gap-1.5 rounded-md', variant !== 'text' && 'px-3 py-1.5'],
-		lg: ['text-sm gap-1.5 rounded-md', variant !== 'text' && 'px-3.5 py-2'],
+		lg: ['text-sm gap-2 rounded-md', variant !== 'text' && 'px-3 py-2'],
 		xl: ['text-base gap-2 rounded-md', variant !== 'text' && 'px-3.5 py-2.5']
 	} as const;
 

@@ -52,7 +52,7 @@
 			<SidebarItem {...menuItem} active={currentPath === menuItem.href} {onclick} />
 		{/each}
 	</nav>
-	{#if recentProjects}
+	{#if recentProjects && recentProjects.length > 0}
 		<div class="text-main-500 dark:text-main-400 p-2 pb-1 pl-4 text-sm font-medium">
 			Recent projects
 		</div>

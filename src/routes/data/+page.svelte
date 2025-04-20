@@ -1,11 +1,14 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import DataList from '$lib/components/DataList.svelte';
+	import TrashIcon from '$lib/components/heroicons/mini/TrashIcon.svelte';
 	import CheckCircleIcon from '$lib/components/heroicons/outline/CheckCircleIcon.svelte';
 	import ExclamationTriangleIcon from '$lib/components/heroicons/outline/ExclamationTriangleIcon.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
-	import { countAllData } from '$lib/db';
+	import SimpleDialog from '$lib/components/ui/SimpleDialog.svelte';
+	import { countAllData, deleteAllProjects } from '$lib/db';
 	import { stateQuery } from '$lib/stateQuery.svelte';
 	import { formatNumber } from '$lib/utils/numbers';
 	import {
@@ -17,9 +20,12 @@
 
 	const countsQuery = stateQuery(countAllData);
 	const counts = $derived(countsQuery.current);
+
+	let deleteDialog = $state<SimpleDialog>();
+	let persistenceInfoDialog = $state<SimpleDialog>();
 </script>
 
-<section class="flex flex-col gap-8">
+<div class="flex flex-col gap-8">
 	<h2 class="text-2xl font-medium">Data</h2>
 	<div>Prioritizationator stores all data offline in your browser.</div>
 	{#if counts}
@@ -45,7 +51,7 @@
 	{/if}
 
 	<section class="flex flex-col gap-4">
-		<h3 class="text-xl font-medium">Storage</h3>
+		<h3 class="text-xl font-medium">Storage estimate</h3>
 		{#await showEstimatedQuota()}
 			<p>Loading...</p>
 		{:then estimatedQuota}
@@ -63,6 +69,9 @@
 						<span class="text-main-500 dark:text-main-400">quota.</span>
 					</div>
 					<ProgressBar progress={estimatedQuota.usage} total={estimatedQuota.quota} size="lg" />
+					<p class="text-main-500 dark:text-main-400 text-sm">
+						This is just an estimate and can be wildly wrong at times.
+					</p>
 				</div>
 			{:else}
 				<p>Unable to estimate storage.</p>
@@ -82,7 +91,7 @@
 		<h3 class="text-xl font-medium">Persistence</h3>
 		<div
 			class={[
-				'flex max-w-lg items-center gap-6 rounded-lg border p-6',
+				'flex max-w-lg flex-col items-center gap-6 rounded-lg border p-6 @sm:flex-row',
 				'border-main-200 dark:border-main-800 bg-main-50 dark:bg-main-900 '
 			]}
 		>
@@ -111,11 +120,7 @@
 								variant="primary"
 								onclick={async () => {
 									const success = await persist();
-									if (!success) {
-										alert(
-											'Your browser did not allow enabling persistent storage. Try to use the app some more and then try again.'
-										);
-									}
+									if (!success) persistenceInfoDialog?.open();
 								}}
 							>
 								Enable persistent storage
@@ -128,4 +133,59 @@
 			{/await}
 		</div>
 	</section>
-</section>
+	<section class="flex flex-col items-start gap-4">
+		<h3 class="text-xl font-medium">Deletion</h3>
+		<p>
+			You can delete all your data if you no longer plan to use Prioritizationator. This is
+			irreversible and will delete all your projects and tasks forever. You will not be able to
+			recover them.
+		</p>
+		<Button
+			Icon={TrashIcon}
+			size="lg"
+			onclick={async () => {
+				if (deleteDialog) {
+					deleteDialog.open();
+					return;
+				}
+			}}
+		>
+			Delete all data
+		</Button>
+	</section>
+</div>
+
+<SimpleDialog
+	bind:this={deleteDialog}
+	title="Delete all data"
+	description="Are you sure you want to delete all your data? This action cannot be undone."
+	buttons={[
+		{
+			label: 'Delete',
+			variant: 'primary',
+			onclick: () => {
+				deleteAllProjects();
+				deleteDialog?.close();
+				goto('/');
+			}
+		},
+		{
+			label: 'Cancel',
+			variant: 'secondary',
+			onclick: () => deleteDialog?.close()
+		}
+	]}
+/>
+
+<SimpleDialog
+	bind:this={persistenceInfoDialog}
+	title="Enabling persistent storage failed"
+	description="Your browser did not allow enabling persistent storage. Try to use the app some more and then try again. Alternatively, upgrade your web browser or try another one."
+	buttons={[
+		{
+			label: 'Alrighty',
+			variant: 'primary',
+			onclick: () => persistenceInfoDialog?.close()
+		}
+	]}
+/>

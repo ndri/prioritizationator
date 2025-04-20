@@ -115,6 +115,11 @@ async function updateProjectModifiedAt(projectId: number) {
 	return db.projects.update(projectId, { modifiedAt: new Date() });
 }
 
+export async function deleteAllProjects() {
+	const projects = await db.projects.toArray();
+	projects.forEach((project) => deleteProject(project.id));
+}
+
 /* Tasks */
 async function getTask(id: number) {
 	return db.tasks.where({ id }).first();
