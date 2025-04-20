@@ -56,6 +56,10 @@
 						value: formatNumber(counts.tasks)
 					},
 					{
+						key: 'Number of ratings',
+						value: formatNumber(counts.ratings)
+					},
+					{
 						key: 'Number of tasks blocking other tasks',
 						value: formatNumber(counts.blockings)
 					}

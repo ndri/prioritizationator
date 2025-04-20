@@ -355,8 +355,13 @@ async function addBlockingsToTasks(tasks: Task[]): Promise<TaskWithBlockings[]> 
 export async function countAllData() {
 	const projects = await db.projects.count();
 	const tasks = await db.tasks.count();
+	let ratings = 0;
+	await db.tasks.each((task) => {
+		if (task.valueRatings) ratings += task.valueRatings;
+		if (task.easeRatings) ratings += task.easeRatings;
+	});
 	const blockings = await db.taskBlockings.count();
-	return { projects, tasks, blockings };
+	return { projects, tasks, ratings, blockings };
 }
 
 /* Export and import */
