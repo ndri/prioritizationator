@@ -16,12 +16,6 @@ export async function isStoragePersisted(): Promise<boolean | undefined> {
   persisted the storage, false if not, and undefined if the API is not present.
 */
 export async function persist(): Promise<boolean | undefined> {
-	console.log('navigator.storage', navigator.storage);
-	console.log('navigator.storage.persist', navigator.storage.persist);
-	console.log(
-		'navigator.storage && navigator.storage.persist',
-		navigator.storage && navigator.storage.persist
-	);
 	return navigator.storage && navigator.storage.persist ? navigator.storage.persist() : undefined;
 }
 
@@ -43,7 +37,6 @@ export async function showEstimatedQuota(): Promise<StorageEstimate | undefined>
       or if it was already persisted.
 */
 export async function tryPersistWithoutPromtingUser(): Promise<string> {
-	console.log('Trying to persist storage without prompting user...');
 	if (!navigator.storage || !navigator.storage.persisted) return 'never';
 
 	let persisted = await navigator.storage.persisted();
