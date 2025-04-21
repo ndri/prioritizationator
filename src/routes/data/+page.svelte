@@ -19,6 +19,7 @@
 		showEstimatedQuota,
 		tryPersistWithoutPromtingUser
 	} from '$lib/utils/storage';
+	import { createTitle } from '$lib/utils/title';
 
 	const countsQuery = stateQuery(countAllData);
 	const counts = $derived(countsQuery.current);
@@ -102,6 +103,8 @@
 		}, 200);
 	}
 </script>
+
+<svelte:head><title>{createTitle('Data')}</title></svelte:head>
 
 <div class="flex flex-col gap-8">
 	<h2 class="text-2xl font-medium">Data</h2>

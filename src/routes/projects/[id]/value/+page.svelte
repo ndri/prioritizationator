@@ -12,6 +12,7 @@
 		valueRatingsProgress
 	} from '$lib/utils/tasks';
 	import BackLink from '$lib/components/BackLink.svelte';
+	import { createTitle } from '$lib/utils/title';
 
 	let { data }: PageProps = $props();
 
@@ -19,6 +20,8 @@
 	const projectQuery = stateQuery(() => getProject(projectId));
 	const project = $derived(projectQuery.current);
 </script>
+
+<svelte:head><title>{createTitle(project?.name)}</title></svelte:head>
 
 <BackLink href="/projects/{projectId}" text="Back to project" />
 

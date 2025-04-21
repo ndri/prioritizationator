@@ -1,9 +1,10 @@
 <script lang="ts">
-	import BackLink from '$lib/components/BackLink.svelte';
+	import { createTitle } from '$lib/utils/title';
 	import NewProjectForm from '$lib/components/NewProjectForm.svelte';
 	import ProjectTemplates from '$lib/components/ProjectTemplates.svelte';
 </script>
 
-<!-- <BackLink href="/" text="Back to projects" /> -->
+<svelte:head><title>{createTitle('New project')}</title></svelte:head>
+
 <NewProjectForm />
 <ProjectTemplates />

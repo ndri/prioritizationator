@@ -1,7 +1,10 @@
 <script lang="ts">
 	import Disclosure from '$lib/components/Disclosure.svelte';
 	import Link from '$lib/components/Link.svelte';
+	import { createTitle } from '$lib/utils/title';
 </script>
+
+<svelte:head><title>{createTitle('Help')}</title></svelte:head>
 
 <section class="flex flex-col gap-4">
 	<h2 class="text-2xl font-medium">Help</h2>

@@ -2,10 +2,13 @@
 	import '@fontsource-variable/inter';
 	import '../app.css';
 	import Navbar from '$lib/components/Navbar.svelte';
+	import { createTitle } from '$lib/utils/title';
 	let { children } = $props();
 
 	export const ssr = false;
 </script>
+
+<svelte:head><title>{createTitle()}</title></svelte:head>
 
 <div
 	class={[

@@ -33,6 +33,7 @@
 	import ReadyTasks from '$lib/components/ReadyTasks.svelte';
 	import BlockedTasks from '$lib/components/BlockedTasks.svelte';
 	import CompletedTasks from '$lib/components/CompletedTasks.svelte';
+	import { createTitle } from '$lib/utils/title';
 
 	let { data }: PageProps = $props();
 
@@ -50,7 +51,7 @@
 	let tab = $state<'ready' | 'matrix' | 'blocked' | 'completed'>('ready');
 </script>
 
-<!-- <BackLink href="/" text="Back to projects" /> -->
+<svelte:head><title>{createTitle(project?.name)}</title></svelte:head>
 
 {#if project}
 	<div class="flex justify-between">

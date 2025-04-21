@@ -6,6 +6,7 @@
 	import type { PageProps } from './$types';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { minTasksForRating } from '$lib/utils/tasks';
+	import { createTitle } from '$lib/utils/title';
 
 	let { data }: PageProps = $props();
 
@@ -13,6 +14,8 @@
 	const projectQuery = stateQuery(() => getProject(projectId));
 	const project = $derived(projectQuery.current);
 </script>
+
+<svelte:head><title>{createTitle(project?.name)}</title></svelte:head>
 
 {#if project}
 	<h1 class="text-2xl font-medium">
