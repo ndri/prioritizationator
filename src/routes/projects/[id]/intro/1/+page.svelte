@@ -17,31 +17,33 @@
 
 <svelte:head><title>{createTitle(project?.name)}</title></svelte:head>
 
-{#if project}
-	<div class="flex flex-col gap-4">
-		<h2 class="text-2xl font-medium">
-			Tasks for <span class="text-accent-600 dark:text-accent-500">{project.name}</span>
-		</h2>
-		<p class="text-sm">Brainstorm some tasks that you want to prioritize in your project.</p>
-		<p class="text-sm">You can add as many as you want, and you can always add more later.</p>
-	</div>
+<div class="mx-auto flex w-full max-w-2xl flex-col gap-8">
+	{#if project}
+		<div class="flex flex-col gap-4">
+			<h2 class="text-2xl font-medium">
+				Tasks for <span class="text-accent-600 dark:text-accent-500">{project.name}</span>
+			</h2>
+			<p class="text-sm">Brainstorm some tasks that you want to prioritize in your project.</p>
+			<p class="text-sm">You can add as many as you want, and you can always add more later.</p>
+		</div>
 
-	{#if project.tasks}
-		<NewTaskForm {projectId} autofocus />
+		{#if project.tasks}
+			<NewTaskForm {projectId} autofocus />
 
-		{#if project.tasks.length > 0}
-			<TaskList tasks={project.tasks.toReversed()} />
-		{/if}
+			{#if project.tasks.length > 0}
+				<TaskList tasks={project.tasks.toReversed()} />
+			{/if}
 
-		{#if project.tasks.length >= minTasksForRating}
-			<div class="flex justify-end">
-				<Button href="/projects/{projectId}/intro/2" size="lg">Continue</Button>
-			</div>
-		{:else}
-			{@const needToAdd = minTasksForRating - project.tasks.length}
-			<p class="text-main-500 dark:text-main-400 text-sm">
-				Add {needToAdd} more task{needToAdd === 1 ? '' : 's'} to get started!
-			</p>
+			{#if project.tasks.length >= minTasksForRating}
+				<div class="flex justify-end">
+					<Button href="/projects/{projectId}/intro/2" size="lg">Continue</Button>
+				</div>
+			{:else}
+				{@const needToAdd = minTasksForRating - project.tasks.length}
+				<p class="text-main-500 dark:text-main-400 text-sm">
+					Add {needToAdd} more task{needToAdd === 1 ? '' : 's'} to get started!
+				</p>
+			{/if}
 		{/if}
 	{/if}
-{/if}
+</div>
