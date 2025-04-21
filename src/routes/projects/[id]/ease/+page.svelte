@@ -31,21 +31,26 @@
 	{#if tasksReadyForRating(project.tasks)}
 		{@const incompleteTasks = filterIncompleteTasks(project.tasks)}
 
-		<h2 class="text-center text-2xl font-medium">
-			Which of these requires <span class="text-accent-600 dark:text-accent-500">less effort</span>
-			to complete?
-		</h2>
+		<div class="flex flex-col gap-3">
+			<h2 class="text-center text-xl font-medium">
+				Which task requires <span class="text-accent-600 dark:text-accent-500">less effort</span>
+				to complete?
+			</h2>
+			<p class="text-main-500 dark:text-main-400 text-center text-sm">
+				Think about the time, energy, and resources required.
+			</p>
+		</div>
+
+		<ProgressBar
+			progress={easeRatingsProgress(incompleteTasks)}
+			total={ratingsRequired(incompleteTasks)}
+		/>
 
 		<TaskPairing
 			{projectId}
 			dimension="ease"
 			recordWin={recordEaseMatchupWin}
 			recordDraw={recordEaseMatchupDraw}
-		/>
-
-		<ProgressBar
-			progress={easeRatingsProgress(incompleteTasks)}
-			total={ratingsRequired(incompleteTasks)}
 		/>
 	{:else}
 		<p class="text-main-500 dark:text-main-400">

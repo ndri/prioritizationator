@@ -31,21 +31,27 @@
 	{#if tasksReadyForRating(project.tasks)}
 		{@const incompleteTasks = filterIncompleteTasks(project.tasks)}
 
-		<h2 class="text-center text-2xl font-medium">
-			Which of these provides <span class="text-accent-600 dark:text-accent-500">more value</span>
-			in your project?
-		</h2>
+		<div class="flex flex-col gap-3">
+			<h2 class="text-center text-xl font-medium">
+				Which task provides <span class="text-accent-600 dark:text-accent-500">more value</span>
+				in your project?
+			</h2>
+
+			<p class="text-main-500 dark:text-main-400 text-center text-sm">
+				Think about how much do they contribute to the main goal of your project.
+			</p>
+		</div>
+
+		<ProgressBar
+			progress={valueRatingsProgress(incompleteTasks)}
+			total={ratingsRequired(incompleteTasks)}
+		/>
 
 		<TaskPairing
 			{projectId}
 			dimension="value"
 			recordWin={recordValueMatchupWin}
 			recordDraw={recordValueMatchupDraw}
-		/>
-
-		<ProgressBar
-			progress={valueRatingsProgress(incompleteTasks)}
-			total={ratingsRequired(incompleteTasks)}
 		/>
 	{:else}
 		<p class="text-main-500 dark:text-main-400">
