@@ -24,7 +24,13 @@
 	</section>
 {:else}
 	<section class="flex flex-col items-center gap-8">
-		<h2 class="text-2xl font-medium">Welcome to Prioritizationator!</h2>
+		<h2 class="text-2xl font-medium">
+			Welcome to
+			<span class="inline-flex">
+				<span class="text-accent-600 dark:text-accent-500">Prioritizationator</span>
+				!
+			</span>
+		</h2>
 		<WritingDownIdeasIllustration class="my-4 h-auto w-64" />
 		<div class="flex flex-col items-center gap-4">
 			<h3 class="font-medium">Ready to get your tasks in order?</h3>
