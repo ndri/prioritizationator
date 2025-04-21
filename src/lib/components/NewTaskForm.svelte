@@ -31,6 +31,7 @@
 				size="lg"
 				bind:value={taskName}
 				hiddenLabel
+				autocomplete="off"
 				{autofocus}
 			/>
 		</div>

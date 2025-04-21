@@ -30,14 +30,14 @@
 		<!-- Vertical halves separator with labels -->
 		<div class="bg-main-300 dark:bg-main-700 absolute top-0 left-1/2 h-full w-px"></div>
 		<div class="text-main-500 absolute top-1/2 left-0 -translate-y-1/2 text-sm">
-			less
-			<br />
-			easier
-		</div>
-		<div class="text-main-500 absolute top-1/2 right-0 -translate-y-1/2 text-right text-sm">
 			more
 			<br />
-			easier
+			effort
+		</div>
+		<div class="text-main-500 absolute top-1/2 right-0 -translate-y-1/2 text-right text-sm">
+			less
+			<br />
+			effort
 		</div>
 
 		<!-- Horizontal halves separator with labels -->
