@@ -91,7 +91,7 @@
 		<div class="flex flex-col">
 			{#if tasksReadyForRating(project.tasks)}
 				{@const incompleteTasks = filterIncompleteTasks(project.tasks)}
-				<div class="grid grid-cols-2 gap-4" transition:slide>
+				<div class="grid gap-4 @lg:grid-cols-2" transition:slide>
 					<RatingCard
 						title="Value"
 						ratingsProgress={valueRatingsProgress(incompleteTasks)}

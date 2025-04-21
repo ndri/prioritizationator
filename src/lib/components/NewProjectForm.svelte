@@ -15,7 +15,7 @@
 </script>
 
 <section>
-	<h2 class="mb-4 text-xl font-medium">Create new project</h2>
+	<h2 class="mb-4 text-xl font-medium">Create a new project</h2>
 	<form class="flex items-center gap-2" onsubmit={submitForm}>
 		<div class="grow">
 			<TextInput

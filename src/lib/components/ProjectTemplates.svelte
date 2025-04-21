@@ -23,7 +23,7 @@
 				);
 			})
 		);
-		goto(`/projects/${projectId}/tasks`);
+		goto(`/projects/${projectId}`);
 	};
 </script>
 

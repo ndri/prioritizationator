@@ -23,11 +23,11 @@
 	</h1>
 
 	{#if project.tasks}
-		{#if project.tasks.length > 0}
-			<TaskList tasks={project.tasks} />
-		{/if}
-
 		<NewTaskForm {projectId} autofocus />
+
+		{#if project.tasks.length > 0}
+			<TaskList tasks={project.tasks.toReversed()} />
+		{/if}
 
 		{#if project.tasks.length >= minTasksForRating}
 			<Button href="/projects/{projectId}" size="xl">Continue</Button>
