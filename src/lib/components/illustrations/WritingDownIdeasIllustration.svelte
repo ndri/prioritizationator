@@ -120,7 +120,7 @@
 		y="120"
 		width="66.60128"
 		height="61.84405"
-		class="fill-accent-400"
+		class="fill-accent-300 dark:fill-accent-600"
 		stroke-width="0"
 	/>
 	<rect
@@ -128,7 +128,7 @@
 		y="50"
 		width="66.60128"
 		height="61.84405"
-		class="fill-accent-300"
+		class="fill-accent-200 dark:fill-accent-700"
 		stroke-width="0"
 	/>
 	<path
@@ -143,59 +143,49 @@
 	/>
 	<path
 		d="m201.08753,141.5h-35.45801c-.55225,0-1-.44727-1-1s.44775-1,1-1h35.45801c.55225,0,1,.44727,1,1s-.44775,1-1,1Z"
-		class="fill-main-700"
+		class="fill-main-700 dark:fill-main-300"
 		stroke-width="0"
 	/>
 	<path
 		d="m201.08753,150.5h-35.45801c-.55225,0-1-.44727-1-1s.44775-1,1-1h35.45801c.55225,0,1,.44727,1,1s-.44775,1-1,1Z"
-		class="fill-main-700"
+		class="fill-main-700 dark:fill-main-300"
 		stroke-width="0"
 	/>
 	<path
 		d="m344.08753,74.5h-35.45801c-.55225,0-1-.44727-1-1s.44775-1,1-1h35.45801c.55225,0,1,.44727,1,1s-.44775,1-1,1Z"
-		class="fill-main-700"
+		class="fill-main-700 dark:fill-main-300"
 		stroke-width="0"
 	/>
 	<path
 		d="m344.08753,83.5h-35.45801c-.55225,0-1-.44727-1-1s.44775-1,1-1h35.45801c.55225,0,1,.44727,1,1s-.44775,1-1,1Z"
-		class="fill-main-700"
+		class="fill-main-700 dark:fill-main-300"
 		stroke-width="0"
 	/>
 	<path
 		d="m344.08753,65.5h-35.45801c-.55225,0-1-.44727-1-1s.44775-1,1-1h35.45801c.55225,0,1,.44727,1,1s-.44775,1-1,1Z"
-		class="fill-main-700"
+		class="fill-main-700 dark:fill-main-300"
 		stroke-width="0"
 	/>
 	<rect
 		x="165.05788"
 		width="66.60128"
 		height="61.84405"
-		class="fill-main-300 dark:fill-main-400"
+		class="fill-accent-100 dark:fill-accent-800"
 		stroke-width="0"
 	/>
 	<path
 		d="m216.08753,28.5h-35.45801c-.55225,0-1-.44727-1-1s.44775-1,1-1h35.45801c.55225,0,1,.44727,1,1s-.44775,1-1,1Z"
-		class="fill-main-600"
+		class="fill-main-700 dark:fill-main-300"
 		stroke-width="0"
 	/>
 	<path
 		d="m216.08753,37.5h-35.45801c-.55225,0-1-.44727-1-1s.44775-1,1-1h35.45801c.55225,0,1,.44727,1,1s-.44775,1-1,1Z"
-		class="fill-main-600"
+		class="fill-main-700 dark:fill-main-300"
 		stroke-width="0"
 	/>
 	<path
 		d="m216.08753,19.5h-35.45801c-.55225,0-1-.44727-1-1s.44775-1,1-1h35.45801c.55225,0,1,.44727,1,1s-.44775,1-1,1Z"
-		class="fill-main-600"
-		stroke-width="0"
-	/>
-	<path
-		d="m182.24997,14.06604c10.70663,10.70663,21.41325,21.41325,32.11988,32.11988,1.47342,1.47342,3.76065-.81255,2.2866-2.2866-10.70663-10.70663-21.41325-21.41325-32.11988-32.11988-1.47342-1.47342-3.76065.81255-2.2866,2.2866h0Z"
-		class="fill-main-700"
-		stroke-width="0"
-	/>
-	<path
-		d="m211.96571,11.77944c-10.70663,10.70663-21.41325,21.41325-32.11988,32.11988-1.47342,1.47342.81255,3.76065,2.2866,2.2866,10.70663-10.70663,21.41325-21.41325,32.11988-32.11988,1.47342-1.47342-.81255-3.76065-2.2866-2.2866h0Z"
-		class="fill-main-700"
+		class="fill-main-700 dark:fill-main-300"
 		stroke-width="0"
 	/>
 </svg>
