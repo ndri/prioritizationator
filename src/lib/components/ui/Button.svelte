@@ -69,7 +69,7 @@
 	];
 
 	const iconClasses = {
-		primary: 'text-white',
+		primary: 'text-accent-200',
 		secondary: 'text-main-400 dark:text-main-500',
 		text: [
 			'text-main-400 group-hover/button:text-main-500',

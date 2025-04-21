@@ -29,7 +29,9 @@
 
 <section class="flex flex-col gap-4">
 	<h2 class="text-xl font-medium">...or choose a template</h2>
-	<p class="text-main-500 dark:text-main-400">Get started quickly with some pre-selected tasks.</p>
+	<p class="text-main-500 dark:text-main-400 text-sm">
+		Get started quickly with some pre-selected tasks.
+	</p>
 	<div class="grid grid-cols-1 gap-3 @lg:grid-cols-2">
 		{#each TEMPLATES as template}
 			<button

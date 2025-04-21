@@ -22,12 +22,12 @@
 				id="projectNameInput"
 				label="Project name"
 				placeholder="Enter a project name"
-				size="xl"
+				size="lg"
 				bind:value={projectName}
 				hiddenLabel
 				autofocus
 			/>
 		</div>
-		<Button type="submit" variant="primary" size="xl">Create</Button>
+		<Button type="submit" variant="primary" size="lg">Create</Button>
 	</form>
 </section>

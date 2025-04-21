@@ -14,7 +14,7 @@
 </script>
 
 {#if tasks.length}
-	<section class="flex flex-col gap-4 pb-6" transition:slide>
+	<section class="flex flex-col gap-4" transition:slide>
 		{#if title}<h2 class="font-medium">{title}</h2>{/if}
 		{#if description}<p class="text-main-500 dark:text-main-400 text-sm">{description}</p>{/if}
 		<ol

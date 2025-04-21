@@ -25,7 +25,7 @@
 	const leaps = $derived(filterLeaps(ratedTasks));
 </script>
 
-<div class="flex flex-col">
+<div class="flex flex-col gap-6">
 	<TaskList
 		title="Low Hanging Fruits"
 		description="Do these first!"
