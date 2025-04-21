@@ -20,7 +20,10 @@
 	class={['bg-main-200 dark:bg-main-800 relative w-full overflow-hidden rounded-lg', sizeClasses]}
 >
 	<div
-		class="bg-accent-500 dark:bg-accent-600 absolute top-0 left-0 h-full"
+		class={[
+			'bg-accent-500 dark:bg-accent-600 absolute top-0 left-0 h-full',
+			'transition-[width] duration-300 ease-out'
+		]}
 		style="width: {percentage}%;"
 	></div>
 </div>

@@ -213,7 +213,7 @@
 								Enable persistent storage
 							</Button>
 						{:else}
-							<p>Consider upgrading to a web browser that supports persistent storage.</p>
+							<p>Consider switching to a web browser that supports persistent storage.</p>
 						{/if}
 					</div>
 				{/if}
