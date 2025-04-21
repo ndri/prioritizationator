@@ -23,7 +23,7 @@
 				);
 			})
 		);
-		goto(`/projects/${projectId}`);
+		goto(`/projects/${projectId}/intro/2`);
 	};
 </script>
 

@@ -10,7 +10,7 @@
 		event.preventDefault();
 		if (!projectName) return;
 		const projectId = await createProject({ name: projectName });
-		goto(`/projects/${projectId}/tasks`);
+		goto(`/projects/${projectId}/intro/1`);
 	};
 </script>
 
@@ -24,6 +24,7 @@
 				placeholder="Enter a project name"
 				size="lg"
 				bind:value={projectName}
+				autocomplete="off"
 				hiddenLabel
 				autofocus
 			/>

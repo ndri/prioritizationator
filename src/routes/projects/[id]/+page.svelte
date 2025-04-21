@@ -99,7 +99,7 @@
 						ratingPath="/projects/{projectId}/value"
 					/>
 					<RatingCard
-						title="Ease"
+						title="Effort"
 						ratingsProgress={easeRatingsProgress(incompleteTasks)}
 						ratingsRequired={ratingsRequired(incompleteTasks)}
 						ratingPath="/projects/{projectId}/ease"

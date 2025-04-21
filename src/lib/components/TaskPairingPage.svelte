@@ -18,13 +18,15 @@
 	import { createTitle } from '$lib/utils/title';
 	import ProgressBar from './ProgressBar.svelte';
 	import TaskPairing from './TaskPairing.svelte';
+	import Button from './ui/Button.svelte';
 
 	interface Props {
 		projectId: number;
 		dimension: 'value' | 'ease';
+		intro?: boolean;
 	}
 
-	const { projectId, dimension }: Props = $props();
+	const { projectId, dimension, intro = false }: Props = $props();
 
 	const projectQuery = stateQuery(() => getProject(projectId));
 	const project = $derived(projectQuery.current);
@@ -71,9 +73,27 @@
 		/>
 
 		<ProgressBar {progress} {total} />
+
+		<div class="flex justify-between">
+			{#if intro}
+				{@const previousUrl =
+					dimension === 'value'
+						? `/projects/${projectId}/intro/2`
+						: `/projects/${projectId}/intro/4`}
+				<Button href={previousUrl} variant="secondary">Back</Button>
+				{@const nextUrl =
+					dimension === 'value'
+						? `/projects/${projectId}/intro/4`
+						: `/projects/${projectId}/intro/6`}
+				<Button href={nextUrl} disabled={progress < total}>Continue</Button>
+			{:else}
+				<Button href={`/projects/${projectId}`} variant="secondary">Back to project</Button>
+			{/if}
+		</div>
 	{:else}
 		<p class="text-main-500 dark:text-main-400">
 			You need at least {minTasksForRating} incomplete tasks to rate them.
 		</p>
+		<div class="flex"><Button href={`/projects/${projectId}`}>Return to project</Button></div>
 	{/if}
 {/if}

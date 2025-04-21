@@ -32,6 +32,6 @@
 				Get started by creating a project and adding tasks to it.
 			</p>
 		</div>
-		<Button href="/projects/new" size="lg" Icon={PlusIcon}>Create my first project</Button>
+		<Button href="/projects/new" size="lg" Icon={PlusIcon}>New project</Button>
 	</section>
 {/if}

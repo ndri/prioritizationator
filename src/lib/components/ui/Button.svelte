@@ -64,7 +64,7 @@
 		variantClasses[variant],
 		'font-semibold inline-flex items-center justify-center whitespace-nowrap cursor-pointer',
 		'focus-outline',
-		'disabled:opacity-70 disabled:cursor-not-allowed',
+		'disabled:opacity-50 disabled:cursor-not-allowed',
 		className
 	];
 
@@ -90,7 +90,7 @@
 	{@render children?.()}
 {/snippet}
 
-{#if href}
+{#if href && !disabled}
 	<a {href} class={buttonClasses} bind:this={ref} {...props}>
 		{@render contents()}
 	</a>

@@ -15,7 +15,7 @@
 <div class="flex flex-col">
 	<TaskList
 		title="Completed Tasks"
-		description="Well done!"
+		description="These are the tasks you have completed so far. They can no longer be prioritized and the tasks they are blocking are no longer blocked."
 		tasks={sortedCompletedTasks}
 		showBadges
 	/>
