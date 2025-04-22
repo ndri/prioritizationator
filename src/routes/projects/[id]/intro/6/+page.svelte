@@ -23,13 +23,13 @@
 			<p class="text-sm">You can now</p>
 			<ul class="flex list-disc flex-col gap-2 pl-6 text-sm">
 				<li>start working on the tasks and marking them as complete,</li>
-				<li>brainstorm more tasks to prioritize along these,</li>
+				<li>brainstorm more tasks to prioritize in addition to these,</li>
 				<li>rate the tasks again if you're not happy with the results yet.</li>
 			</ul>
 		</div>
 		<div class="flex justify-between">
 			<Button href="/projects/{projectId}/intro/3" size="lg" variant="secondary">Go back</Button>
-			<Button href="/projects/{projectId}" size="lg">To project overview</Button>
+			<Button href="/projects/{projectId}" size="lg">View project</Button>
 		</div>
 	{/if}
 </div>

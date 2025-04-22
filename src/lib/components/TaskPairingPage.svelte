@@ -58,7 +58,7 @@
 
 			<p class="text-main-500 dark:text-main-400 text-center text-sm">
 				{#if dimension === 'value'}
-					Think about how much do they contribute to the main goal of your project.
+					Think about how much they contribute to the main goal of your project.
 				{:else if dimension === 'ease'}
 					Think about the time, energy, and resources required.
 				{/if}
