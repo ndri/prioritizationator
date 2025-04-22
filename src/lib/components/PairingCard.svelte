@@ -12,7 +12,7 @@
 <button
 	class={[
 		'flex min-h-40 cursor-pointer items-center justify-center',
-		'rounded-xl p-8 text-xl font-semibold ring-1 ring-inset',
+		'rounded-md p-8 text-xl font-semibold ring-1 ring-inset',
 		'text-main-900 ring-main-300 bg-white',
 		'hover:bg-main-100',
 		'dark:bg-main-800 dark:text-white dark:ring-0',

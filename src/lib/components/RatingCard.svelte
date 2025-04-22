@@ -12,6 +12,8 @@
 	}
 
 	const { title, ratingsProgress, ratingsRequired, ratingPath }: Props = $props();
+
+	const percentage = Math.round((ratingsProgress / ratingsRequired) * 100);
 </script>
 
 <div class="bg-main-50 dark:bg-main-900 flex flex-col justify-between gap-4 rounded-lg p-5">
@@ -29,7 +31,7 @@
 		<div class="text-lg font-medium">{title}</div>
 		<div class="flex flex-col gap-2">
 			<span class="text-main-400 dark:text-main-500 text-sm">
-				{ratingsProgress}/{ratingsRequired} rated
+				{percentage}% rated
 			</span>
 			<ProgressBar progress={ratingsProgress} total={ratingsRequired} size="sm" />
 		</div>
