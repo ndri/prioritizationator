@@ -45,7 +45,7 @@
 				<a
 					href="/projects/{project.id}"
 					class={[
-						'hover:text-main-500 dark:hover:text-main-300 font-medium',
+						'hover:text-main-500 dark:hover:text-accent-400 font-medium',
 						'focus-outline rounded-xs'
 					]}
 				>
