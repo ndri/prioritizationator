@@ -1,5 +1,6 @@
 <script lang="ts">
 	import CheckCircleIcon from './heroicons/mini/CheckCircleIcon.svelte';
+	import StarIcon from './heroicons/mini/StarIcon.svelte';
 	import ProgressBar from './ProgressBar.svelte';
 	import Button from './ui/Button.svelte';
 
@@ -33,5 +34,5 @@
 			<ProgressBar progress={ratingsProgress} total={ratingsRequired} size="sm" />
 		</div>
 	{/if}
-	<Button href={ratingPath} variant="secondary">Rate</Button>
+	<Button href={ratingPath} variant="secondary" Icon={StarIcon} size="lg">Rate</Button>
 </div>

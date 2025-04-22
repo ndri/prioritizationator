@@ -2,7 +2,7 @@
 	interface Props {
 		progress: number;
 		total: number;
-		size?: 'sm' | 'md' | 'lg';
+		size?: 'sm' | 'md' | 'lg' | 'xs';
 	}
 
 	const { progress, total, size = 'md' }: Props = $props();
@@ -10,6 +10,7 @@
 	let percentage = $derived(Math.round((Math.min(progress, total) / total) * 100));
 
 	const sizeClasses = {
+		xs: 'h-1.5',
 		sm: 'h-2',
 		md: 'h-3',
 		lg: 'h-4'

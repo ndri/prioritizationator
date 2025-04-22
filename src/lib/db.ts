@@ -12,6 +12,10 @@ export interface ProjectWithTasks extends Project {
 	tasks: Task[];
 }
 
+export interface ProjectWithTasksAndBlockings extends Project {
+	tasks: TaskWithBlockings[];
+}
+
 export interface Task {
 	id: number;
 	projectId: number;
@@ -70,6 +74,16 @@ export async function getProjectsWithTasks(): Promise<ProjectWithTasks[]> {
 	return projects.map((project) => ({
 		...project,
 		tasks: allTasks.filter((task) => task.projectId === project.id)
+	}));
+}
+
+export async function getProjectsWithTasksAndBlockings(): Promise<ProjectWithTasksAndBlockings[]> {
+	const projects = await getProjects();
+	const allTasks = await db.tasks.toArray();
+	const tasksWithBlockings = await addBlockingsToTasks(allTasks);
+	return projects.map((project) => ({
+		...project,
+		tasks: tasksWithBlockings.filter((task) => task.projectId === project.id)
 	}));
 }
 

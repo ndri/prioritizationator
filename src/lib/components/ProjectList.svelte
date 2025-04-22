@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getProjectsWithTasks } from '../db';
+	import { getProjectsWithTasksAndBlockings } from '../db';
 	import { stateQuery } from '$lib/stateQuery.svelte';
 	import ProjectCard from './ProjectCard.svelte';
 	import NewProjectCard from './NewProjectCard.svelte';
@@ -7,7 +7,7 @@
 	import PlusIcon from './heroicons/mini/PlusIcon.svelte';
 	import WritingDownIdeasIllustration from './illustrations/WritingDownIdeasIllustration.svelte';
 
-	const projectsQuery = stateQuery(getProjectsWithTasks);
+	const projectsQuery = stateQuery(getProjectsWithTasksAndBlockings);
 	let projects = $derived(projectsQuery.current);
 	let reversedProjects = $derived(projects?.toReversed() ?? []);
 </script>
