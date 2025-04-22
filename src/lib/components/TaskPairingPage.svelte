@@ -72,7 +72,7 @@
 			recordDraw={dimension === 'value' ? recordValueMatchupDraw : recordEaseMatchupDraw}
 		/>
 
-		<ProgressBar {progress} {total} />
+		<ProgressBar {progress} {total} animateOnComplete />
 
 		<div class="flex justify-between">
 			{#if intro}
@@ -88,6 +88,11 @@
 				<Button href={nextUrl} disabled={progress < total}>Continue</Button>
 			{:else}
 				<Button href={`/projects/${projectId}`} variant="secondary">Back to project</Button>
+				{#if progress >= total}
+					{@const nextUrl =
+						dimension === 'value' ? `/projects/${projectId}/ease` : `/projects/${projectId}`}
+					<Button href={nextUrl}>Continue</Button>
+				{/if}
 			{/if}
 		</div>
 	{:else}

@@ -29,6 +29,18 @@
 	--color-accent-800: var(--color-indigo-800);
 	--color-accent-900: var(--color-indigo-900);
 	--color-accent-950: var(--color-indigo-950);
+
+	--animate-progress-bar-boom: progress-bar-boom 0.85s ease-in-out;
+	@keyframes progress-bar-boom {
+		0% {
+			transform: scale(1, 1);
+			opacity: 100%;
+		}
+		100% {
+			transform: scale(1.05, 4.5);
+			opacity: 0%;
+		}
+	}
 }
 
 /*

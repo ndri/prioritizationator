@@ -24,13 +24,13 @@
 				<CheckCircleIcon /> Rated!
 			</div>
 		</div>
-		<div class="text-main-400 dark:text-main-500 grow text-sm">
+		<div class="text-main-500 dark:text-main-400 grow text-sm">
 			Keep rating to improve accuracy.
 		</div>
 	{:else}
 		<div class="text-lg font-medium">{title}</div>
 		<div class="flex flex-col gap-2">
-			<span class="text-main-400 dark:text-main-500 text-sm">
+			<span class="text-main-500 dark:text-main-400 text-sm">
 				{percentage}% rated
 			</span>
 			<ProgressBar progress={ratingsProgress} total={ratingsRequired} size="sm" />
