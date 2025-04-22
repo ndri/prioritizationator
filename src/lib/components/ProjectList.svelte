@@ -16,7 +16,7 @@
 	{#if projects.length > 0}
 		<section class="flex flex-col gap-4">
 			<h2 class="text-2xl font-medium">Projects</h2>
-			<div class="grid grid-cols-1 gap-3 @lg:grid-cols-2">
+			<div class="grid grid-cols-1 gap-3 @xl:grid-cols-2">
 				<NewProjectCard />
 				{#each reversedProjects as project}
 					<ProjectCard {project} />
