@@ -20,7 +20,7 @@
 				<li>Get tasks automatically sorted into four priority categories.</li>
 			</ol>
 			<p>The four categories are:</p>
-			<ul class="list-disc pl-6">
+			<ul class="marker:text-main-400 dark:marker:text-main-500 list-disc pl-6">
 				<li>
 					<strong>Low-hanging fruit:</strong>
 					High value, low effort (prioritize these first)
@@ -41,13 +41,16 @@
 		</Disclosure>
 		<Disclosure question="How are scores calculated?">
 			<p>
-				We use a modified <Link href="https://en.wikipedia.org/wiki/Elo_rating_system" newTab>
+				Prioritizationator uses a modified <Link
+					href="https://en.wikipedia.org/wiki/Elo_rating_system"
+					newTab
+				>
 					Elo rating system
 				</Link> (similar to chess rankings) with scores normalized from 0 to 100. All tasks start at
 				50.
 			</p>
-			<p>Each comparison adjusts scores based on</p>
-			<ul class="list-disc pl-6">
+			<p>Each pairwise comparison adjusts scores based on</p>
+			<ul class="marker:text-main-400 dark:marker:text-main-500 list-disc pl-6">
 				<li>the outcome of your comparison and</li>
 				<li>the current score difference between tasks.</li>
 			</ul>
@@ -78,7 +81,7 @@
 					IndexedDB
 				</Link>. This means
 			</p>
-			<ul class="list-disc pl-6">
+			<ul class="marker:text-main-400 dark:marker:text-main-500 list-disc pl-6">
 				<li>your data never leaves your device;</li>
 				<li>it's accessible only on the device where you created it;</li>
 				<li>no servers store your information.</li>
@@ -87,7 +90,7 @@
 		</Disclosure>
 
 		<Disclosure question="What is Prioritizationator built with?">
-			<p>Prioritizationator is powered by Svelte, SvelteKit, Dexie and Tailwind.</p>
+			<p>Prioritizationator is powered by Svelte, SvelteKit, Dexie and Tailwind CSS.</p>
 		</Disclosure>
 	</div>
 </section>

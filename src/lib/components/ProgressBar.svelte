@@ -30,7 +30,7 @@
 	{#if animateOnComplete && !mountedComplete}
 		<div
 			class={[
-				'bg-accent-300 dark:bg-accent-800 absolute top-0 left-0 h-full w-full rounded-full',
+				'bg-accent-300 dark:bg-accent-700 absolute top-0 left-0 h-full w-full rounded-full',
 				percentage === 100 ? 'animate-progress-bar-boom' : 'invisible'
 			]}
 		></div>

@@ -30,7 +30,7 @@
 		{/if}
 	</button>
 	{#if show}
-		<div class="text-main-500 dark:text-main-400 -mx-3 flex flex-col gap-3 p-3" transition:slide>
+		<div class="text-main-600 dark:text-main-300 -mx-3 flex flex-col gap-3 p-3" transition:slide>
 			{@render children()}
 		</div>
 	{/if}

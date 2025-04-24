@@ -91,7 +91,9 @@
 				{#if progress >= total}
 					{@const nextUrl =
 						dimension === 'value' ? `/projects/${projectId}/ease` : `/projects/${projectId}`}
-					<Button href={nextUrl}>Continue</Button>
+					<Button href={nextUrl}>
+						{dimension === 'value' ? 'Rate effort' : 'Finish rating'}
+					</Button>
 				{/if}
 			{/if}
 		</div>

@@ -23,7 +23,9 @@
 			<h2 class="text-2xl font-medium">
 				Tasks for <span class="text-accent-600 dark:text-accent-500">{project.name}</span>
 			</h2>
-			<p class="text-sm">Brainstorm some tasks that you want to prioritize in your project.</p>
+			<p class="text-sm">
+				Brainstorm some next actions in your project that you want to prioritize.
+			</p>
 			<p class="text-sm">You can add as many as you want, and you can always add more later.</p>
 		</div>
 
