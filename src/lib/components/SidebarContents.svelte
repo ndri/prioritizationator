@@ -2,10 +2,12 @@
 	import { page } from '$app/state';
 	import { getRecentProjects } from '$lib/db';
 	import { stateQuery } from '$lib/stateQuery.svelte';
+	import ArrowTopRightOnSquareIcon from './heroicons/micro/ArrowTopRightOnSquareIcon.svelte';
 	import CircleStackIcon from './heroicons/mini/CircleStackIcon.svelte';
 	import DocumentTextIcon from './heroicons/mini/DocumentTextIcon.svelte';
 	import HomeIcon from './heroicons/mini/HomeIcon.svelte';
 	import QuestionMarkCircleIcon from './heroicons/mini/QuestionMarkCircleIcon.svelte';
+	import Link from './Link.svelte';
 	import SidebarItem from './SidebarItem.svelte';
 
 	interface Props {
@@ -68,4 +70,16 @@
 			{/each}
 		</nav>
 	{/if}
+	<div class="grow"></div>
+	<div class="mb-2 flex justify-center">
+		<Link
+			class="text-main-500 dark:text-main-400 hover:text-main-400 dark:hover:text-main-500 text-xs"
+			iconSize="sm"
+			href="https://github.com/ndri/prioritizationator"
+			newTab
+			plain
+		>
+			Version 0.1.0
+		</Link>
+	</div>
 </div>
