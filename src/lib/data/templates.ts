@@ -30,7 +30,7 @@ export const TEMPLATES: Template[] = [
 			},
 			{
 				id: 4,
-				name: 'Research transportation methods to destination',
+				name: 'Research transportation options',
 				blockedBy: [2]
 			},
 			{
@@ -51,7 +51,7 @@ export const TEMPLATES: Template[] = [
 			{
 				id: 8,
 				name: 'Research required vaccinations',
-				blockedBy: [2]
+				blockedBy: []
 			},
 			{
 				id: 9,
@@ -61,7 +61,7 @@ export const TEMPLATES: Template[] = [
 			{
 				id: 10,
 				name: 'Research travel insurance',
-				blockedBy: [2]
+				blockedBy: []
 			},
 			{
 				id: 11,
@@ -80,33 +80,28 @@ export const TEMPLATES: Template[] = [
 			},
 			{
 				id: 14,
-				name: 'Research travelling clothes',
-				blockedBy: [2]
+				name: 'Research travel clothing and gear needs',
+				blockedBy: []
 			},
 			{
 				id: 15,
-				name: 'Research travelling gear',
-				blockedBy: [2]
+				name: 'Purchase necessary clothing and gear',
+				blockedBy: [3, 14]
 			},
 			{
 				id: 16,
-				name: 'Purchase necessary clothing and gear',
-				blockedBy: [3, 14, 15]
-			},
-			{
-				id: 17,
 				name: 'Create detailed itinerary',
 				blockedBy: [5, 6, 7, 13]
 			},
 			{
-				id: 18,
+				id: 17,
 				name: 'Share itinerary with emergency contacts',
-				blockedBy: [17]
+				blockedBy: [16]
 			},
 			{
-				id: 19,
+				id: 18,
 				name: 'Pack luggage',
-				blockedBy: [16, 17]
+				blockedBy: [15, 16]
 			}
 		]
 	},
@@ -156,17 +151,17 @@ export const TEMPLATES: Template[] = [
 			{
 				id: 9,
 				name: 'Get a professional portrait taken',
-				blockedBy: [7]
+				blockedBy: []
 			},
 			{
 				id: 10,
 				name: 'Design resume',
-				blockedBy: [8]
+				blockedBy: [5, 8]
 			},
 			{
 				id: 11,
 				name: 'Design cover letter template',
-				blockedBy: [8]
+				blockedBy: [5, 8]
 			},
 			{
 				id: 12,
@@ -185,58 +180,23 @@ export const TEMPLATES: Template[] = [
 			},
 			{
 				id: 15,
-				name: 'Design social banners',
-				blockedBy: [8]
-			},
-			{
-				id: 16,
 				name: 'Create bio templates',
 				blockedBy: [4, 5]
 			},
 			{
-				id: 17,
+				id: 16,
 				name: 'Set up portfolio website',
 				blockedBy: [8, 9]
 			},
 			{
-				id: 18,
+				id: 17,
 				name: 'Create project showcase',
-				blockedBy: [17]
+				blockedBy: [16]
 			},
 			{
-				id: 19,
-				name: 'Design presentation template',
-				blockedBy: [8]
-			},
-			{
-				id: 20,
-				name: 'Design pitch deck',
-				blockedBy: [8, 19]
-			},
-			{
-				id: 21,
-				name: 'Create a case study',
-				blockedBy: [8, 17]
-			},
-			{
-				id: 22,
-				name: 'Set up testimonial system',
-				blockedBy: [17]
-			},
-			{
-				id: 23,
+				id: 18,
 				name: 'Create media kit',
-				blockedBy: [6, 8, 9, 16]
-			},
-			{
-				id: 24,
-				name: 'Set up personal newsletter',
-				blockedBy: [8, 16, 17]
-			},
-			{
-				id: 25,
-				name: 'Set up speaking kit',
-				blockedBy: [8, 9, 19, 20, 23]
+				blockedBy: [6, 8, 9, 15]
 			}
 		]
 	},
@@ -251,7 +211,7 @@ export const TEMPLATES: Template[] = [
 			{
 				id: 2,
 				name: 'Research competitors in your niche',
-				blockedBy: [1]
+				blockedBy: []
 			},
 			{
 				id: 3,
@@ -261,7 +221,7 @@ export const TEMPLATES: Template[] = [
 			{
 				id: 4,
 				name: 'Come up with channel name',
-				blockedBy: [1]
+				blockedBy: []
 			},
 			{
 				id: 5,
@@ -275,123 +235,73 @@ export const TEMPLATES: Template[] = [
 			},
 			{
 				id: 7,
-				name: 'Design channel logo',
+				name: 'Design channel logo and banner',
 				blockedBy: [4, 5]
 			},
 			{
 				id: 8,
-				name: 'Design channel banner',
-				blockedBy: [4, 5, 7]
+				name: 'Research video equipment needs',
+				blockedBy: []
 			},
 			{
 				id: 9,
-				name: 'Research video equipment needs',
-				blockedBy: [1]
+				name: 'Purchase camera/microphone equipment',
+				blockedBy: [8]
 			},
 			{
 				id: 10,
-				name: 'Purchase camera/microphone equipment',
-				blockedBy: [9]
+				name: 'Research video editing tools',
+				blockedBy: []
 			},
 			{
 				id: 11,
-				name: 'Research video editing tools',
-				blockedBy: [1]
+				name: 'Install and learn editing software',
+				blockedBy: [10]
 			},
 			{
 				id: 12,
-				name: 'Install and learn editing software',
-				blockedBy: [11]
+				name: 'Set up recording space',
+				blockedBy: [9]
 			},
 			{
 				id: 13,
-				name: 'Set up recording space',
-				blockedBy: [9, 10]
+				name: 'Create intro/outro sequences',
+				blockedBy: [7, 11]
 			},
 			{
 				id: 14,
-				name: 'Create intro/outro sequences',
-				blockedBy: [7, 12]
-			},
-			{
-				id: 15,
 				name: 'Design thumbnail templates',
 				blockedBy: [7]
 			},
 			{
-				id: 16,
-				name: 'Design end screen templates',
-				blockedBy: [7]
-			},
-			{
-				id: 17,
+				id: 15,
 				name: 'Create video descriptions template',
 				blockedBy: [6]
 			},
 			{
-				id: 18,
+				id: 16,
 				name: 'Prepare content calendar',
 				blockedBy: [3]
 			},
 			{
+				id: 17,
+				name: 'Record first video',
+				blockedBy: [3, 9, 12, 16]
+			},
+			{
+				id: 18,
+				name: 'Edit first video',
+				blockedBy: [11, 13, 17]
+			},
+			{
 				id: 19,
-				name: 'Pitch channel idea to friends',
-				blockedBy: [1, 4]
+				name: 'Create thumbnail for first video',
+				blockedBy: [14, 17]
 			},
 			{
 				id: 20,
-				name: 'Record first video',
-				blockedBy: [3, 10, 13, 18]
-			},
-			{
-				id: 21,
-				name: 'Edit first video',
-				blockedBy: [12, 14, 20]
-			},
-			{
-				id: 22,
-				name: 'Create thumbnail for first video',
-				blockedBy: [15, 20]
-			},
-			{
-				id: 23,
 				name: 'Upload first video',
-				blockedBy: [5, 6, 17, 21, 22]
-			},
-			{
-				id: 24,
-				name: 'Create channel trailer',
-				blockedBy: [13, 14, 23]
-			},
-			{
-				id: 25,
-				name: 'Set up social media accounts',
-				blockedBy: [4, 7]
-			},
-			{
-				id: 26,
-				name: 'Create playlist system',
-				blockedBy: [5, 23]
-			},
-			{
-				id: 27,
-				name: 'Set up backup system',
-				blockedBy: [20, 21]
-			},
-			{
-				id: 28,
-				name: 'Set up monetization',
-				blockedBy: [23]
-			},
-			{
-				id: 29,
-				name: 'Design merch concepts',
-				blockedBy: [7, 23]
-			},
-			{
-				id: 30,
-				name: 'Organize a video watching event',
-				blockedBy: [19, 23]
+				blockedBy: [5, 6, 15, 18, 19]
 			}
 		]
 	},
@@ -405,8 +315,8 @@ export const TEMPLATES: Template[] = [
 			},
 			{
 				id: 2,
-				name: 'Create inventory of storage containers needed',
-				blockedBy: [1]
+				name: 'Create inventory of storage needs',
+				blockedBy: []
 			},
 			{
 				id: 3,
@@ -421,7 +331,7 @@ export const TEMPLATES: Template[] = [
 			{
 				id: 5,
 				name: 'Sort items by keep, donate, and discard',
-				blockedBy: [1]
+				blockedBy: []
 			},
 			{
 				id: 6,
@@ -436,7 +346,7 @@ export const TEMPLATES: Template[] = [
 			{
 				id: 8,
 				name: 'Take inventory of documents',
-				blockedBy: [1]
+				blockedBy: []
 			},
 			{
 				id: 9,
@@ -446,137 +356,47 @@ export const TEMPLATES: Template[] = [
 			{
 				id: 10,
 				name: 'Set up paper filing system for documents',
-				blockedBy: [8, 9]
+				blockedBy: [9]
 			},
 			{
 				id: 11,
-				name: 'Digitize important documents',
-				blockedBy: [10]
+				name: 'Organize digital photos',
+				blockedBy: []
 			},
 			{
 				id: 12,
-				name: 'Set up or revise system for processing mail',
-				blockedBy: [10]
+				name: 'Take inventory of tools and create organization system',
+				blockedBy: [4]
 			},
 			{
 				id: 13,
-				name: 'Take inventory of digital photos',
+				name: 'Take inventory of pantry items',
 				blockedBy: []
 			},
 			{
 				id: 14,
-				name: 'Create digital folder system',
-				blockedBy: [13]
+				name: 'Set up labeled pantry storage',
+				blockedBy: [3, 13]
 			},
 			{
 				id: 15,
-				name: 'Organize photo library',
-				blockedBy: [13, 14]
+				name: 'Organize medication and first aid kit',
+				blockedBy: [4]
 			},
 			{
 				id: 16,
-				name: 'Backup photo collection',
-				blockedBy: [15]
+				name: 'Organize cleaning supplies',
+				blockedBy: [4]
 			},
 			{
 				id: 17,
-				name: 'Take inventory of tools',
-				blockedBy: [1]
-			},
-			{
-				id: 18,
-				name: 'Create tool organization system',
-				blockedBy: [4, 17]
-			},
-			{
-				id: 19,
-				name: 'Take inventory of pantry items',
-				blockedBy: [1]
-			},
-			{
-				id: 20,
-				name: 'Purchase pantry storage solutions',
-				blockedBy: [19]
-			},
-			{
-				id: 21,
-				name: 'Set up labeled pantry storage containers',
-				blockedBy: [19, 20]
-			},
-			{
-				id: 22,
-				name: 'Take inventory of medications',
-				blockedBy: [1]
-			},
-			{
-				id: 23,
-				name: 'Organize medication and first aid kit',
-				blockedBy: [4, 22]
-			},
-			{
-				id: 24,
-				name: 'Take inventory of cleaning supplies',
-				blockedBy: [1]
-			},
-			{
-				id: 25,
-				name: 'Organize cleaning supplies',
-				blockedBy: [4, 24]
-			},
-			{
-				id: 26,
-				name: 'Set up or revise recycling system',
-				blockedBy: [1]
-			},
-			{
-				id: 27,
 				name: 'Sort and organize cables',
 				blockedBy: [4]
 			},
 			{
-				id: 28,
-				name: 'Label cables',
-				blockedBy: [27]
-			},
-			{
-				id: 29,
-				name: 'Organize cables and electronics',
-				blockedBy: [27, 28]
-			},
-			{
-				id: 30,
-				name: 'Organize arts and crafts supplies',
-				blockedBy: [4, 5]
-			},
-			{
-				id: 31,
-				name: 'Organize pet supplies',
-				blockedBy: [4, 5]
-			},
-			{
-				id: 32,
-				name: 'Sort holiday items by season/holiday',
-				blockedBy: [5]
-			},
-			{
-				id: 33,
-				name: 'Organize holiday items',
-				blockedBy: [4, 32]
-			},
-			{
-				id: 34,
-				name: 'Organize toiletries',
-				blockedBy: [4, 5]
-			},
-			{
-				id: 35,
+				id: 18,
 				name: 'Create home inventory spreadsheet',
-				blockedBy: [6, 10, 15, 18, 21, 23, 25, 29, 30, 31, 33, 34]
-			},
-			{
-				id: 36,
-				name: 'Set up maintenance schedule',
-				blockedBy: [35]
+				blockedBy: [6, 10, 11, 12, 14, 15, 16, 17]
 			}
 		]
 	},
@@ -606,7 +426,7 @@ export const TEMPLATES: Template[] = [
 			{
 				id: 5,
 				name: 'Create landing page for the app',
-				blockedBy: [2]
+				blockedBy: []
 			},
 			{
 				id: 6,
@@ -621,12 +441,12 @@ export const TEMPLATES: Template[] = [
 			{
 				id: 8,
 				name: 'Write blog post about app launch',
-				blockedBy: [6]
+				blockedBy: []
 			},
 			{
 				id: 9,
 				name: 'Create social media accounts for the app',
-				blockedBy: [6]
+				blockedBy: []
 			},
 			{
 				id: 10,
@@ -640,128 +460,38 @@ export const TEMPLATES: Template[] = [
 			},
 			{
 				id: 12,
-				name: 'Write to friends who might be interested',
-				blockedBy: [6]
-			},
-			{
-				id: 13,
 				name: 'Post on own social media feeds',
 				blockedBy: [6, 9]
 			},
 			{
-				id: 14,
+				id: 13,
 				name: 'Post "Show HN" on Hacker News',
 				blockedBy: [6, 7]
 			},
 			{
+				id: 14,
+				name: 'Identify relevant influencers',
+				blockedBy: []
+			},
+			{
 				id: 15,
-				name: 'Post on self-promo subreddits',
-				blockedBy: [6]
+				name: 'Create influencer outreach template',
+				blockedBy: [6, 14]
 			},
 			{
 				id: 16,
-				name: 'Post to daily.dev',
-				blockedBy: [6, 8]
+				name: 'Reach out to influencers',
+				blockedBy: [15]
 			},
 			{
 				id: 17,
-				name: 'Create Bluesky account and post there',
-				blockedBy: [6]
-			},
-			{
-				id: 18,
-				name: 'Post in LinkedIn groups',
-				blockedBy: [6]
-			},
-			{
-				id: 19,
-				name: 'Post in Facebook groups',
-				blockedBy: [6]
-			},
-			{
-				id: 20,
-				name: 'Message Discord communities',
-				blockedBy: [6]
-			},
-			{
-				id: 21,
-				name: 'Identify relevant influencers',
-				blockedBy: [2]
-			},
-			{
-				id: 22,
-				name: 'Create influencer outreach template',
-				blockedBy: [6, 21]
-			},
-			{
-				id: 23,
-				name: 'Reach out to influencers',
-				blockedBy: [22]
-			},
-			{
-				id: 24,
-				name: 'Identify relevant journalists',
-				blockedBy: [2]
-			},
-			{
-				id: 25,
-				name: 'Create press release',
-				blockedBy: [6, 24]
-			},
-			{
-				id: 26,
-				name: 'Reach out to journalists',
-				blockedBy: [25]
-			},
-			{
-				id: 27,
 				name: 'Setup analytics to track marketing effectiveness',
 				blockedBy: [1]
 			},
 			{
-				id: 28,
+				id: 18,
 				name: 'Create ad creatives',
 				blockedBy: [2, 6]
-			},
-			{
-				id: 29,
-				name: 'Create LinkedIn ads',
-				blockedBy: [28]
-			},
-			{
-				id: 30,
-				name: 'Create reddit ads',
-				blockedBy: [28]
-			},
-			{
-				id: 31,
-				name: 'Create facebook ads',
-				blockedBy: [28]
-			},
-			{
-				id: 32,
-				name: 'Create short form content for TikTok, Reels or Shorts',
-				blockedBy: [6, 7]
-			},
-			{
-				id: 33,
-				name: 'Setup referral program',
-				blockedBy: [5, 27]
-			},
-			{
-				id: 34,
-				name: 'Launch email newsletter',
-				blockedBy: [8, 27]
-			},
-			{
-				id: 35,
-				name: 'Plan app store optimization updates',
-				blockedBy: [4, 27]
-			},
-			{
-				id: 36,
-				name: 'Yell your website domain in the streets',
-				blockedBy: [5]
 			}
 		]
 	},
@@ -776,17 +506,17 @@ export const TEMPLATES: Template[] = [
 			{
 				id: 2,
 				name: 'Set event budget',
-				blockedBy: [1]
+				blockedBy: []
 			},
 			{
 				id: 3,
 				name: 'Choose event date and time',
-				blockedBy: [1]
+				blockedBy: []
 			},
 			{
 				id: 4,
 				name: 'Create guest list',
-				blockedBy: [1]
+				blockedBy: []
 			},
 			{
 				id: 5,
@@ -796,7 +526,7 @@ export const TEMPLATES: Template[] = [
 			{
 				id: 6,
 				name: 'Book venue',
-				blockedBy: [2, 3, 5]
+				blockedBy: [5]
 			},
 			{
 				id: 7,
@@ -815,158 +545,48 @@ export const TEMPLATES: Template[] = [
 			},
 			{
 				id: 10,
-				name: 'Research catering options',
-				blockedBy: [2, 6]
+				name: 'Plan menu',
+				blockedBy: [2]
 			},
 			{
 				id: 11,
-				name: 'Plan menu',
+				name: 'Book caterer or purchase food supplies',
 				blockedBy: [2, 10]
 			},
 			{
 				id: 12,
-				name: 'Book caterer or purchase food supplies',
-				blockedBy: [2, 11]
+				name: 'Plan and source beverages',
+				blockedBy: [2, 10]
 			},
 			{
 				id: 13,
-				name: 'Plan and source beverages',
-				blockedBy: [2, 11]
+				name: 'Book entertainment',
+				blockedBy: [2]
 			},
 			{
 				id: 14,
-				name: 'Research entertainment options',
-				blockedBy: [1, 2, 7]
+				name: 'Purchase or rent decorations',
+				blockedBy: [2]
 			},
 			{
 				id: 15,
-				name: 'Book entertainment',
-				blockedBy: [2, 14]
-			},
-			{
-				id: 16,
-				name: 'Create event theme and decoration plan',
-				blockedBy: [1, 6]
-			},
-			{
-				id: 17,
-				name: 'Purchase or rent decorations',
-				blockedBy: [2, 16]
-			},
-			{
-				id: 18,
-				name: 'Research and book photography/videography',
+				name: 'Arrange for tables, chairs, and furniture',
 				blockedBy: [2, 6]
 			},
 			{
-				id: 19,
-				name: 'Create seating chart or arrangement',
-				blockedBy: [6, 9]
-			},
-			{
-				id: 20,
-				name: 'Arrange for tables, chairs, and furniture',
-				blockedBy: [2, 6, 19]
-			},
-			{
-				id: 21,
-				name: 'Coordinate with speakers or presenters',
-				blockedBy: [7]
-			},
-			{
-				id: 22,
+				id: 16,
 				name: 'Arrange for audio/visual equipment',
-				blockedBy: [2, 6, 21]
+				blockedBy: [2, 6]
 			},
 			{
-				id: 23,
-				name: 'Create event program or handouts',
-				blockedBy: [7, 21]
-			},
-			{
-				id: 24,
-				name: 'Purchase party favors or gifts',
-				blockedBy: [2, 9]
-			},
-			{
-				id: 25,
-				name: 'Arrange transportation or parking',
-				blockedBy: [2, 6, 9]
-			},
-			{
-				id: 26,
+				id: 17,
 				name: 'Create setup team schedule',
 				blockedBy: [6, 7]
 			},
 			{
-				id: 27,
-				name: 'Create day-of event staff schedule',
-				blockedBy: [7, 26]
-			},
-			{
-				id: 28,
-				name: 'Send event reminders to guests',
-				blockedBy: [8, 9]
-			},
-			{
-				id: 29,
-				name: 'Create name tags or badges',
-				blockedBy: [9]
-			},
-			{
-				id: 30,
-				name: 'Confirm all vendor arrangements',
-				blockedBy: [12, 13, 15, 18, 20, 22]
-			},
-			{
-				id: 31,
-				name: 'Prepare welcome speech or talking points',
-				blockedBy: [7]
-			},
-			{
-				id: 32,
-				name: 'Create event setup checklist',
-				blockedBy: [7, 12, 17, 20, 22, 23]
-			},
-			{
-				id: 33,
-				name: 'Set up venue',
-				blockedBy: [17, 20, 22, 26, 32]
-			},
-			{
-				id: 34,
-				name: 'Final venue walkthrough',
-				blockedBy: [33]
-			},
-			{
-				id: 35,
+				id: 18,
 				name: 'Host the event',
-				blockedBy: [27, 28, 30, 31, 34]
-			},
-			{
-				id: 36,
-				name: 'Clean up and break down',
-				blockedBy: [35]
-			},
-			{
-				id: 37,
-				name: 'Return rented items',
-				blockedBy: [36]
-			},
-			{
-				id: 38,
-				name: 'Send thank you notes',
-				blockedBy: [35]
-			},
-			{
-				id: 39,
-				name: 'Collect and review feedback',
-				blockedBy: [35]
-			},
-			{
-				id: 40,
-				name: 'Create event summary and lessons learned',
-				blockedBy: [39]
+				blockedBy: [8, 9, 11, 12, 13, 14, 15, 16, 17]
 			}
 		]
 	},
@@ -981,12 +601,12 @@ export const TEMPLATES: Template[] = [
 			{
 				id: 2,
 				name: 'Define business concept and value proposition',
-				blockedBy: [1]
+				blockedBy: []
 			},
 			{
 				id: 3,
 				name: 'Conduct market research',
-				blockedBy: [2]
+				blockedBy: []
 			},
 			{
 				id: 4,
@@ -1001,7 +621,7 @@ export const TEMPLATES: Template[] = [
 			{
 				id: 6,
 				name: 'Choose business name',
-				blockedBy: [2]
+				blockedBy: []
 			},
 			{
 				id: 7,
@@ -1031,7 +651,7 @@ export const TEMPLATES: Template[] = [
 			{
 				id: 12,
 				name: 'Choose business structure (LLC, Corp, etc.)',
-				blockedBy: [8]
+				blockedBy: []
 			},
 			{
 				id: 13,
@@ -1045,108 +665,33 @@ export const TEMPLATES: Template[] = [
 			},
 			{
 				id: 15,
-				name: 'Open business bank account',
-				blockedBy: [13, 14]
+				name: 'Develop brand identity (logo, colors)',
+				blockedBy: []
 			},
 			{
 				id: 16,
-				name: 'Set up accounting system',
-				blockedBy: [15]
-			},
-			{
-				id: 17,
-				name: 'Obtain necessary licenses and permits',
-				blockedBy: [12, 13]
-			},
-			{
-				id: 18,
-				name: 'Purchase business insurance',
-				blockedBy: [12, 13]
-			},
-			{
-				id: 19,
-				name: 'Develop brand identity (logo, colors)',
-				blockedBy: [6]
-			},
-			{
-				id: 20,
 				name: 'Purchase domain name',
 				blockedBy: [7, 11]
 			},
 			{
-				id: 21,
-				name: 'Create business website',
-				blockedBy: [19, 20]
-			},
-			{
-				id: 22,
-				name: 'Create social media accounts',
-				blockedBy: [6, 19]
-			},
-			{
-				id: 23,
-				name: 'Create business email',
-				blockedBy: [20]
-			},
-			{
-				id: 24,
-				name: 'Source inventory/equipment',
-				blockedBy: [11]
-			},
-			{
-				id: 25,
-				name: 'Set up workspace/office',
-				blockedBy: [11, 24]
-			},
-			{
-				id: 26,
-				name: 'Hire initial employees (if needed)',
-				blockedBy: [11, 14, 16, 18]
-			},
-			{
-				id: 27,
+				id: 17,
 				name: 'Develop initial products/services',
 				blockedBy: [4, 5, 8, 11]
 			},
 			{
-				id: 28,
+				id: 18,
 				name: 'Set pricing strategy',
-				blockedBy: [4, 5, 27]
+				blockedBy: [4, 5, 17]
 			},
 			{
-				id: 29,
+				id: 19,
 				name: 'Create marketing strategy',
-				blockedBy: [4, 5, 19, 28]
+				blockedBy: [4, 5, 15, 18]
 			},
 			{
-				id: 30,
-				name: 'Develop sales process',
-				blockedBy: [28, 29]
-			},
-			{
-				id: 31,
-				name: 'Create business cards and materials',
-				blockedBy: [19, 23]
-			},
-			{
-				id: 32,
-				name: 'Plan launch event/promotion',
-				blockedBy: [27, 29]
-			},
-			{
-				id: 33,
-				name: 'Test products/services with beta customers',
-				blockedBy: [27]
-			},
-			{
-				id: 34,
-				name: 'Refine offerings based on feedback',
-				blockedBy: [33]
-			},
-			{
-				id: 35,
+				id: 20,
 				name: 'Launch business officially',
-				blockedBy: [17, 18, 21, 22, 25, 30, 31, 32, 34]
+				blockedBy: [13, 14, 17, 18, 19]
 			}
 		]
 	},
@@ -1166,12 +711,12 @@ export const TEMPLATES: Template[] = [
 			{
 				id: 3,
 				name: 'Research target industries',
-				blockedBy: [1]
+				blockedBy: []
 			},
 			{
 				id: 4,
 				name: 'Research potential employers',
-				blockedBy: [1, 3]
+				blockedBy: []
 			},
 			{
 				id: 5,
@@ -1190,168 +735,68 @@ export const TEMPLATES: Template[] = [
 			},
 			{
 				id: 8,
-				name: 'Update other social media profiles',
-				blockedBy: [1]
+				name: 'Identify professional references',
+				blockedBy: []
 			},
 			{
 				id: 9,
-				name: 'Create or update portfolio',
-				blockedBy: [1, 2, 5]
+				name: 'Contact references for permission',
+				blockedBy: [8]
 			},
 			{
 				id: 10,
-				name: 'Identify professional references',
-				blockedBy: [1]
-			},
-			{
-				id: 11,
-				name: 'Contact references for permission',
-				blockedBy: [10]
-			},
-			{
-				id: 12,
-				name: 'Create reference document',
-				blockedBy: [11]
-			},
-			{
-				id: 13,
 				name: 'Set up job search tracking system',
 				blockedBy: []
 			},
 			{
-				id: 14,
-				name: 'Set up alerts on job boards',
-				blockedBy: [1, 3, 4, 13]
-			},
-			{
-				id: 15,
-				name: 'Register with recruitment agencies',
-				blockedBy: [5, 7]
-			},
-			{
-				id: 16,
+				id: 11,
 				name: 'Create elevator pitch',
 				blockedBy: [1, 2]
 			},
 			{
-				id: 17,
+				id: 12,
 				name: 'Research typical interview questions',
 				blockedBy: [1, 3]
 			},
 			{
-				id: 18,
+				id: 13,
 				name: 'Practice interview responses',
-				blockedBy: [16, 17]
+				blockedBy: [11, 12]
+			},
+			{
+				id: 14,
+				name: 'Research salary expectations',
+				blockedBy: [3, 4]
+			},
+			{
+				id: 15,
+				name: 'Search for job openings',
+				blockedBy: [1, 3, 4, 10]
+			},
+			{
+				id: 16,
+				name: 'Submit job applications',
+				blockedBy: [5, 6, 15]
+			},
+			{
+				id: 17,
+				name: 'Schedule interviews',
+				blockedBy: [16]
+			},
+			{
+				id: 18,
+				name: 'Research company before interview',
+				blockedBy: [17]
 			},
 			{
 				id: 19,
-				name: 'Research salary expectations',
-				blockedBy: [1, 3, 4]
+				name: 'Attend interview',
+				blockedBy: [13, 17, 18]
 			},
 			{
 				id: 20,
-				name: 'Prepare salary negotiation approach',
-				blockedBy: [19]
-			},
-			{
-				id: 21,
-				name: 'Inform network of job search',
-				blockedBy: [1, 2, 5, 7]
-			},
-			{
-				id: 22,
-				name: 'Identify networking opportunities',
-				blockedBy: [1, 3]
-			},
-			{
-				id: 23,
-				name: 'Attend industry events and meetups',
-				blockedBy: [16, 22]
-			},
-			{
-				id: 24,
-				name: 'Search for job openings',
-				blockedBy: [1, 3, 4, 13]
-			},
-			{
-				id: 25,
-				name: 'Customize resume for each application',
-				blockedBy: [5, 24]
-			},
-			{
-				id: 26,
-				name: 'Customize cover letter for each application',
-				blockedBy: [6, 24]
-			},
-			{
-				id: 27,
-				name: 'Submit job applications',
-				blockedBy: [24, 25, 26]
-			},
-			{
-				id: 28,
-				name: 'Follow up on applications',
-				blockedBy: [27]
-			},
-			{
-				id: 29,
-				name: 'Schedule interviews',
-				blockedBy: [27, 28]
-			},
-			{
-				id: 30,
-				name: 'Research company before interview',
-				blockedBy: [29]
-			},
-			{
-				id: 31,
-				name: 'Prepare questions for interviewers',
-				blockedBy: [30]
-			},
-			{
-				id: 32,
-				name: 'Plan interview outfit',
-				blockedBy: [29]
-			},
-			{
-				id: 33,
-				name: 'Attend interview',
-				blockedBy: [18, 29, 30, 31, 32]
-			},
-			{
-				id: 34,
-				name: 'Send thank you note after interview',
-				blockedBy: [33]
-			},
-			{
-				id: 35,
-				name: 'Follow up if no response received',
-				blockedBy: [34]
-			},
-			{
-				id: 36,
-				name: 'Evaluate job offers',
-				blockedBy: [19, 33]
-			},
-			{
-				id: 37,
-				name: 'Negotiate job offer',
-				blockedBy: [20, 36]
-			},
-			{
-				id: 38,
 				name: 'Accept job offer',
-				blockedBy: [37]
-			},
-			{
-				id: 39,
-				name: 'Notify other potential employers',
-				blockedBy: [38]
-			},
-			{
-				id: 40,
-				name: 'Plan first day preparations',
-				blockedBy: [38]
+				blockedBy: [19]
 			}
 		]
 	},
@@ -1371,12 +816,12 @@ export const TEMPLATES: Template[] = [
 			{
 				id: 3,
 				name: 'Determine sun exposure in garden area',
-				blockedBy: [2]
+				blockedBy: []
 			},
 			{
 				id: 4,
 				name: 'Test soil quality',
-				blockedBy: [2]
+				blockedBy: []
 			},
 			{
 				id: 5,
@@ -1435,103 +880,28 @@ export const TEMPLATES: Template[] = [
 			},
 			{
 				id: 16,
-				name: 'Install irrigation/watering system (if needed)',
-				blockedBy: [7, 14, 15]
-			},
-			{
-				id: 17,
 				name: 'Amend soil or fill containers with soil',
 				blockedBy: [13, 14, 15]
 			},
 			{
-				id: 18,
-				name: 'Create paths or walkways (if needed)',
-				blockedBy: [7, 14, 15]
-			},
-			{
-				id: 19,
+				id: 17,
 				name: 'Purchase seeds or starter plants',
 				blockedBy: [6, 9]
 			},
 			{
-				id: 20,
-				name: 'Start seeds indoors (if needed)',
-				blockedBy: [9, 19]
-			},
-			{
-				id: 21,
-				name: 'Install trellises or supports (if needed)',
-				blockedBy: [7, 15, 17]
-			},
-			{
-				id: 22,
+				id: 18,
 				name: 'Prepare planting areas',
-				blockedBy: [17]
+				blockedBy: [16]
 			},
 			{
-				id: 23,
+				id: 19,
 				name: 'Plant seeds or starter plants outdoors',
-				blockedBy: [9, 19, 22]
+				blockedBy: [17, 18]
 			},
 			{
-				id: 24,
-				name: 'Transplant indoor seedlings to garden',
-				blockedBy: [9, 20, 22]
-			},
-			{
-				id: 25,
-				name: 'Apply initial fertilizer',
-				blockedBy: [23, 24]
-			},
-			{
-				id: 26,
+				id: 20,
 				name: 'Apply mulch',
-				blockedBy: [23, 24]
-			},
-			{
-				id: 27,
-				name: 'Set up plant labels/markers',
-				blockedBy: [23, 24]
-			},
-			{
-				id: 28,
-				name: 'Create garden journal',
-				blockedBy: [23, 24]
-			},
-			{
-				id: 29,
-				name: 'Establish watering schedule',
-				blockedBy: [16, 23, 24]
-			},
-			{
-				id: 30,
-				name: 'Create pest management plan',
-				blockedBy: [23, 24]
-			},
-			{
-				id: 31,
-				name: 'Monitor for pests and diseases',
-				blockedBy: [23, 24, 30]
-			},
-			{
-				id: 32,
-				name: 'Create fertilizing schedule',
-				blockedBy: [25]
-			},
-			{
-				id: 33,
-				name: 'Plan for succession planting',
-				blockedBy: [9, 28]
-			},
-			{
-				id: 34,
-				name: 'Install garden decorations or features',
-				blockedBy: [18, 23, 24]
-			},
-			{
-				id: 35,
-				name: 'Start compost system',
-				blockedBy: [11]
+				blockedBy: [19]
 			}
 		]
 	}
