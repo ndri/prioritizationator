@@ -3,6 +3,7 @@
 	import { getRecentProjects } from '$lib/db';
 	import { stateQuery } from '$lib/stateQuery.svelte';
 	import ArrowTopRightOnSquareIcon from './heroicons/micro/ArrowTopRightOnSquareIcon.svelte';
+	import ChatBubbleBottomCenterTextIcon from './heroicons/mini/ChatBubbleBottomCenterTextIcon.svelte';
 	import CircleStackIcon from './heroicons/mini/CircleStackIcon.svelte';
 	import DocumentTextIcon from './heroicons/mini/DocumentTextIcon.svelte';
 	import HomeIcon from './heroicons/mini/HomeIcon.svelte';
@@ -34,6 +35,12 @@
 			text: 'Help',
 			href: '/help',
 			Icon: QuestionMarkCircleIcon
+		},
+		{
+			text: 'Feedback',
+			href: 'https://tally.so/r/m64rKY',
+			Icon: ChatBubbleBottomCenterTextIcon,
+			newTab: true
 		}
 	];
 
