@@ -71,10 +71,10 @@
 	{/if}
 	<!-- <div class="text-main-500 dark:text-main-500 text-sm">{task.id}</div> -->
 	<div class="grow text-sm">{task.name}</div>
-	{#if task.completedAt}
-		<div class="text-main-500 dark:text-main-500 flex flex-col items-center">
-			<div class="text-xs">Completed</div>
-			<div class="text-sm">{task.completedAt.toISOString().split('T')[0]}</div>
+	{#if task.complete && task.completedAt}
+		<div class="text-main-500 dark:text-main-500 flex flex-col items-center text-xs break-keep">
+			<div>Completed</div>
+			<div>{task.completedAt.toISOString().split('T')[0]}</div>
 		</div>
 	{/if}
 	{#if showBadges && !task.complete}
