@@ -3,6 +3,7 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import { getProject } from '$lib/db';
 	import { stateQuery } from '$lib/stateQuery.svelte';
+	import { filterDoableTasks } from '$lib/utils/tasks';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -14,6 +15,7 @@
 
 <div class="mx-auto flex w-full max-w-2xl flex-col gap-8">
 	{#if project && project.tasks}
+		{@const doableTasks = filterDoableTasks(project.tasks)}
 		<div class="flex flex-col gap-4">
 			<h2 class="text-2xl font-medium">Let's get those tasks in order!</h2>
 			<p class="text-sm">
@@ -23,7 +25,7 @@
 				required to complete them:
 			</p>
 			<div class="mx-auto w-full max-w-xl">
-				<PrioritizationMatrix tasks={project.tasks} />
+				<PrioritizationMatrix tasks={doableTasks} />
 			</div>
 			<p class="text-sm">
 				We want to focus on the <strong>Low Hanging Fruits</strong>
