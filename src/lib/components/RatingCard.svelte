@@ -13,7 +13,7 @@
 
 	const { title, ratingsProgress, ratingsRequired, ratingPath }: Props = $props();
 
-	const percentage = Math.round((ratingsProgress / ratingsRequired) * 100);
+	const percentage = $derived(Math.round((ratingsProgress / ratingsRequired) * 100));
 </script>
 
 <div class="bg-main-50 dark:bg-main-900 flex flex-col justify-between gap-4 rounded-lg p-5">
