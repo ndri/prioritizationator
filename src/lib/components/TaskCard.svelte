@@ -71,6 +71,12 @@
 	{/if}
 	<!-- <div class="text-main-500 dark:text-main-500 text-sm">{task.id}</div> -->
 	<div class="grow text-sm">{task.name}</div>
+	{#if task.completedAt}
+		<div class="text-main-500 dark:text-main-500 flex flex-col items-center">
+			<div class="text-xs">Completed</div>
+			<div class="text-sm">{task.completedAt.toISOString().split('T')[0]}</div>
+		</div>
+	{/if}
 	{#if showBadges && !task.complete}
 		<RatingBadge label="Value" rating={task.valueRating ?? -1} rated={taskValueIsRated(task)} />
 		<RatingBadge label="Ease" rating={task.easeRating ?? -1} rated={taskEaseIsRated(task)} />
