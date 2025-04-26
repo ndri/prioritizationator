@@ -30,7 +30,7 @@
 	import ArrowPathIcon from '$lib/components/heroicons/mini/ArrowPathIcon.svelte';
 	import { slide } from 'svelte/transition';
 	import Tabs from '$lib/components/ui/Tabs.svelte';
-	import ReadyTasks from '$lib/components/ReadyTasks.svelte';
+	import TodoTasks from '$lib/components/TodoTasks.svelte';
 	import BlockedTasks from '$lib/components/BlockedTasks.svelte';
 	import CompletedTasks from '$lib/components/CompletedTasks.svelte';
 	import { createTitle } from '$lib/utils/title';
@@ -48,7 +48,7 @@
 	let editDialog = $state<EditDialog>();
 	let resetDialog = $state<SimpleDialog>();
 
-	let tab = $state<'ready' | 'matrix' | 'blocked' | 'completed'>('ready');
+	let tab = $state<'todo' | 'matrix' | 'blocked' | 'completed'>('todo');
 </script>
 
 <svelte:head><title>{createTitle(project?.name)}</title></svelte:head>
@@ -122,7 +122,7 @@
 		{@const doableTasks = filterDoableTasks(project.tasks)}
 
 		{@const tabValues = [
-			{ id: 'ready', label: 'Ready', tag: String(unblockedTasks.length || '') },
+			{ id: 'todo', label: 'To do', tag: String(unblockedTasks.length || '') },
 			...(blockedTasks.length
 				? [{ id: 'blocked', label: 'Blocked', tag: String(blockedTasks.length) }]
 				: []),
@@ -135,8 +135,8 @@
 			{#if tabValues.length > 1}
 				<Tabs values={tabValues} bind:selected={tab} />
 			{/if}
-			{#if tab === 'ready'}
-				<ReadyTasks {unblockedTasks} />
+			{#if tab === 'todo'}
+				<TodoTasks {unblockedTasks} />
 				<NewTaskForm {projectId} />
 			{:else if tab === 'blocked'}
 				<BlockedTasks {blockedTasks} />
