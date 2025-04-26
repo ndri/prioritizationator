@@ -44,7 +44,12 @@
 		tasks={leaps}
 		showBadges
 	/>
-	<TaskList title="Traps" description="Consider dropping these." tasks={traps} showBadges />
+	<TaskList
+		title="Traps"
+		description="Consider dropping these if possible."
+		tasks={traps}
+		showBadges
+	/>
 	<TaskList
 		title="Unrated Tasks"
 		description="Rate them above to prioritize them!"

@@ -56,7 +56,7 @@
 			</ul>
 			<p>The more comparisons you make, the more accurate and reliable the scores become.</p>
 		</Disclosure>
-		<Disclosure question={`What do "blocked by" and "blocking to" mean?`}>
+		<Disclosure question={`What do "blocked by" and "blocks" mean?`}>
 			<p>
 				<strong>Blocked by:</strong>
 				A task that must wait for another task to be completed first.
@@ -65,10 +65,10 @@
 				Example: Building a house is "blocked by" getting construction permits.
 			</p>
 			<p>
-				<strong>Blocking to:</strong>
-				A task that prevents another task from starting.
+				<strong>Blocks:</strong>
+				A task that prevents another task from being done.
 			</p>
-			<p class="mb-3 ml-4 italic">Example: Getting permits is "blocking to" building a house.</p>
+			<p class="mb-3 ml-4 italic">Example: Getting permits "blocks" building a house.</p>
 			<p>
 				When a task is blocked, it can't be prioritized until its blocking tasks are completed. This
 				helps you focus on what's actually actionable right now.

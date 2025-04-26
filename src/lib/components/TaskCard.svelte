@@ -98,7 +98,7 @@
 				}
 			},
 			{
-				label: 'Blocking to...',
+				label: 'Blocks...',
 				Icon: HandRaisedIcon,
 				onSelect: () => {
 					if (blockingToDialog) {
@@ -144,7 +144,7 @@
 	{#snippet label()}
 		<p>
 			Task <span class="text-accent-600 dark:text-accent-500 font-medium">{task.name}</span>
-			is blocking these tasks:
+			blocks these tasks from being done:
 		</p>
 	{/snippet}
 </MultiSelectDialog>
