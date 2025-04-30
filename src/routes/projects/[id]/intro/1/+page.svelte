@@ -7,6 +7,7 @@
 	import { minTasksForRating } from '$lib/utils/tasks';
 	import { createTitle } from '$lib/utils/title';
 	import type { PageProps } from './$types';
+	import CheckIcon from '$lib/components/heroicons/mini/CheckIcon.svelte';
 
 	let { data }: PageProps = $props();
 
@@ -38,7 +39,7 @@
 
 			{#if project.tasks.length >= minTasksForRating}
 				<div class="flex justify-end">
-					<Button href="/projects/{projectId}/intro/2" size="lg">Continue</Button>
+					<Button href="/projects/{projectId}/intro/2" size="lg" Icon={CheckIcon}>Continue</Button>
 				</div>
 			{:else}
 				{@const needToAdd = minTasksForRating - project.tasks.length}

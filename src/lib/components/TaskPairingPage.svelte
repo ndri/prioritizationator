@@ -129,14 +129,14 @@
 							: `/projects/${projectId}/intro/6`}
 					<Button href={nextUrl} disabled={progress < total} Icon={CheckIcon}>Continue</Button>
 				{:else}
-					<Button href={`/projects/${projectId}`} variant="secondary">Back to project</Button>
-					{#if progress >= total}
-						{@const nextUrl =
-							dimension === 'value' ? `/projects/${projectId}/ease` : `/projects/${projectId}`}
-						<Button href={nextUrl}>
-							{dimension === 'value' ? 'Rate effort' : 'Finish rating'}
-						</Button>
-					{/if}
+					<Button href={`/projects/${projectId}`} variant="secondary" Icon={ArrowLeftIcon}>
+						Back to project
+					</Button>
+					{@const nextUrl =
+						dimension === 'value' ? `/projects/${projectId}/ease` : `/projects/${projectId}`}
+					<Button href={nextUrl} disabled={progress < total} Icon={CheckIcon}>
+						{dimension === 'value' ? 'Rate effort' : 'Finish rating'}
+					</Button>
 				{/if}
 			</div>
 		</div>

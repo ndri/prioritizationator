@@ -1,4 +1,6 @@
 <script lang="ts">
+	import ArrowLeftIcon from '$lib/components/heroicons/mini/ArrowLeftIcon.svelte';
+	import StarIcon from '$lib/components/heroicons/mini/StarIcon.svelte';
 	import PrioritizationMatrix from '$lib/components/PrioritizationMatrix.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { getProject } from '$lib/db';
@@ -26,9 +28,16 @@
 				Let's finish by rating the tasks by the amount of effort required to complete them.
 			</p>
 		</div>
-		<div class="flex justify-between">
-			<Button href="/projects/{projectId}/intro/3" size="lg" variant="secondary">Go back</Button>
-			<Button href="/projects/{projectId}/intro/5" size="lg">Rate effort</Button>
+		<div class="flex justify-end gap-2">
+			<Button
+				href="/projects/{projectId}/intro/3"
+				size="lg"
+				variant="secondary"
+				Icon={ArrowLeftIcon}
+			>
+				Go back
+			</Button>
+			<Button href="/projects/{projectId}/intro/5" size="lg" Icon={StarIcon}>Rate effort</Button>
 		</div>
 	{/if}
 </div>

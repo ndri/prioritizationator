@@ -1,4 +1,6 @@
 <script lang="ts">
+	import ArrowLeftIcon from '$lib/components/heroicons/mini/ArrowLeftIcon.svelte';
+	import StarIcon from '$lib/components/heroicons/mini/StarIcon.svelte';
 	import PrioritizationMatrix from '$lib/components/PrioritizationMatrix.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { getProject } from '$lib/db';
@@ -35,9 +37,16 @@
 			</p>
 			<p class="text-sm">Let's start by rating the tasks by their value.</p>
 		</div>
-		<div class="flex justify-between">
-			<Button href="/projects/{projectId}/intro/1" size="lg" variant="secondary">Go back</Button>
-			<Button href="/projects/{projectId}/intro/3" size="lg">Rate value</Button>
+		<div class="flex justify-end gap-2">
+			<Button
+				href="/projects/{projectId}/intro/1"
+				size="lg"
+				variant="secondary"
+				Icon={ArrowLeftIcon}
+			>
+				Go back
+			</Button>
+			<Button href="/projects/{projectId}/intro/3" size="lg" Icon={StarIcon}>Rate value</Button>
 		</div>
 	{/if}
 </div>
