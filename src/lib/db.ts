@@ -41,10 +41,30 @@ export interface TaskBlocking {
 	createdAt: Date;
 }
 
+export interface RatingChange {
+	id: number;
+	dimension: 'value' | 'ease';
+	taskId: number;
+	oldRating: number;
+	newRating: number;
+	createdAt: Date;
+}
+
+export interface Matchup {
+	id: number;
+	dimension: 'value' | 'ease';
+	projectId: number;
+	ratingChangeId1: number;
+	ratingChangeId2: number;
+	undone: boolean;
+}
+
 class PrioritizationatorDB extends Dexie {
 	projects!: EntityTable<Project, 'id'>;
 	tasks!: EntityTable<Task, 'id'>;
 	taskBlockings!: Table<TaskBlocking, [number, number]>;
+	ratingChanges!: EntityTable<RatingChange, 'id'>;
+	matchups!: EntityTable<Matchup, 'id'>;
 
 	constructor() {
 		super('Prioritizationator');
@@ -57,6 +77,11 @@ class PrioritizationatorDB extends Dexie {
 
 		this.version(2).stores({
 			taskBlockings: '[taskId+blockedById], taskId, blockedById, createdAt'
+		});
+
+		this.version(3).stores({
+			ratingChanges: '++id, dimension, taskId, oldRating, newRating, createdAt',
+			matchups: '++id, dimension, projectId, ratingChangeId1, ratingChangeId2, undone'
 		});
 	}
 }
@@ -193,10 +218,12 @@ async function updateTaskModifiedAt(id: number) {
 async function recordMatchup(
 	taskId1: number,
 	taskId2: number,
-	ratingField: 'valueRating' | 'easeRating',
-	ratingsField: 'valueRatings' | 'easeRatings',
+	dimension: 'value' | 'ease',
 	result: 'win' | 'draw'
 ) {
+	const ratingField = dimension === 'value' ? 'valueRating' : 'easeRating';
+	const ratingsField = dimension === 'value' ? 'valueRatings' : 'easeRatings';
+
 	const task1 = await getTask(taskId1);
 	if (!task1) throw `Task ${taskId1} not found.`;
 	const task2 = await getTask(taskId2);
@@ -208,10 +235,11 @@ async function recordMatchup(
 	await updateTaskModifiedAt(taskId1);
 	await updateTaskModifiedAt(taskId1);
 
+	const oldRating1 = task1[ratingField];
+	const oldRating2 = task2[ratingField];
+
 	const { newRating1, newRating2 } =
-		result === 'win'
-			? calculateWin(task1[ratingField], task2[ratingField])
-			: calculateDraw(task1[ratingField], task2[ratingField]);
+		result === 'win' ? calculateWin(oldRating1, oldRating2) : calculateDraw(oldRating1, oldRating2);
 
 	await db.tasks.update(taskId1, {
 		[ratingField]: newRating1,
@@ -222,22 +250,48 @@ async function recordMatchup(
 		[ratingField]: newRating2,
 		[ratingsField]: task2[ratingsField] + 1
 	});
+
+	const ratingChangeId1 = await db.ratingChanges.add({
+		dimension,
+		taskId: taskId1,
+		oldRating: oldRating1,
+		newRating: newRating1,
+		createdAt: new Date()
+	});
+
+	const ratingChangeId2 = await db.ratingChanges.add({
+		dimension,
+		taskId: taskId2,
+		oldRating: oldRating2,
+		newRating: newRating2,
+		createdAt: new Date()
+	});
+
+	await db.matchups.add({
+		dimension,
+		projectId: task1.projectId,
+		ratingChangeId1,
+		ratingChangeId2,
+		undone: false
+	});
+
+	await removeUndoneMatchups(task1.projectId, dimension);
 }
 
 export async function recordValueMatchupWin(taskId1: number, taskId2: number) {
-	return recordMatchup(taskId1, taskId2, 'valueRating', 'valueRatings', 'win');
+	return recordMatchup(taskId1, taskId2, 'value', 'win');
 }
 
 export async function recordValueMatchupDraw(taskId1: number, taskId2: number) {
-	return recordMatchup(taskId1, taskId2, 'valueRating', 'valueRatings', 'draw');
+	return recordMatchup(taskId1, taskId2, 'value', 'draw');
 }
 
 export async function recordEaseMatchupWin(taskId1: number, taskId2: number) {
-	return recordMatchup(taskId1, taskId2, 'easeRating', 'easeRatings', 'win');
+	return recordMatchup(taskId1, taskId2, 'ease', 'win');
 }
 
 export async function recordEaseMatchupDraw(taskId1: number, taskId2: number) {
-	return recordMatchup(taskId1, taskId2, 'easeRating', 'easeRatings', 'draw');
+	return recordMatchup(taskId1, taskId2, 'ease', 'draw');
 }
 
 export async function resetRatings(projectId: number) {
@@ -251,6 +305,136 @@ export async function resetRatings(projectId: number) {
 			easeRating: 50.0,
 			easeRatings: 0
 		});
+	});
+
+	removeAllMatchups(projectId);
+}
+
+export async function getUndoableMatchup(projectId: number, dimension: 'value' | 'ease') {
+	return db.matchups
+		.where({ projectId, dimension })
+		.filter((matchup) => !matchup.undone)
+		.last();
+}
+
+export async function canUndoMatchup(projectId: number, dimension: 'value' | 'ease') {
+	const undoableMatchup = await getUndoableMatchup(projectId, dimension);
+	return !!undoableMatchup;
+}
+
+export async function undoMatchup(projectId: number, dimension: 'value' | 'ease') {
+	const matchupToUndo = await getUndoableMatchup(projectId, dimension);
+	if (!matchupToUndo) return;
+
+	const ratingChange1 = await db.ratingChanges.get(matchupToUndo.ratingChangeId1);
+	const ratingChange2 = await db.ratingChanges.get(matchupToUndo.ratingChangeId2);
+	if (!ratingChange1 || !ratingChange2) return;
+
+	const task1 = await getTask(ratingChange1.taskId);
+	const task2 = await getTask(ratingChange2.taskId);
+	if (!task1 || !task2) return;
+
+	const ratingField = dimension === 'value' ? 'valueRating' : 'easeRating';
+	const ratingsField = dimension === 'value' ? 'valueRatings' : 'easeRatings';
+
+	await db.tasks.update(task1.id, {
+		[ratingField]: ratingChange1.oldRating,
+		[ratingsField]: task1[ratingsField] - 1,
+		modifiedAt: new Date()
+	});
+	await db.tasks.update(task2.id, {
+		[ratingField]: ratingChange2.oldRating,
+		[ratingsField]: task2[ratingsField] - 1,
+		modifiedAt: new Date()
+	});
+	await db.matchups.update(matchupToUndo.id, { undone: true });
+
+	return {
+		task1: {
+			oldRating: ratingChange1.newRating,
+			newRating: ratingChange1.oldRating
+		},
+		task2: {
+			oldRating: ratingChange2.newRating,
+			newRating: ratingChange2.oldRating
+		}
+	};
+}
+
+export async function getRedoableMatchup(projectId: number, dimension: 'value' | 'ease') {
+	return db.matchups
+		.where({ projectId, dimension })
+		.filter((matchup) => matchup.undone)
+		.first();
+}
+
+export async function canRedoMatchup(projectId: number, dimension: 'value' | 'ease') {
+	const redoableMatchup = await getRedoableMatchup(projectId, dimension);
+	return !!redoableMatchup;
+}
+
+export async function redoMatchup(projectId: number, dimension: 'value' | 'ease') {
+	const matchupToRedo = await getRedoableMatchup(projectId, dimension);
+	if (!matchupToRedo) return;
+
+	const ratingChange1 = await db.ratingChanges.get(matchupToRedo.ratingChangeId1);
+	const ratingChange2 = await db.ratingChanges.get(matchupToRedo.ratingChangeId2);
+	if (!ratingChange1 || !ratingChange2) return;
+
+	const task1 = await getTask(ratingChange1.taskId);
+	const task2 = await getTask(ratingChange2.taskId);
+	if (!task1 || !task2) return;
+
+	const ratingField = dimension === 'value' ? 'valueRating' : 'easeRating';
+	const ratingsField = dimension === 'value' ? 'valueRatings' : 'easeRatings';
+
+	await db.tasks.update(task1.id, {
+		[ratingField]: ratingChange1.newRating,
+		[ratingsField]: task1[ratingsField] + 1,
+		modifiedAt: new Date()
+	});
+	await db.tasks.update(task2.id, {
+		[ratingField]: ratingChange2.newRating,
+		[ratingsField]: task2[ratingsField] + 1,
+		modifiedAt: new Date()
+	});
+	await db.matchups.update(matchupToRedo.id, { undone: false });
+
+	return {
+		task1: {
+			oldRating: ratingChange1.oldRating,
+			newRating: ratingChange1.newRating
+		},
+		task2: {
+			oldRating: ratingChange2.oldRating,
+			newRating: ratingChange2.newRating
+		}
+	};
+}
+
+async function removeUndoneMatchups(projectId: number, dimension: 'value' | 'ease') {
+	const matchupsToRemove = await db.matchups
+		.where({ projectId, dimension })
+		.filter((matchup) => matchup.undone)
+		.toArray();
+
+	removeMatchups(matchupsToRemove);
+}
+
+async function removeAllMatchups(projectId: number) {
+	const matchupsToRemove = await db.matchups.where({ projectId }).toArray();
+	removeMatchups(matchupsToRemove);
+}
+
+function removeMatchups(matchups: Matchup[]) {
+	matchups.forEach(async (matchup) => {
+		const ratingChange1 = await db.ratingChanges.get(matchup.ratingChangeId1);
+		const ratingChange2 = await db.ratingChanges.get(matchup.ratingChangeId2);
+		if (!ratingChange1 || !ratingChange2) return;
+
+		await db.ratingChanges.delete(ratingChange1.id);
+		await db.ratingChanges.delete(ratingChange2.id);
+		await db.matchups.delete(matchup.id);
 	});
 }
 

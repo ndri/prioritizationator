@@ -1,10 +1,14 @@
 <script lang="ts">
 	import {
+		canRedoMatchup,
+		canUndoMatchup,
 		getProject,
 		recordEaseMatchupDraw,
 		recordEaseMatchupWin,
 		recordValueMatchupDraw,
-		recordValueMatchupWin
+		recordValueMatchupWin,
+		redoMatchup,
+		undoMatchup
 	} from '$lib/db';
 	import { stateQuery } from '$lib/stateQuery.svelte';
 	import {
@@ -16,6 +20,10 @@
 		valueRatingsProgress
 	} from '$lib/utils/tasks';
 	import { createTitle } from '$lib/utils/title';
+	import ArrowLeftIcon from './heroicons/mini/ArrowLeftIcon.svelte';
+	import ArrowUturnLeftIcon from './heroicons/mini/ArrowUturnLeftIcon.svelte';
+	import ArrowUturnRightIcon from './heroicons/mini/ArrowUturnRightIcon.svelte';
+	import CheckIcon from './heroicons/mini/CheckIcon.svelte';
 	import ProgressBar from './ProgressBar.svelte';
 	import TaskPairing from './TaskPairing.svelte';
 	import Button from './ui/Button.svelte';
@@ -30,6 +38,14 @@
 
 	const projectQuery = stateQuery(() => getProject(projectId));
 	const project = $derived(projectQuery.current);
+
+	const canUndoQuery = stateQuery(() => canUndoMatchup(projectId, dimension));
+	const canUndo = $derived(canUndoQuery.current);
+
+	const canRedoQuery = stateQuery(() => canRedoMatchup(projectId, dimension));
+	const canRedo = $derived(canRedoQuery.current);
+
+	let taskPairing = $state<TaskPairing>();
 </script>
 
 <svelte:head><title>{createTitle(project?.name)}</title></svelte:head>
@@ -70,32 +86,59 @@
 			{dimension}
 			recordWin={dimension === 'value' ? recordValueMatchupWin : recordEaseMatchupWin}
 			recordDraw={dimension === 'value' ? recordValueMatchupDraw : recordEaseMatchupDraw}
+			bind:this={taskPairing}
 		/>
 
 		<ProgressBar {progress} {total} animateOnComplete />
 
-		<div class="flex justify-between">
-			{#if intro}
-				{@const previousUrl =
-					dimension === 'value'
-						? `/projects/${projectId}/intro/2`
-						: `/projects/${projectId}/intro/4`}
-				<Button href={previousUrl} variant="secondary">Back</Button>
-				{@const nextUrl =
-					dimension === 'value'
-						? `/projects/${projectId}/intro/4`
-						: `/projects/${projectId}/intro/6`}
-				<Button href={nextUrl} disabled={progress < total}>Continue</Button>
-			{:else}
-				<Button href={`/projects/${projectId}`} variant="secondary">Back to project</Button>
-				{#if progress >= total}
+		<div class="flex justify-between gap-2">
+			<div class="flex gap-2">
+				<Button
+					variant="secondary"
+					Icon={ArrowUturnLeftIcon}
+					onclick={async () => {
+						await undoMatchup(projectId, dimension);
+						taskPairing?.resetTasks();
+					}}
+					disabled={!canUndo}
+				>
+					Undo
+				</Button>
+				<Button
+					variant="secondary"
+					Icon={ArrowUturnRightIcon}
+					onclick={async () => {
+						await redoMatchup(projectId, dimension);
+						taskPairing?.resetTasks();
+					}}
+					disabled={!canRedo}
+				>
+					Redo
+				</Button>
+			</div>
+			<div class="flex gap-2">
+				{#if intro}
+					{@const previousUrl =
+						dimension === 'value'
+							? `/projects/${projectId}/intro/2`
+							: `/projects/${projectId}/intro/4`}
+					<Button href={previousUrl} variant="secondary" Icon={ArrowLeftIcon}>Back</Button>
 					{@const nextUrl =
-						dimension === 'value' ? `/projects/${projectId}/ease` : `/projects/${projectId}`}
-					<Button href={nextUrl}>
-						{dimension === 'value' ? 'Rate effort' : 'Finish rating'}
-					</Button>
+						dimension === 'value'
+							? `/projects/${projectId}/intro/4`
+							: `/projects/${projectId}/intro/6`}
+					<Button href={nextUrl} disabled={progress < total} Icon={CheckIcon}>Continue</Button>
+				{:else}
+					<Button href={`/projects/${projectId}`} variant="secondary">Back to project</Button>
+					{#if progress >= total}
+						{@const nextUrl =
+							dimension === 'value' ? `/projects/${projectId}/ease` : `/projects/${projectId}`}
+						<Button href={nextUrl}>
+							{dimension === 'value' ? 'Rate effort' : 'Finish rating'}
+						</Button>
+					{/if}
 				{/if}
-			{/if}
+			</div>
 		</div>
 	{:else}
 		<p class="text-main-500 dark:text-main-400">

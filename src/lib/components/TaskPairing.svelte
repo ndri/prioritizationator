@@ -2,6 +2,7 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import { type Task } from '$lib/db';
 	import { getTaskPair } from '$lib/utils/tasks';
+	import { onMount } from 'svelte';
 	import PairingCard from './PairingCard.svelte';
 
 	interface Props {
@@ -16,13 +17,14 @@
 	let task1 = $state<Task>();
 	let task2 = $state<Task>();
 
-	const resetTasks = async (avoidTasks: number[] = []) => {
+	export const resetTasks = async (avoidTasks: number[] = []) => {
 		const taskPair = await getTaskPair(projectId, dimension, avoidTasks);
 		if (!taskPair) return;
 		task1 = taskPair[0];
 		task2 = taskPair[1];
 	};
-	resetTasks();
+
+	onMount(resetTasks);
 
 	const recordResult = (winnerId: number, loserId: number) => {
 		recordWin(winnerId, loserId).then(() => resetTasks());
