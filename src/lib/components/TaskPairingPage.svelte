@@ -91,7 +91,7 @@
 
 		<ProgressBar {progress} {total} animateOnComplete />
 
-		<div class="flex justify-between gap-2">
+		<div class="flex flex-col justify-between gap-6 @md:flex-row">
 			<div class="flex gap-2">
 				<Button
 					variant="secondary"
@@ -101,6 +101,7 @@
 						taskPairing?.resetTasks();
 					}}
 					disabled={!canUndo}
+					class="w-full"
 				>
 					Undo
 				</Button>
@@ -112,6 +113,7 @@
 						taskPairing?.resetTasks();
 					}}
 					disabled={!canRedo}
+					class="w-full"
 				>
 					Redo
 				</Button>
@@ -122,19 +124,28 @@
 						dimension === 'value'
 							? `/projects/${projectId}/intro/2`
 							: `/projects/${projectId}/intro/4`}
-					<Button href={previousUrl} variant="secondary" Icon={ArrowLeftIcon}>Back</Button>
+					<Button href={previousUrl} variant="secondary" Icon={ArrowLeftIcon} class="w-full">
+						Back
+					</Button>
 					{@const nextUrl =
 						dimension === 'value'
 							? `/projects/${projectId}/intro/4`
 							: `/projects/${projectId}/intro/6`}
-					<Button href={nextUrl} disabled={progress < total} Icon={CheckIcon}>Continue</Button>
+					<Button href={nextUrl} disabled={progress < total} Icon={CheckIcon} class="w-full">
+						Continue
+					</Button>
 				{:else}
-					<Button href={`/projects/${projectId}`} variant="secondary" Icon={ArrowLeftIcon}>
-						Back to project
+					<Button
+						href={`/projects/${projectId}`}
+						variant="secondary"
+						Icon={ArrowLeftIcon}
+						class="w-full"
+					>
+						Back
 					</Button>
 					{@const nextUrl =
 						dimension === 'value' ? `/projects/${projectId}/ease` : `/projects/${projectId}`}
-					<Button href={nextUrl} disabled={progress < total} Icon={CheckIcon}>
+					<Button href={nextUrl} disabled={progress < total} Icon={CheckIcon} class="w-full">
 						{dimension === 'value' ? 'Rate effort' : 'Finish rating'}
 					</Button>
 				{/if}
