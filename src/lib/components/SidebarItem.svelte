@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Heroicon } from './heroicons/Heroicon';
+	import type { Heroicon } from '$lib/Heroicon';
 	import { ArrowTopRightOnSquareIcon } from '@sidekickicons/svelte/20/solid';
 
 	interface Props {

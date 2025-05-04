@@ -5,7 +5,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import type { ClassValue, MouseEventHandler } from 'svelte/elements';
-	import type { Heroicon } from '../heroicons/Heroicon';
+	import type { Heroicon } from '$lib/Heroicon';
 	import Spinner from './Spinner.svelte';
 
 	interface Props {

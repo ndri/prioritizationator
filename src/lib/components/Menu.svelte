@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import type { ClassValue, HTMLButtonAttributes } from 'svelte/elements';
-	import type { Heroicon } from './heroicons/Heroicon';
+	import type { Heroicon } from '$lib/Heroicon';
 	import Transition from 'svelte-transition';
 
 	interface Props {
