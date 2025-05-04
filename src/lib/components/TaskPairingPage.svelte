@@ -97,7 +97,7 @@
 			<div class="flex gap-2">
 				<Button
 					variant="secondary"
-					Icon={ArrowUturnLeftIcon}
+					LeftIcon={ArrowUturnLeftIcon}
 					onclick={async () => {
 						await undoMatchup(projectId, dimension);
 						taskPairing?.resetTasks();
@@ -109,7 +109,7 @@
 				</Button>
 				<Button
 					variant="secondary"
-					Icon={ArrowUturnRightIcon}
+					LeftIcon={ArrowUturnRightIcon}
 					onclick={async () => {
 						await redoMatchup(projectId, dimension);
 						taskPairing?.resetTasks();
@@ -126,28 +126,28 @@
 						dimension === 'value'
 							? `/projects/${projectId}/intro/2`
 							: `/projects/${projectId}/intro/4`}
-					<Button href={previousUrl} variant="secondary" Icon={ArrowLeftIcon} class="w-full">
+					<Button href={previousUrl} variant="secondary" LeftIcon={ArrowLeftIcon} class="w-full">
 						Back
 					</Button>
 					{@const nextUrl =
 						dimension === 'value'
 							? `/projects/${projectId}/intro/4`
 							: `/projects/${projectId}/intro/6`}
-					<Button href={nextUrl} disabled={progress < total} Icon={CheckIcon} class="w-full">
+					<Button href={nextUrl} disabled={progress < total} LeftIcon={CheckIcon} class="w-full">
 						Continue
 					</Button>
 				{:else}
 					<Button
 						href={`/projects/${projectId}`}
 						variant="secondary"
-						Icon={ArrowLeftIcon}
+						LeftIcon={ArrowLeftIcon}
 						class="w-full"
 					>
 						Back
 					</Button>
 					{@const nextUrl =
 						dimension === 'value' ? `/projects/${projectId}/ease` : `/projects/${projectId}`}
-					<Button href={nextUrl} disabled={progress < total} Icon={CheckIcon} class="w-full">
+					<Button href={nextUrl} disabled={progress < total} LeftIcon={CheckIcon} class="w-full">
 						{dimension === 'value' ? 'Rate effort' : 'Finish rating'}
 					</Button>
 				{/if}

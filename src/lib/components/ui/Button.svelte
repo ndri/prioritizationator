@@ -19,7 +19,8 @@
 		onclick?: MouseEventHandler<HTMLButtonElement> | null;
 		children?: Snippet;
 		class?: ClassValue | null;
-		Icon?: Heroicon;
+		LeftIcon?: Heroicon;
+		RightIcon?: Heroicon;
 		ref?: ButtonComponentRef;
 		[key: string]: any;
 	}
@@ -35,7 +36,8 @@
 		onclick,
 		children,
 		class: className,
-		Icon,
+		LeftIcon,
+		RightIcon,
 		ref = $bindable(),
 		...props
 	}: Props = $props();
@@ -81,13 +83,16 @@
 {#snippet contents()}
 	{#if loading}
 		<Spinner {size} />
-	{:else if Icon}
-		<Icon class={iconClasses[variant]} />
+	{:else if LeftIcon}
+		<LeftIcon class={iconClasses[variant]} />
 	{/if}
 	{#if label}
 		{label}
 	{/if}
 	{@render children?.()}
+	{#if RightIcon}
+		<RightIcon class={iconClasses[variant]} />
+	{/if}
 {/snippet}
 
 {#if href && !disabled}

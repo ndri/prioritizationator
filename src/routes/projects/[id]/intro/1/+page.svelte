@@ -39,7 +39,9 @@
 
 			{#if project.tasks.length >= minTasksForRating}
 				<div class="flex justify-end">
-					<Button href="/projects/{projectId}/intro/2" size="lg" Icon={CheckIcon}>Continue</Button>
+					<Button href="/projects/{projectId}/intro/2" size="lg" LeftIcon={CheckIcon}>
+						Continue
+					</Button>
 				</div>
 			{:else}
 				{@const needToAdd = minTasksForRating - project.tasks.length}

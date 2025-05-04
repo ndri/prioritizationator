@@ -15,7 +15,7 @@
 		<Button
 			size="xl"
 			variant="text"
-			Icon={sidebarOpen ? XMarkIcon : Bars3Icon}
+			LeftIcon={sidebarOpen ? XMarkIcon : Bars3Icon}
 			onclick={() => (sidebarOpen = !sidebarOpen)}
 			class="p-1"
 			aria-label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}

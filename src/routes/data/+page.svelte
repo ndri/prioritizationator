@@ -226,7 +226,7 @@
 			You can export all of your Prioritizationator data to a JSON file. This is useful if you want
 			to back up your data or transfer it to another device.
 		</p>
-		<Button size="lg" Icon={ArrowUpTrayIcon} loading={exportLoading} onclick={exportData}>
+		<Button size="lg" LeftIcon={ArrowUpTrayIcon} loading={exportLoading} onclick={exportData}>
 			Export JSON
 		</Button>
 	</section>
@@ -239,7 +239,7 @@
 				import.
 			</p>
 		{:else}
-			<Button size="lg" Icon={ArrowDownTrayIcon} loading={importLoading} onclick={importData}>
+			<Button size="lg" LeftIcon={ArrowDownTrayIcon} loading={importLoading} onclick={importData}>
 				Import JSON
 			</Button>
 		{/if}
@@ -252,7 +252,7 @@
 			recover them.
 		</p>
 		<Button
-			Icon={TrashIcon}
+			LeftIcon={TrashIcon}
 			size="lg"
 			loading={deleteLoading}
 			onclick={async () => {

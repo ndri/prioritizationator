@@ -35,5 +35,5 @@
 			<ProgressBar progress={ratingsProgress} total={ratingsRequired} size="sm" />
 		</div>
 	{/if}
-	<Button href={ratingPath} variant="secondary" Icon={StarIcon} size="lg">Rate</Button>
+	<Button href={ratingPath} variant="secondary" LeftIcon={StarIcon} size="lg">Rate</Button>
 </div>

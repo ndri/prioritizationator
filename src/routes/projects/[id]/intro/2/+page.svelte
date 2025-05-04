@@ -41,11 +41,11 @@
 				href="/projects/{projectId}/intro/1"
 				size="lg"
 				variant="secondary"
-				Icon={ArrowLeftIcon}
+				LeftIcon={ArrowLeftIcon}
 			>
 				Go back
 			</Button>
-			<Button href="/projects/{projectId}/intro/3" size="lg" Icon={StarIcon}>Rate value</Button>
+			<Button href="/projects/{projectId}/intro/3" size="lg" LeftIcon={StarIcon}>Rate value</Button>
 		</div>
 	{/if}
 </div>

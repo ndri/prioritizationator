@@ -83,7 +83,7 @@
 			class="flex items-center p-1"
 		>
 			{#snippet button(props)}
-				<Button size="xl" variant="text" Icon={EllipsisVerticalIcon} class="p-1.5" {...props} />
+				<Button size="xl" variant="text" LeftIcon={EllipsisVerticalIcon} class="p-1.5" {...props} />
 			{/snippet}
 		</Menu>
 	</div>
