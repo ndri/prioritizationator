@@ -11,11 +11,13 @@
 		type Task
 	} from '$lib/db';
 	import { filterIncompleteTasks, taskEaseIsRated, taskValueIsRated } from '$lib/utils/tasks';
-	import EllipsisVerticalIcon from './heroicons/mini/EllipsisVerticalIcon.svelte';
-	import HandRaisedIcon from './heroicons/mini/HandRaisedIcon.svelte';
-	import NoSymbolIcon from './heroicons/mini/NoSymbolIcon.svelte';
-	import PencilSquareIcon from './heroicons/mini/PencilSquareIcon.svelte';
-	import TrashIcon from './heroicons/mini/TrashIcon.svelte';
+	import {
+		EllipsisVerticalIcon,
+		HandRaisedIcon,
+		NoSymbolIcon,
+		PencilSquareIcon,
+		TrashIcon
+	} from '@sidekickicons/svelte/20/solid';
 	import Menu from './Menu.svelte';
 	import RatingBadge from './RatingBadge.svelte';
 	import Button from './ui/Button.svelte';

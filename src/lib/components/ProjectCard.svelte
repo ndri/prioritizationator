@@ -8,12 +8,14 @@
 		valueRatingsProgress
 	} from '$lib/utils/tasks';
 	import { getTimeAgo } from '$lib/utils/time';
-	import TrashIcon from './heroicons/micro/TrashIcon.svelte';
-	import ChecklistIcon from './heroicons/mini/ChecklistIcon.svelte';
-	import EllipsisVerticalIcon from './heroicons/mini/EllipsisVerticalIcon.svelte';
-	import PencilSquareIcon from './heroicons/mini/PencilSquareIcon.svelte';
-	import StarIcon from './heroicons/mini/StarIcon.svelte';
-	import WrenchScrewdriverIcon from './heroicons/mini/WrenchScrewdriverIcon.svelte';
+	import {
+		TrashIcon,
+		ChecklistIcon,
+		EllipsisVerticalIcon,
+		PencilSquareIcon,
+		StarIcon,
+		WrenchScrewdriverIcon
+	} from '@sidekickicons/svelte/20/solid';
 	import Dot from './illustrations/Dot.svelte';
 	import Menu from './Menu.svelte';
 	import ProgressBar from './ProgressBar.svelte';

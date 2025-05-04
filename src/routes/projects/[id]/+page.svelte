@@ -18,16 +18,17 @@
 	} from '$lib/utils/tasks';
 	import PrioritizationMatrix from '$lib/components/PrioritizationMatrix.svelte';
 	import RatingCard from '$lib/components/RatingCard.svelte';
-	import BackLink from '$lib/components/BackLink.svelte';
 	import Menu from '$lib/components/Menu.svelte';
-	import TrashIcon from '$lib/components/heroicons/mini/TrashIcon.svelte';
+	import {
+		ArrowPathIcon,
+		EllipsisVerticalIcon,
+		PencilSquareIcon,
+		TrashIcon
+	} from '@sidekickicons/svelte/20/solid';
 	import Button from '$lib/components/ui/Button.svelte';
-	import EllipsisVerticalIcon from '$lib/components/heroicons/mini/EllipsisVerticalIcon.svelte';
 	import { goto } from '$app/navigation';
 	import SimpleDialog from '$lib/components/ui/SimpleDialog.svelte';
-	import PencilSquareIcon from '$lib/components/heroicons/mini/PencilSquareIcon.svelte';
 	import EditDialog from '$lib/components/ui/EditDialog.svelte';
-	import ArrowPathIcon from '$lib/components/heroicons/mini/ArrowPathIcon.svelte';
 	import { slide } from 'svelte/transition';
 	import Tabs from '$lib/components/ui/Tabs.svelte';
 	import TodoTasks from '$lib/components/TodoTasks.svelte';

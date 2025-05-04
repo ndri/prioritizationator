@@ -1,6 +1,5 @@
 <script lang="ts">
-	import XMarkIcon from './heroicons/outline/XMarkIcon.svelte';
-	import Bars3Icon from './heroicons/outline/Bars3Icon.svelte';
+	import { Bars3Icon, XMarkIcon } from '@sidekickicons/svelte/24/outline';
 	import SidebarContents from './SidebarContents.svelte';
 	import { fade, fly } from 'svelte/transition';
 	import Button from './ui/Button.svelte';

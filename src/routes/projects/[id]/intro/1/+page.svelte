@@ -7,7 +7,7 @@
 	import { minTasksForRating } from '$lib/utils/tasks';
 	import { createTitle } from '$lib/utils/title';
 	import type { PageProps } from './$types';
-	import CheckIcon from '$lib/components/heroicons/mini/CheckIcon.svelte';
+	import { CheckIcon } from '@sidekickicons/svelte/20/solid';
 
 	let { data }: PageProps = $props();
 

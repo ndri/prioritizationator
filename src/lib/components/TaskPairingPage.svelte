@@ -20,10 +20,12 @@
 		valueRatingsProgress
 	} from '$lib/utils/tasks';
 	import { createTitle } from '$lib/utils/title';
-	import ArrowLeftIcon from './heroicons/mini/ArrowLeftIcon.svelte';
-	import ArrowUturnLeftIcon from './heroicons/mini/ArrowUturnLeftIcon.svelte';
-	import ArrowUturnRightIcon from './heroicons/mini/ArrowUturnRightIcon.svelte';
-	import CheckIcon from './heroicons/mini/CheckIcon.svelte';
+	import {
+		ArrowLeftIcon,
+		ArrowUturnLeftIcon,
+		ArrowUturnRightIcon,
+		CheckIcon
+	} from '@sidekickicons/svelte/20/solid';
 	import ProgressBar from './ProgressBar.svelte';
 	import TaskPairing from './TaskPairing.svelte';
 	import Button from './ui/Button.svelte';

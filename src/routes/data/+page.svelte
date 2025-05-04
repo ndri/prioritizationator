@@ -1,10 +1,7 @@
 <script lang="ts">
 	import DataList from '$lib/components/DataList.svelte';
-	import ArrowDownTray from '$lib/components/heroicons/mini/ArrowDownTray.svelte';
-	import ArrowUpTray from '$lib/components/heroicons/mini/ArrowUpTray.svelte';
-	import TrashIcon from '$lib/components/heroicons/mini/TrashIcon.svelte';
-	import CheckCircleIcon from '$lib/components/heroicons/outline/CheckCircleIcon.svelte';
-	import ExclamationTriangleIcon from '$lib/components/heroicons/outline/ExclamationTriangleIcon.svelte';
+	import { ArrowDownTrayIcon, ArrowUpTrayIcon, TrashIcon } from '@sidekickicons/svelte/20/solid';
+	import { CheckCircleIcon, ExclamationTriangleIcon } from '@sidekickicons/svelte/24/outline';
 	import Link from '$lib/components/Link.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
@@ -229,7 +226,7 @@
 			You can export all of your Prioritizationator data to a JSON file. This is useful if you want
 			to back up your data or transfer it to another device.
 		</p>
-		<Button size="lg" Icon={ArrowUpTray} loading={exportLoading} onclick={exportData}>
+		<Button size="lg" Icon={ArrowUpTrayIcon} loading={exportLoading} onclick={exportData}>
 			Export JSON
 		</Button>
 	</section>
@@ -242,7 +239,7 @@
 				import.
 			</p>
 		{:else}
-			<Button size="lg" Icon={ArrowDownTray} loading={importLoading} onclick={importData}>
+			<Button size="lg" Icon={ArrowDownTrayIcon} loading={importLoading} onclick={importData}>
 				Import JSON
 			</Button>
 		{/if}

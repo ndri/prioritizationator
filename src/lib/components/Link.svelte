@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import type { ClassValue } from 'svelte/elements';
-	import SmIcon from './heroicons/micro/ArrowTopRightOnSquareIcon.svelte';
-	import MdIcon from './heroicons/mini/ArrowTopRightOnSquareIcon.svelte';
-	import LgIcon from './heroicons/outline/ArrowTopRightOnSquareIcon.svelte';
+	import { ArrowTopRightOnSquareIcon as SmIcon } from '@sidekickicons/svelte/16/solid';
+	import { ArrowTopRightOnSquareIcon as MdIcon } from '@sidekickicons/svelte/20/solid';
+	import { ArrowTopRightOnSquareIcon as LgIcon } from '@sidekickicons/svelte/24/solid';
 
 	interface Props {
 		children: Snippet;

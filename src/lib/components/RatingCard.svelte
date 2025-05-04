@@ -1,6 +1,5 @@
 <script lang="ts">
-	import CheckCircleIcon from './heroicons/mini/CheckCircleIcon.svelte';
-	import StarIcon from './heroicons/mini/StarIcon.svelte';
+	import { CheckCircleIcon, StarIcon } from '@sidekickicons/svelte/20/solid';
 	import ProgressBar from './ProgressBar.svelte';
 	import Button from './ui/Button.svelte';
 

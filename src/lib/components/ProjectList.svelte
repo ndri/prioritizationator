@@ -4,7 +4,7 @@
 	import ProjectCard from './ProjectCard.svelte';
 	import NewProjectCard from './NewProjectCard.svelte';
 	import Button from './ui/Button.svelte';
-	import PlusIcon from './heroicons/mini/PlusIcon.svelte';
+	import { PlusIcon } from '@sidekickicons/svelte/20/solid';
 	import WritingDownIdeasIllustration from './illustrations/WritingDownIdeasIllustration.svelte';
 
 	const projectsQuery = stateQuery(getProjectsWithTasksAndBlockings);

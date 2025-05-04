@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Heroicon } from './heroicons/Heroicon';
-	import ArrowTopRightOnSquareIcon from './heroicons/mini/ArrowTopRightOnSquareIcon.svelte';
+	import { ArrowTopRightOnSquareIcon } from '@sidekickicons/svelte/20/solid';
 
 	interface Props {
 		href: string;

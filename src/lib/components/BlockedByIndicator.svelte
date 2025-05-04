@@ -1,5 +1,5 @@
 <script lang="ts">
-	import NoSymbolIcon from './heroicons/mini/NoSymbolIcon.svelte';
+	import { NoSymbolIcon } from '@sidekickicons/svelte/20/solid';
 	import Tooltip from './Tooltip.svelte';
 
 	interface Props {

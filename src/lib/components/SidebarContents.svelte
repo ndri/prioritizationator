@@ -2,12 +2,13 @@
 	import { page } from '$app/state';
 	import { getRecentProjects } from '$lib/db';
 	import { stateQuery } from '$lib/stateQuery.svelte';
-	import ArrowTopRightOnSquareIcon from './heroicons/micro/ArrowTopRightOnSquareIcon.svelte';
-	import ChatBubbleBottomCenterTextIcon from './heroicons/mini/ChatBubbleBottomCenterTextIcon.svelte';
-	import CircleStackIcon from './heroicons/mini/CircleStackIcon.svelte';
-	import DocumentTextIcon from './heroicons/mini/DocumentTextIcon.svelte';
-	import HomeIcon from './heroicons/mini/HomeIcon.svelte';
-	import QuestionMarkCircleIcon from './heroicons/mini/QuestionMarkCircleIcon.svelte';
+	import {
+		ChatBubbleBottomCenterTextIcon,
+		CircleStackIcon,
+		DocumentTextIcon,
+		HomeIcon,
+		QuestionMarkCircleIcon
+	} from '@sidekickicons/svelte/20/solid';
 	import Link from './Link.svelte';
 	import SidebarItem from './SidebarItem.svelte';
 

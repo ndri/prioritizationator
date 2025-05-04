@@ -1,6 +1,5 @@
 <script lang="ts">
-	import ArrowLeftIcon from '$lib/components/heroicons/mini/ArrowLeftIcon.svelte';
-	import StarIcon from '$lib/components/heroicons/mini/StarIcon.svelte';
+	import { ArrowLeftIcon, StarIcon } from '@sidekickicons/svelte/20/solid';
 	import PrioritizationMatrix from '$lib/components/PrioritizationMatrix.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { getProject } from '$lib/db';
