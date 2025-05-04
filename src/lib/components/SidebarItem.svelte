@@ -13,13 +13,13 @@
 
 	const { href, text, Icon, active, onclick, newTab = false }: Props = $props();
 
-	const iconClasses = [
+	const iconClasses = $derived([
 		'shrink-0',
 		active ? 'text-accent-600' : 'text-main-400',
 		'group-hover:text-accent-600',
 		active ? 'dark:text-accent-400' : 'dark:text-main-600',
 		'dark:group-hover:text-accent-400'
-	];
+	]);
 </script>
 
 <a
